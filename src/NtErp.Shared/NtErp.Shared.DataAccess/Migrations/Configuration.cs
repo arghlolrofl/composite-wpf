@@ -32,11 +32,11 @@ namespace NtErp.Shared.DataAccess.Migrations {
                 new Product { Name = "Screw (small)", Description = "Kleine Schraube", Number = "S-K-123", Version = 1 },
                 new Product { Name = "Screw (medium)", Description = "Mittelgroße Schraube", Number = "S-M-123", Version = 1 },
                 new Product { Name = "Screw (large)", Description = "Große Schraube", Number = "S-G-123", Version = 1 },
-                new Product { Name = "Fan", Description = "Propeller", Number = "E-F-123", Version = 1 }//,
-                //new Component { Name = "Compressor", Description = "Verdichter", Number = "E-C-123", Version = 1 },
-                //new Component { Name = "Burning Chamber", Description = "Brennkammer", Number = "E-B-123", Version = 1 },
-                //new Component { Name = "Turbine", Description = "Turbine", Number = "E-T-123", Version = 1 },
-                //new Component { Name = "Jet Nozzle", Description = "Schubdüse", Number = "E-N-123", Version = 1 }
+                new Product { Name = "Fan", Description = "Propeller", Number = "E-F-123", Version = 1 },
+                new Product { Name = "Compressor", Description = "Verdichter", Number = "E-C-123", Version = 1 },
+                new Product { Name = "Burning Chamber", Description = "Brennkammer", Number = "E-B-123", Version = 1 },
+                new Product { Name = "Turbine", Description = "Turbine", Number = "E-T-123", Version = 1 },
+                new Product { Name = "Jet Nozzle", Description = "Schubdüse", Number = "E-N-123", Version = 1 }
             };
 
             foreach (var component in productsToSeed) {
@@ -52,16 +52,17 @@ namespace NtErp.Shared.DataAccess.Migrations {
 
         private void SeedKits(NtErpContext context) {
             Product component = context.Products.Local.First();
-            Product testKit1 = new Product() { Name = "TestKit", Description = "Test-Baugruppe", Number = "KIT-123-456", Version = 1 };
-            testKit1.Components.Add(new Component() { Parent = testKit1, ProductComponent = component, Amount = 1 });
+            Kit testKit1 = new Kit() { Name = "TestKit", Description = "Test-Baugruppe", Number = "KIT-123-456", Version = 1 };
 
-            IList<Product> kitsToSeed = new List<Product>() {
+            testKit1.Components.Add(new ProductComponent() { Kit = testKit1, Component = component, Amount = 1 });
+
+            IList<Kit> kitsToSeed = new List<Kit>() {
                 testKit1
             };
 
             foreach (var kit in kitsToSeed) {
                 try {
-                    context.Products.AddOrUpdate(c => c.Name, kit);
+                    context.Kits.AddOrUpdate(c => c.Name, kit);
                 } catch (Exception ex) {
                     Debug.WriteLine("SEED ERROR:");
                     Debug.WriteLine("    " + ex.GetType().Name.ToUpper() + ": " + ex.Message);

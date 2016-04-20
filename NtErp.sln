@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FAKE", "FAKE", "{127F4D25-7
 	ProjectSection(SolutionItems) = preProject
 		build.fsx = build.fsx
 		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{97DD816C-E132-4F19-839C-35D5C9DC7528}"

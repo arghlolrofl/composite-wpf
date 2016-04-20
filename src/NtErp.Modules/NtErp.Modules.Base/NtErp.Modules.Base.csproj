@@ -106,7 +106,6 @@
       <Name>NtErp.Shared.Services</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ModuleMenuView.xaml">
       <SubType>Designer</SubType>

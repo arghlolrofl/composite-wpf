@@ -105,7 +105,6 @@ Target RunTestTask (fun _ ->
 // ######################################################
 CleanOutputTask
    ==> BuildSourceTask
-   ==> FxCopCheckTask
    ==> BuildTestTask
    ==> RunTestTask
 

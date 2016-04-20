@@ -1,18 +1,17 @@
 ﻿using NtErp.Shared.Entities.Base;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace NtErp.Shared.Entities.MasterFileData {
 	/// <summary>
-	/// 	Class representing a <see cref="Product" /> or a part of a <see cref="Kit" />.
+	/// 	Class representing an assembly of <see cref="Product" />.
 	/// </summary>
-    public class Product : EntityBase {
-        private int _Version;
+    public class Kit : EntityBase {
+		private int _Version;
         private string _Number;
         private string _Name;
         private string _Description;
         private ICollection<ProductComponent> _components = new HashSet<ProductComponent>();
-		
+
 		/// <summary>
 		/// 	Natural number representing the version of this Kit
 		/// </summary>
