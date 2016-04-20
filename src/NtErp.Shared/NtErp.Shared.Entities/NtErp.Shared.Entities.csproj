@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Base\EntityBase.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
+    <Compile Include="MasterFileData\Component.cs" />
     <Compile Include="MasterFileData\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

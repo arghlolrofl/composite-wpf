@@ -3,13 +3,11 @@ using System.Collections.ObjectModel;
 
 namespace NtErp.Shared.Entities.MasterFileData {
     public class Product : EntityBase {
-        private ObservableCollection<Product> _products = new ObservableCollection<Product>();
-        private ObservableCollection<Product> _components = new ObservableCollection<Product>();
-
         private int _Version;
         private string _Number;
         private string _Name;
         private string _Description;
+        private ObservableCollection<Component> _components = new ObservableCollection<Component>();
 
 
         public int Version {
@@ -32,20 +30,9 @@ namespace NtErp.Shared.Entities.MasterFileData {
             set { _Description = value; RaisePropertyChanged(); }
         }
 
-        public virtual ObservableCollection<Product> Products {
-            get { return _products; }
-            set {
-                _products = value;
-                RaisePropertyChanged();
-            }
-        }
-
-        public virtual ObservableCollection<Product> Components {
+        public virtual ObservableCollection<Component> Components {
             get { return _components; }
-            set {
-                _components = value;
-                RaisePropertyChanged();
-            }
+            set { _components = value; RaisePropertyChanged(); }
         }
 
 

@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Services", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Entities", "src\NtErp.Shared\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj", "{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.DataAccess", "src\NtErp.Shared\NtErp.Shared.DataAccess\NtErp.Shared.DataAccess.csproj", "{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +66,6 @@ Global
 		{06C24979-6910-4737-A4F8-6C71B34091C5} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 		{46BC1775-84A1-4213-B7D0-4C65F5365579} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 	EndGlobalSection
 EndGlobal
