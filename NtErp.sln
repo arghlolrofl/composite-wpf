@@ -1,0 +1,64 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shell.Demo", "src\NtErp.Shell\NtErp.Shell.Demo\NtErp.Shell.Demo.csproj", "{A588FE3D-33A3-4828-B389-9CBF0B4B7DB1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "FAKE", "FAKE", "{127F4D25-7267-45C9-96E0-A7372C90EA8F}"
+	ProjectSection(SolutionItems) = preProject
+		build.fsx = build.fsx
+		paket.dependencies = paket.dependencies
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{97DD816C-E132-4F19-839C-35D5C9DC7528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shell.WpfDemo.Tests", "test\NtErp.Shell.WpfDemo.Tests\NtErp.Shell.WpfDemo.Tests.csproj", "{8EDF4429-251A-416D-BB68-93F227191BCF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{FF28EA42-AFAE-439F-AA39-B1521E070525}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.Base", "src\NtErp.Modules\NtErp.Modules.Base\NtErp.Modules.Base.csproj", "{06C24979-6910-4737-A4F8-6C71B34091C5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Services", "src\NtErp.Shared\NtErp.Shared.Services\NtErp.Shared.Services.csproj", "{46BC1775-84A1-4213-B7D0-4C65F5365579}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Entities", "src\NtErp.Shared\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj", "{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A588FE3D-33A3-4828-B389-9CBF0B4B7DB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A588FE3D-33A3-4828-B389-9CBF0B4B7DB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A588FE3D-33A3-4828-B389-9CBF0B4B7DB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A588FE3D-33A3-4828-B389-9CBF0B4B7DB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8EDF4429-251A-416D-BB68-93F227191BCF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06C24979-6910-4737-A4F8-6C71B34091C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06C24979-6910-4737-A4F8-6C71B34091C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06C24979-6910-4737-A4F8-6C71B34091C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06C24979-6910-4737-A4F8-6C71B34091C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46BC1775-84A1-4213-B7D0-4C65F5365579}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46BC1775-84A1-4213-B7D0-4C65F5365579}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46BC1775-84A1-4213-B7D0-4C65F5365579}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46BC1775-84A1-4213-B7D0-4C65F5365579}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8EDF4429-251A-416D-BB68-93F227191BCF} = {97DD816C-E132-4F19-839C-35D5C9DC7528}
+		{06C24979-6910-4737-A4F8-6C71B34091C5} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
+		{46BC1775-84A1-4213-B7D0-4C65F5365579} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+	EndGlobalSection
+EndGlobal
