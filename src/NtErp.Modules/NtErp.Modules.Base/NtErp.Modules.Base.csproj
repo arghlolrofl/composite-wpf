@@ -11,6 +11,10 @@
     <AssemblyName>NtErp.Modules.Base</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -100,6 +104,10 @@
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj">
       <Project>{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}</Project>
       <Name>NtErp.Shared.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj">
+      <Project>{E490DDAE-B664-4103-B54A-7B34313125CD}</Project>
+      <Name>NtErp.Shared.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Services\NtErp.Shared.Services.csproj">
       <Project>{46bc1775-84a1-4213-b7d0-4c65f5365579}</Project>

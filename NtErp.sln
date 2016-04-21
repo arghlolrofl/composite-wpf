@@ -28,6 +28,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Entities", "sr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.DataAccess", "src\NtErp.Shared\NtErp.Shared.DataAccess\NtErp.Shared.DataAccess.csproj", "{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Repositories", "src\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj", "{E490DDAE-B664-4103-B54A-7B34313125CD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -58,6 +60,10 @@ Global
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E490DDAE-B664-4103-B54A-7B34313125CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E490DDAE-B664-4103-B54A-7B34313125CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,5 +74,39 @@ Global
 		{46BC1775-84A1-4213-B7D0-4C65F5365579} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+		{E490DDAE-B664-4103-B54A-7B34313125CD} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = http://tfs2013-01:8080/tfs/ntinnovationcompanygmbh
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = src\\NtErp.Modules\\NtErp.Modules.Base\\NtErp.Modules.Base.csproj
+		SccProjectTopLevelParentUniqueName1 = NtErp.sln
+		SccProjectName1 = src/NtErp.Modules/NtErp.Modules.Base
+		SccLocalPath1 = src\\NtErp.Modules\\NtErp.Modules.Base
+		SccProjectUniqueName2 = src\\NtErp.Shared\\NtErp.Shared.DataAccess\\NtErp.Shared.DataAccess.csproj
+		SccProjectTopLevelParentUniqueName2 = NtErp.sln
+		SccProjectName2 = src/NtErp.Shared/NtErp.Shared.DataAccess
+		SccLocalPath2 = src\\NtErp.Shared\\NtErp.Shared.DataAccess
+		SccProjectUniqueName3 = src\\NtErp.Shared\\NtErp.Shared.Entities\\NtErp.Shared.Entities.csproj
+		SccProjectTopLevelParentUniqueName3 = NtErp.sln
+		SccProjectName3 = src/NtErp.Shared/NtErp.Shared.Entities
+		SccLocalPath3 = src\\NtErp.Shared\\NtErp.Shared.Entities
+		SccProjectUniqueName4 = src\\NtErp.Shared\\NtErp.Shared.Services\\NtErp.Shared.Services.csproj
+		SccProjectTopLevelParentUniqueName4 = NtErp.sln
+		SccProjectName4 = src/NtErp.Shared/NtErp.Shared.Services
+		SccLocalPath4 = src\\NtErp.Shared\\NtErp.Shared.Services
+		SccProjectUniqueName5 = src\\NtErp.Shell\\NtErp.Shell.Demo\\NtErp.Shell.Demo.csproj
+		SccProjectName5 = src/NtErp.Shell/NtErp.Shell.Demo
+		SccLocalPath5 = src\\NtErp.Shell\\NtErp.Shell.Demo
+		SccProjectUniqueName6 = test\\NtErp.Shell.WpfDemo.Tests\\NtErp.Shell.WpfDemo.Tests.csproj
+		SccProjectTopLevelParentUniqueName6 = NtErp.sln
+		SccProjectName6 = test/NtErp.Shell.WpfDemo.Tests
+		SccLocalPath6 = test\\NtErp.Shell.WpfDemo.Tests
+		SccProjectUniqueName7 = src\\NtErp.Shared\\NtErp.Shared.Repositories\\NtErp.Shared.Repositories.csproj
+		SccProjectTopLevelParentUniqueName7 = NtErp.sln
+		SccProjectName7 = src/NtErp.Shared/NtErp.Shared.Repositories
+		SccLocalPath7 = src\\NtErp.Shared\\NtErp.Shared.Repositories
 	EndGlobalSection
 EndGlobal

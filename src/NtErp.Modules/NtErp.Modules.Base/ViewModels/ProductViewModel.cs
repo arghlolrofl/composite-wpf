@@ -2,6 +2,7 @@
 using Microsoft.Practices.Prism.Commands;
 using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Entities.MasterFileData;
+using NtErp.Shared.Services.Contracts;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace NtErp.Modules.Base.ViewModels {
         private ICommand _refreshProductCommand;
 
         private readonly ILifetimeScope _scope;
+        private readonly
         private Product _selectedProduct;
         private Product _selectedProductComponent;
         private string _statusText;
@@ -160,7 +162,8 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         private void RefreshProductCommand_OnExecute() {
-            //SelectedProduct = ProductFactory.GetById(SelectedProduct.Id);
+            SelectedProduct = _scope.Resolve<IProductRepository>()
+                                    .Get(SelectedProduct.Id);
         }
 
         private void OpenProductSearchCommand_OnExecute() {
@@ -177,19 +180,19 @@ namespace NtErp.Modules.Base.ViewModels {
         //}
 
         private void CreateProductCommand_OnExecute() {
-            //SelectedProduct = ProductFactory.New();
+            SelectedProduct = _scope.Resolve<Product>();
             //StatusText = "Create new Product";
         }
 
         private void UpdateProductCommand_OnExecute() {
-            //SelectedProduct.Save();
+            _scope.Resolve<IProductRepository>().Save(SelectedProduct);
             //StatusText = "Product saved";
-            //HasChanges = false;
-            //RaisePropertyChanged(nameof(SelectedProduct));
+            HasChanges = false;
+            RaisePropertyChanged(nameof(SelectedProduct));
         }
 
         private void DeleteProductCommand_OnExecute() {
-            //SelectedProduct.Delete();
+            _scope.Resolve<IProductRepository>().Delete(SelectedProduct);
             //StatusText = "Product deleted";
         }
 

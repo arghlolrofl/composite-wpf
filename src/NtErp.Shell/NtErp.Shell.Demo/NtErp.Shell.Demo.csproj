@@ -3,6 +3,10 @@
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">$(MSBuildProjectDirectory)\..\..\..\</SolutionDir>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -165,13 +169,13 @@
       <Project>{06c24979-6910-4737-a4f8-6c71b34091c5}</Project>
       <Name>NtErp.Modules.Base</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.DataAccess\NtErp.Shared.DataAccess.csproj">
-      <Project>{fc1b2772-a68e-4cc0-8bd0-7912b0ddf6ae}</Project>
-      <Name>NtErp.Shared.DataAccess</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj">
       <Project>{dabebf34-52f1-40d6-a9c3-f50dcaea235a}</Project>
       <Name>NtErp.Shared.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj">
+      <Project>{E490DDAE-B664-4103-B54A-7B34313125CD}</Project>
+      <Name>NtErp.Shared.Repositories</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Services\NtErp.Shared.Services.csproj">
       <Project>{46bc1775-84a1-4213-b7d0-4c65f5365579}</Project>
