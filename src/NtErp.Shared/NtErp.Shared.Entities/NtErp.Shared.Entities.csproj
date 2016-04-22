@@ -47,7 +47,6 @@
   <ItemGroup>
     <Compile Include="Base\EntityBase.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
-    <Compile Include="MasterFileData\Kit.cs" />
     <Compile Include="MasterFileData\Product.cs" />
     <Compile Include="MasterFileData\ProductComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

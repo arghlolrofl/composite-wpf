@@ -68,6 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Migrations\ProductComponentConfiguration.cs" />
     <Compile Include="Migrations\ProductConfiguration.cs" />
     <Compile Include="NtErpContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

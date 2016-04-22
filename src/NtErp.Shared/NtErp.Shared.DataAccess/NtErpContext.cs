@@ -1,60 +1,54 @@
-﻿using NtErp.Shared.Entities.MasterFileData;
+﻿using NtErp.Data.Migrations;
+using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
 
 namespace NtErp.Shared.DataAccess {
-  public class NtErpContext : DbContext {
-    const string NtErpConnectionStringName = "NtErpConnectionString";
-    const string DataDirectoryKey = "DataDirectory";
+    public class NtErpContext : DbContext {
+        const string NtErpConnectionStringName = "NtErpConnectionString";
+        const string DataDirectoryKey = "DataDirectory";
 
-    static readonly string DatabasePath;
+        static readonly string DatabasePath;
 
-    #region Context Entities
+        #region Context Entities
 
-    public DbSet<Product> Products { get; set; }
-    public DbSet<Kit> Kits { get; set; }
-    public DbSet<ProductComponent> Components { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductComponent> Components { get; set; }
 
-    #endregion
+        #endregion
 
-    /// <summary>
-    /// Reads the database directory from the config file.
-    /// </summary>
-    static NtErpContext() {
-      Debug.WriteLine("Reading database path from config file");
-      DatabasePath = ConfigurationManager.AppSettings[DataDirectoryKey];
+        /// <summary>
+        /// Reads the database directory from the config file.
+        /// </summary>
+        static NtErpContext() {
+            Debug.WriteLine("Reading database path from config file");
+            DatabasePath = ConfigurationManager.AppSettings[DataDirectoryKey];
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the database context class.
+        /// </summary>
+        public NtErpContext() : base(NtErpConnectionStringName) {
+            string path = AppDomain.CurrentDomain.GetData(DataDirectoryKey) as String;
+            if (String.IsNullOrEmpty(path)) {
+                // Set |DataDirectory| value
+                AppDomain.CurrentDomain.SetData(DataDirectoryKey, DatabasePath);
+                Debug.WriteLine("DataDirectory set to: " + DatabasePath);
+            }
+
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<NtErpContext, Migrations.Configuration>(NtErpConnectionStringName));
+        }
+
+        /// <summary>
+        /// Configures entities when building the databse model from POCO's.
+        /// </summary>
+        /// <param name="modelBuilder"></param>
+        protected override void OnModelCreating(DbModelBuilder modelBuilder) {
+            modelBuilder.Configurations.Add(new ProductComponentConfiguration());
+            modelBuilder.Configurations.Add(new ProductConfiguration());
+            base.OnModelCreating(modelBuilder);
+        }
     }
-
-    /// <summary>
-    /// Initializes a new instance of the database context class.
-    /// </summary>
-    public NtErpContext() : base(NtErpConnectionStringName) {
-      string path = AppDomain.CurrentDomain.GetData(DataDirectoryKey) as String;
-      if (String.IsNullOrEmpty(path)) {
-        // Set |DataDirectory| value
-        AppDomain.CurrentDomain.SetData(DataDirectoryKey, DatabasePath);
-        Debug.WriteLine("DataDirectory set to: " + DatabasePath);
-      }
-
-      Database.SetInitializer(new MigrateDatabaseToLatestVersion<NtErpContext, Migrations.Configuration>(NtErpConnectionStringName));
-    }
-
-    /// <summary>
-    /// Configures entities when building the databse model from POCO's.
-    /// </summary>
-    /// <param name="modelBuilder"></param>
-    protected override void OnModelCreating(DbModelBuilder modelBuilder) {
-      //modelBuilder.Configurations.Add(new ProductConfiguration());
-      base.OnModelCreating(modelBuilder);
-
-      //modelBuilder.Entity<Product>()
-      //            .HasMany(p => p.Components)
-      //            .WithRequired(c => c.Parent)
-      //            .HasForeignKey(p => p.Id);
-
-
-    }
-  }
 }

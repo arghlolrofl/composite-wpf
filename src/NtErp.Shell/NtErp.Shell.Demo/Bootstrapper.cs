@@ -1,5 +1,8 @@
 ﻿using Autofac;
 using Microsoft.Practices.ServiceLocation;
+using NtErp.Shared.DataAccess;
+using NtErp.Shared.Repositories;
+using NtErp.Shared.Services.Contracts;
 using NtErp.Shell.Demo.Views;
 using Prism.Autofac;
 using Prism.Modularity;
@@ -11,6 +14,9 @@ namespace NtErp.Shell.Demo {
         protected override void ConfigureContainerBuilder(ContainerBuilder builder) {
             base.ConfigureContainerBuilder(builder);
             builder.RegisterType<ShellView>();
+            builder.RegisterType<NtErpContext>();
+            builder.RegisterType<ProductRepository>().As<IProductRepository>();
+
         }
 
         protected override DependencyObject CreateShell() {
@@ -37,15 +43,6 @@ namespace NtErp.Shell.Demo {
                     InitializationMode = InitializationMode.WhenAvailable
                 }
             );
-
-            //moduleType = typeof(Modules.Navigation.NavigationModule);
-            //ModuleCatalog.AddModule(
-            //    new ModuleInfo() {
-            //        ModuleName = moduleType.Name,
-            //        ModuleType = moduleType.AssemblyQualifiedName,
-            //        InitializationMode = InitializationMode.WhenAvailable
-            //    }
-            //);
         }
     }
 }

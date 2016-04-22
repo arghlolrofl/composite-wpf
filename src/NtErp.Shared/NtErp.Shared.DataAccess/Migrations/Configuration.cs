@@ -52,17 +52,17 @@ namespace NtErp.Shared.DataAccess.Migrations {
 
         private void SeedKits(NtErpContext context) {
             Product component = context.Products.Local.First();
-            Kit testKit1 = new Kit() { Name = "TestKit", Description = "Test-Baugruppe", Number = "KIT-123-456", Version = 1 };
+            Product testKit1 = new Product() { Name = "TestKit", Description = "Test-Baugruppe", Number = "KIT-123-456", Version = 1 };
 
-            testKit1.Components.Add(new ProductComponent() { Kit = testKit1, Component = component, Amount = 1 });
+            testKit1.Components.Add(new ProductComponent() { Product = testKit1, Component = component, Amount = 1 });
 
-            IList<Kit> kitsToSeed = new List<Kit>() {
+            IList<Product> kitsToSeed = new List<Product>() {
                 testKit1
             };
 
             foreach (var kit in kitsToSeed) {
                 try {
-                    context.Kits.AddOrUpdate(c => c.Name, kit);
+                    context.Products.AddOrUpdate(c => c.Name, kit);
                 } catch (Exception ex) {
                     Debug.WriteLine("SEED ERROR:");
                     Debug.WriteLine("    " + ex.GetType().Name.ToUpper() + ": " + ex.Message);
