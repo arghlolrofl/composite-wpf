@@ -1,3 +1,4 @@
+using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,8 @@ namespace NtErp.Shared.DataAccess.Migrations {
             Debug.WriteLine(" > Seeding data into database ...");
             SeedProducts(context);
             SeedKits(context);
+            SeedJournalBooks(context);
+            SeedJournalEntries(context);
         }
 
         private void SeedProducts(NtErpContext context) {
@@ -69,6 +72,29 @@ namespace NtErp.Shared.DataAccess.Migrations {
                     continue;
                 }
             }
+        }
+
+        private void SeedJournalBooks(NtErpContext context) {
+            JournalBook book = new JournalBook() { Number = "SomeSequentialNumber", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(30), Description = "Test Book" };
+            context.CashJournals.AddOrUpdate(j => j.Number, book);
+        }
+
+        private void SeedJournalEntries(NtErpContext context) {
+            JournalBook book = context.CashJournals.Local.First();
+
+            JournalEntry entry = new JournalEntry() {
+                Date = DateTime.Now,
+                DocumentNumber = "CJ-123-456",
+                Earning = 100.0m,
+                Expenditure = -200.0m,
+                TaxRate = 19.0m,
+                PrepaidTax = 11.11m,
+                CashBalance = -100.0m,
+                BusinessProcessDescription = "Some business process",
+                JournalBook = book
+            };
+
+            context.CashJournalEntries.AddOrUpdate(e => e.DocumentNumber, entry);
         }
     }
 }

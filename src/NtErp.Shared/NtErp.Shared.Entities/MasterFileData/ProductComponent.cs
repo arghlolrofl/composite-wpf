@@ -13,7 +13,7 @@ namespace NtErp.Shared.Entities.MasterFileData {
         /// <summary>
         /// 	Reference to the Kit that contains a component/product
         /// </summary>
-        public Product Product {
+        public virtual Product Product {
             get { return _product; }
             set { _product = value; RaisePropertyChanged(); }
         }
@@ -21,7 +21,7 @@ namespace NtErp.Shared.Entities.MasterFileData {
         /// <summary>
         /// 	Reference to the product/component of the referenced kit
         /// </summary>
-        public Product Component {
+        public virtual Product Component {
             get { return _component; }
             set { _component = value; RaisePropertyChanged(); }
         }

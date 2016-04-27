@@ -30,6 +30,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Repositories", "src\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj", "{E490DDAE-B664-4103-B54A-7B34313125CD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.CashJournal", "src\NtErp.Modules\NtErp.Modules.CashJournal\NtErp.Modules.CashJournal.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shell.JscriptSuite", "src\NtErp.Shell\NtErp.Shell.JscriptSuite\NtErp.Shell.JscriptSuite.csproj", "{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -64,6 +68,14 @@ Global
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,9 +87,10 @@ Global
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{E490DDAE-B664-4103-B54A-7B34313125CD} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+		{223A9E40-290B-478D-843D-C00639527966} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
+		SccNumberOfProjects = 10
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfs2013-01:8080/tfs/ntinnovationcompanygmbh
 		SccLocalPath0 = .
@@ -108,5 +121,12 @@ Global
 		SccProjectTopLevelParentUniqueName7 = NtErp.sln
 		SccProjectName7 = src/NtErp.Shared/NtErp.Shared.Repositories
 		SccLocalPath7 = src\\NtErp.Shared\\NtErp.Shared.Repositories
+		SccProjectUniqueName8 = src\\NtErp.Modules\\NtErp.Modules.CashJournal\\NtErp.Modules.CashJournal.csproj
+		SccProjectTopLevelParentUniqueName8 = NtErp.sln
+		SccProjectName8 = src/NtErp.Modules/NtErp.Modules.CashJournal
+		SccLocalPath8 = src\\NtErp.Modules\\NtErp.Modules.CashJournal
+		SccProjectUniqueName9 = src\\NtErp.Shell\\NtErp.Shell.JscriptSuite\\NtErp.Shell.JscriptSuite.csproj
+		SccProjectName9 = src/NtErp.Shell/NtErp.Shell.JscriptSuite
+		SccLocalPath9 = src\\NtErp.Shell\\NtErp.Shell.JscriptSuite
 	EndGlobalSection
 EndGlobal

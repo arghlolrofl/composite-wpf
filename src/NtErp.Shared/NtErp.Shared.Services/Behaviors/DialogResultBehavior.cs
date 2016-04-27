@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace NtErp.Shell.Demo.Behaviors {
+namespace NtErp.Shared.Services.Behaviors {
     public class DialogResultBehavior {
         public static readonly DependencyProperty DialogResultProperty = DependencyProperty.RegisterAttached(
             "DialogResult", typeof(bool?), typeof(DialogResultBehavior),

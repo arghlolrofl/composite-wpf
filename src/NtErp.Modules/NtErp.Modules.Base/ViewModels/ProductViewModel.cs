@@ -1,9 +1,10 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
-using NtErp.DemoApp.View.MasterFileData;
+using NtErp.Modules.Base.Views;
 using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Contracts;
+using NtErp.Shared.Services.Events;
 using Prism.Events;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -24,7 +25,7 @@ namespace NtErp.Modules.Base.ViewModels {
         private readonly IProductRepository _repository;
         private readonly IEventAggregator _eventAggregator;
         private Product _selectedProduct;
-        private Product _selectedProductComponent;
+        private ProductComponent _selectedProductComponent;
         private string _statusText;
         private bool _hasChanges;
 
@@ -83,7 +84,7 @@ namespace NtErp.Modules.Base.ViewModels {
             }
         }
 
-        public Product SelectedProductComponent {
+        public ProductComponent SelectedProductComponent {
             get { return _selectedProductComponent; }
             set {
                 _selectedProductComponent = value;
@@ -171,18 +172,22 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         private void OpenProductSearchCommand_OnExecute() {
+            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                            .Subscribe(ProductSearch_OnReply);
 
-
-            _scope.Resolve<ProductSearchWindow>().ShowDialog();
+            var searchWindow = _scope.Resolve<ProductSearchWindow>();
+            searchWindow.ShowDialog();
         }
 
-        //private void ProductSearch_OnReply(SingleSearchResultResponse response) {
-        //MessengerInstance.Unregister<SingleSearchResultResponse>(this);
-        //if (response.DialogResult.Equals(true)) {
-        //    SelectedProduct = ProductFactory.GetById(response.EntityId);
-        //    StatusText = "Selected Product: " + SelectedProduct.Number;
-        //}
-        //}
+        private void ProductSearch_OnReply(EntitySearchResultEvent response) {
+            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                            .Unsubscribe(ProductSearch_OnReply);
+
+            if (response.DialogResult.Equals(true)) {
+                SelectedProduct = _repository.GetSingle(response.EntityId);
+                //StatusText = "Selected Product: " + SelectedProduct.Number;
+            }
+        }
 
         private void CreateProductCommand_OnExecute() {
             SelectedProduct = _repository.New();
@@ -202,28 +207,33 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         private void AddComponentCommand_OnExecute() {
-            //MessengerInstance.Register<SingleSearchResultResponse>(this, ComponentSearch_OnReply);
-            //MessengerInstance.Send(new ShowSearchDialogRequest() { EntityType = typeof(Product) });
+            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                            .Subscribe(ComponentSearch_OnReply);
+
+            var searchWindow = _scope.Resolve<ProductSearchWindow>();
+            searchWindow.ShowDialog();
         }
 
-        //private void ComponentSearch_OnReply(SingleSearchResultResponse response) {
-        //MessengerInstance.Unregister<SingleSearchResultResponse>(this);
-        //if (response.DialogResult.Equals(true)) {
-        //    Product component = ProductFactory.GetById(response.EntityId);
+        private void ComponentSearch_OnReply(EntitySearchResultEvent response) {
+            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                            .Unsubscribe(ProductSearch_OnReply);
 
-        //    SelectedProduct.AddChildComponent(component);
+            if (!response.DialogResult.Equals(true))
+                return;
 
-        //    StatusText = "Added child component: " + component.Number;
-        //}
-        //}
+            Product component = _repository.GetSingle(response.EntityId);
+            _repository.AddComponent(SelectedProduct, component);
+
+            //StatusText = "Selected Product: " + SelectedProduct.Number;
+        }
 
         private void RemoveComponentCommand_OnExecute() {
-            //if (SelectedProductComponent == null)
-            //    return;
+            if (SelectedProductComponent == null)
+                return;
 
             //string componentName = SelectedProductComponent.Name;
 
-            //SelectedProduct.RemoveChildComponent(SelectedProductComponent);
+            _repository.RemoveComponent(SelectedProductComponent);
             //StatusText = $"Removed component {SelectedProduct.Name} from product {componentName}";
         }
     }

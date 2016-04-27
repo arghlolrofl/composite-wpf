@@ -1,4 +1,5 @@
 ﻿using NtErp.Data.Migrations;
+using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Configuration;
@@ -16,6 +17,8 @@ namespace NtErp.Shared.DataAccess {
 
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductComponent> Components { get; set; }
+        public DbSet<JournalBook> CashJournals { get; set; }
+        public DbSet<JournalEntry> CashJournalEntries { get; set; }
 
         #endregion
 

@@ -2,6 +2,7 @@ using Microsoft.Practices.Prism.Commands;
 using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Contracts;
+using NtErp.Shared.Services.Events;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
@@ -9,9 +10,6 @@ using System.Windows.Input;
 
 namespace NtErp.ViewModel.MasterFileData {
     public class ProductSearchViewModel : ViewModelBase {
-        public event EventHandler CloseDialogRequested;
-        private void RaiseCloseDialogRequested() => CloseDialogRequested?.Invoke(this, EventArgs.Empty);
-
         private bool? _dialogResult;
         private IProductRepository _repository;
         private IEventAggregator _eventAggregator;
@@ -112,8 +110,9 @@ namespace NtErp.ViewModel.MasterFileData {
         }
 
         private void SendResponseAndRequestCloseDialog() {
-            // @TODO
-            //MessengerInstance.Send(new SingleSearchResultResponse() { EntityId = SelectedProduct.Id, DialogResult = DialogResult });
+            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                            .Publish(new EntitySearchResultEvent(SelectedProduct.Id, DialogResult));
+
             RaiseCloseDialogRequested();
         }
     }

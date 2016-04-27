@@ -1,0 +1,11 @@
+﻿<MenuItem x:Class="NtErp.Modules.CashJournal.Views.ModuleMenuView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.CashJournal.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="25" d:DesignWidth="200"
+             Header="_CashJournal">
+    <MenuItem Header="_Journal" Command="{Binding Path=GoToJournalViewCommand}" />
+</MenuItem>

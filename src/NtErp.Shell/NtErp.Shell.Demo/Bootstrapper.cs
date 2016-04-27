@@ -16,7 +16,7 @@ namespace NtErp.Shell.Demo {
             builder.RegisterType<ShellView>();
             builder.RegisterType<NtErpContext>();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
-
+            builder.RegisterType<JournalBookRepository>().As<IJournalBookRepository>();
         }
 
         protected override DependencyObject CreateShell() {
@@ -36,6 +36,15 @@ namespace NtErp.Shell.Demo {
             base.ConfigureModuleCatalog();
 
             Type moduleType = typeof(Modules.Base.BaseModule);
+            ModuleCatalog.AddModule(
+                new ModuleInfo() {
+                    ModuleName = moduleType.Name,
+                    ModuleType = moduleType.AssemblyQualifiedName,
+                    InitializationMode = InitializationMode.WhenAvailable
+                }
+            );
+
+            moduleType = typeof(Modules.CashJournal.CashJournalModule);
             ModuleCatalog.AddModule(
                 new ModuleInfo() {
                     ModuleName = moduleType.Name,
