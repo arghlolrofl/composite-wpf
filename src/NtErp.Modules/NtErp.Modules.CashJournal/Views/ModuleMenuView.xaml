@@ -8,4 +8,5 @@
              d:DesignHeight="25" d:DesignWidth="200"
              Header="_CashJournal">
     <MenuItem Header="_Journal" Command="{Binding Path=GoToJournalViewCommand}" />
+    <MenuItem Header="_Tax Rates" Command="{Binding Path=GoToTaxRateViewCommand}" />
 </MenuItem>

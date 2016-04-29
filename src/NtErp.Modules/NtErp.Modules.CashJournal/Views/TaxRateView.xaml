@@ -1,0 +1,88 @@
+﻿<UserControl x:Class="NtErp.Modules.CashJournal.Views.TaxRateView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.CashJournal.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="700" d:DesignWidth="950">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="300" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+
+        <!-- Form CRUD controls -->
+        <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="14">
+            <Button Content="New" 
+                    Width="100" 
+                    Margin="0,0,5,0" 
+                    Command="{Binding Path=CreateTaxRateCommand}" />
+            <Button Content="Refresh" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=RefreshTaxRateCommand}"
+                    IsEnabled="{Binding Path=CanRefreshTaxRate}" />
+            <Button Content="Save" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=UpdateTaxRateCommand}"
+                    IsEnabled="{Binding Path=CanUpdateTaxRate}" />
+            <Button Content="Delete" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=DeleteTaxRateCommand}"
+                    IsEnabled="{Binding Path=CanDeleteTaxRate}" />
+        </StackPanel>
+
+        <!-- Edit form -->
+        <Label Grid.Row="2" Grid.Column="1" Content="Id:" HorizontalAlignment="Right" />
+        <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=SelectedTaxRate.Id}" IsReadOnly="True" />
+
+        <Label Grid.Row="4" Grid.Column="1" Content="Category:" HorizontalAlignment="Right" />
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Path=SelectedTaxRate.Category}" />
+
+        <Label Grid.Row="6" Grid.Column="1" Content="Tax Rate:" HorizontalAlignment="Right" />
+        <Grid Grid.Row="6" Grid.Column="3">
+            <TextBox Text="{Binding Path=SelectedTaxRate.Value}" Margin="0,0,20,0" />
+            <Label Content="%" HorizontalContentAlignment="Center" HorizontalAlignment="Right" />
+        </Grid>
+
+        <Label Grid.Row="8" Grid.Column="1" Content="Description:" HorizontalAlignment="Right" />
+        <TextBox Grid.Row="8" Grid.Column="3" Grid.RowSpan="3" Text="{Binding Path=SelectedTaxRate.Description}" />
+
+        <!-- List of entities -->
+        <DataGrid Grid.Row="2" Grid.Column="5" Grid.RowSpan="11"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False"
+                  ItemsSource="{Binding Path=TaxRates}" 
+                  SelectedItem="{Binding Path=SelectedTaxRate}" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="75" Binding="{Binding Path=Id}" />
+                <DataGridTextColumn Header="Category" Width="*" Binding="{Binding Path=Category}" />
+                <DataGridTextColumn Header="Rate %" Width="*" Binding="{Binding Path=Value}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</UserControl>

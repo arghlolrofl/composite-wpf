@@ -78,6 +78,7 @@
     <Compile Include="ViewModels\JournalBookSearchViewModel.cs" />
     <Compile Include="ViewModels\JournalBookViewModel.cs" />
     <Compile Include="ViewModels\ModuleMenuViewModel.cs" />
+    <Compile Include="ViewModels\TaxRateViewModel.cs" />
     <Compile Include="Views\JournalBookView.xaml.cs">
       <DependentUpon>JournalBookView.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,9 @@
     </Compile>
     <Compile Include="Views\JournalBookSearchWindow.xaml.cs">
       <DependentUpon>JournalBookSearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxRateView.xaml.cs">
+      <DependentUpon>TaxRateView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -113,6 +117,10 @@
     <Page Include="Views\JournalBookSearchWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaxRateView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -4,22 +4,32 @@ using NtErp.Shared.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
     public class JournalBookRepository : IJournalBookRepository {
-        private NtErpContext _context;
+        private readonly NtErpContext _context;
 
         public JournalBookRepository(NtErpContext context) {
             _context = context;
         }
 
 
-        public JournalBook New() {
+        public JournalBook NewJournal() {
             return new JournalBook() {
                 Id = 0,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(1)
+            };
+        }
+
+        public JournalEntry NewEntry(JournalBook book) {
+            return new JournalEntry() {
+                Id = 0,
+                Date = DateTime.Now,
+                JournalBook = book
             };
         }
 
@@ -53,6 +63,33 @@ namespace NtErp.Shared.Repositories {
 
         public void Delete(JournalBook entity) {
             _context.Entry(entity).State = EntityState.Deleted;
+
+            _context.SaveChanges();
+        }
+
+        public void UpdateEntry(JournalEntry entry) {
+
+            try {
+                if (entry.JournalBook != null)
+                    _context.CashJournals.Attach(entry.JournalBook);
+
+                if (entry.Id > 0) {
+                    _context.CashJournalEntries.Attach(entry);
+                    _context.Entry(entry).State = EntityState.Modified;
+                } else {
+                    _context.Entry(entry).State = EntityState.Added;
+                }
+
+                _context.SaveChanges();
+            } catch (DbEntityValidationException ex) {
+                Debug.WriteLine("ERROR: " + ex.GetType().Name);
+                Debug.WriteLine("MESSAGE: " + ex.Message);
+                Debugger.Break();
+            }
+        }
+
+        public void DeleteEntry(JournalEntry entry) {
+            _context.Entry(entry).State = EntityState.Deleted;
 
             _context.SaveChanges();
         }

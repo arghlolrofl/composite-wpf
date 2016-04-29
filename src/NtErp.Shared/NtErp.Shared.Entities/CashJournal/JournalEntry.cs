@@ -1,11 +1,16 @@
 ﻿using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Entities.MasterFileData;
 using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class JournalEntry : EntityBase {
         private DateTime _date;
-        private byte[] _document;
         private string _documentNumber;
+        private string _documentFolderPath;
+        private string _documentName;
         private string _businessProcessDescription;
         private decimal _taxRate;
         private decimal _earning;
@@ -13,6 +18,8 @@ namespace NtErp.Shared.Entities.CashJournal {
         private decimal _prepaidTax;
         private decimal _cashBalance;
         private JournalBook _journalBook;
+        private ObservableCollection<TaxRate> _taxRates = new ObservableCollection<MasterFileData.TaxRate>();
+
 
         /// <summary>
         /// Navigation property to <see cref="JournalBook"/>
@@ -30,12 +37,30 @@ namespace NtErp.Shared.Entities.CashJournal {
             set { _date = value; RaisePropertyChanged(); }
         }
 
+        [NotMapped]
+        public string DocumentFullName {
+            get {
+                if (!String.IsNullOrEmpty(DocumentFolderPath) && !String.IsNullOrEmpty(DocumentName))
+                    return Path.Combine(DocumentFolderPath, DocumentName);
+                else
+                    return String.Empty;
+            }
+        }
+
         /// <summary>
-        /// Document (Beleg)
+        /// Path to the document file
         /// </summary>
-        public byte[] Document {
-            get { return _document; }
-            set { _document = value; RaisePropertyChanged(); }
+        public string DocumentFolderPath {
+            get { return _documentFolderPath; }
+            set { _documentFolderPath = value; RaisePropertyChanged(); RaisePropertyChanged(nameof(DocumentFullName)); }
+        }
+
+        /// <summary>
+        /// Name of the document file
+        /// </summary>
+        public string DocumentName {
+            get { return _documentName; }
+            set { _documentName = value; RaisePropertyChanged(); RaisePropertyChanged(nameof(DocumentFullName)); }
         }
 
         /// <summary>
@@ -92,6 +117,11 @@ namespace NtErp.Shared.Entities.CashJournal {
         public decimal CashBalance {
             get { return _cashBalance; }
             set { _cashBalance = value; RaisePropertyChanged(); }
+        }
+
+        public virtual ObservableCollection<TaxRate> TaxRates {
+            get { return _taxRates; }
+            set { _taxRates = value; RaisePropertyChanged(); }
         }
     }
 }

@@ -5,6 +5,9 @@ namespace NtErp.Shared.Services.Contracts {
     public interface IJournalBookRepository : IRepository<JournalBook, long> {
         IEnumerable<JournalBook> FindAll();
         IEnumerable<JournalBook> Find(long key);
-        JournalBook New();
+        JournalBook NewJournal();
+        JournalEntry NewEntry(JournalBook book);
+        void UpdateEntry(JournalEntry entry);
+        void DeleteEntry(JournalEntry entry);
     }
 }

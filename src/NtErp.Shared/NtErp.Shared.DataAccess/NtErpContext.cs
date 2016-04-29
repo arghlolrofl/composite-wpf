@@ -19,6 +19,7 @@ namespace NtErp.Shared.DataAccess {
         public DbSet<ProductComponent> Components { get; set; }
         public DbSet<JournalBook> CashJournals { get; set; }
         public DbSet<JournalEntry> CashJournalEntries { get; set; }
+        public DbSet<TaxRate> TaxRates { get; set; }
 
         #endregion
 
@@ -50,8 +51,13 @@ namespace NtErp.Shared.DataAccess {
         /// <param name="modelBuilder"></param>
         protected override void OnModelCreating(DbModelBuilder modelBuilder) {
             modelBuilder.Configurations.Add(new ProductComponentConfiguration());
+
             modelBuilder.Configurations.Add(new ProductConfiguration());
+
+            //modelBuilder.Entity<JournalEntry>().Property(e => e.Document).HasColumnType("image");
+
             base.OnModelCreating(modelBuilder);
+
         }
     }
 }

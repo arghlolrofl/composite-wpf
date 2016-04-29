@@ -32,8 +32,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Repositories",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.CashJournal", "src\NtErp.Modules\NtErp.Modules.CashJournal\NtErp.Modules.CashJournal.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shell.JscriptSuite", "src\NtErp.Shell\NtErp.Shell.JscriptSuite\NtErp.Shell.JscriptSuite.csproj", "{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -72,10 +70,6 @@ Global
 		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EFFE6CED-30DC-4D72-BBE5-27A4C0FC6FD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -90,7 +84,7 @@ Global
 		{223A9E40-290B-478D-843D-C00639527966} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 9
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfs2013-01:8080/tfs/ntinnovationcompanygmbh
 		SccLocalPath0 = .
@@ -125,8 +119,5 @@ Global
 		SccProjectTopLevelParentUniqueName8 = NtErp.sln
 		SccProjectName8 = src/NtErp.Modules/NtErp.Modules.CashJournal
 		SccLocalPath8 = src\\NtErp.Modules\\NtErp.Modules.CashJournal
-		SccProjectUniqueName9 = src\\NtErp.Shell\\NtErp.Shell.JscriptSuite\\NtErp.Shell.JscriptSuite.csproj
-		SccProjectName9 = src/NtErp.Shell/NtErp.Shell.JscriptSuite
-		SccLocalPath9 = src\\NtErp.Shell\\NtErp.Shell.JscriptSuite
 	EndGlobalSection
 EndGlobal

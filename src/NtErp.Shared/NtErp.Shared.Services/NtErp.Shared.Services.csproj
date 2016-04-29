@@ -74,6 +74,7 @@
     <Compile Include="Contracts\IMenuItemViewModel.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\IRepository.cs" />
+    <Compile Include="Contracts\ITaxRateRepository.cs" />
     <Compile Include="Events\EntitySearchResultEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Regions\RegionNames.cs" />

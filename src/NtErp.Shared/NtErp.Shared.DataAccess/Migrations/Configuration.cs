@@ -26,6 +26,7 @@ namespace NtErp.Shared.DataAccess.Migrations {
             Debug.WriteLine(" > Seeding data into database ...");
             SeedProducts(context);
             SeedKits(context);
+            SeedTaxRates(context);
             SeedJournalBooks(context);
             SeedJournalEntries(context);
         }
@@ -72,6 +73,17 @@ namespace NtErp.Shared.DataAccess.Migrations {
                     continue;
                 }
             }
+        }
+
+        private void SeedTaxRates(NtErpContext context) {
+            TaxRate rate = new TaxRate() {
+                Category = "VAT",
+                Description = "Value added tax",
+                Value = 19.00m,
+                Id = 0
+            };
+
+            context.TaxRates.AddOrUpdate(t => t.Category, rate);
         }
 
         private void SeedJournalBooks(NtErpContext context) {

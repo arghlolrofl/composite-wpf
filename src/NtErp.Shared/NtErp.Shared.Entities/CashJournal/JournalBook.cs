@@ -1,7 +1,6 @@
 ﻿using NtErp.Shared.Entities.Base;
 using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class JournalBook : EntityBase {
@@ -10,14 +9,6 @@ namespace NtErp.Shared.Entities.CashJournal {
         private DateTime _EndDate;
         private string _Description;
         private ObservableCollection<JournalEntry> _entries;
-
-
-        private bool _hasChanges;
-        public bool HasChanges {
-            get { return _hasChanges; }
-            set { _hasChanges = value; RaisePropertyChanged(); }
-        }
-
 
 
         /// <summary>
@@ -63,31 +54,6 @@ namespace NtErp.Shared.Entities.CashJournal {
 
         public JournalBook() {
             Entries = new ObservableCollection<JournalEntry>();
-
-            PropertyChanged += (sender, args) => {
-                Debug.WriteLine("Changes detected for current journal: " + args.PropertyName);
-
-                switch (args.PropertyName) {
-                    case nameof(Number):
-                        HasChanges = true;
-                        Debug.WriteLine("    > " + Number);
-                        break;
-                    case nameof(StartDate):
-                        HasChanges = true;
-                        Debug.WriteLine("    > " + StartDate);
-                        break;
-                    case nameof(EndDate):
-                        HasChanges = true;
-                        Debug.WriteLine("    > " + EndDate);
-                        break;
-                    case nameof(Description):
-                        HasChanges = true;
-                        Debug.WriteLine("    > " + Description);
-                        break;
-                    default:
-                        break;
-                }
-            };
         }
     }
 }

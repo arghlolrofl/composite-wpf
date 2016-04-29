@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Microsoft.Win32;
 using NtErp.Modules.Base.Views;
 using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Entities.CashJournal;
@@ -6,6 +7,7 @@ using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
 using Prism.Commands;
 using Prism.Events;
+using System.IO;
 using System.Windows.Input;
 
 namespace NtErp.Modules.CashJournal.ViewModels {
@@ -15,6 +17,10 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         private ICommand _deleteJournalCommand;
         private ICommand _refreshJournalCommand;
         private ICommand _openJournalSearchCommand;
+        private ICommand _createEntryCommand;
+        private ICommand _updateEntryCommand;
+        private ICommand _deleteEntryCommand;
+        private ICommand _selectAttachmentCommand;
         private JournalBook _selectedJournal;
         private JournalEntry _selectedJournalEntry;
         private ILifetimeScope _scope;
@@ -44,6 +50,22 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             get { return _openJournalSearchCommand ?? (_openJournalSearchCommand = new DelegateCommand(OpenJournalSearchCommand_OnExecute)); }
         }
 
+        public ICommand CreateEntryCommand {
+            get { return _createEntryCommand ?? (_createEntryCommand = new DelegateCommand(CreateEntryCommand_OnExecute)); }
+        }
+
+        public ICommand UpdateEntryCommand {
+            get { return _updateEntryCommand ?? (_updateEntryCommand = new DelegateCommand(UpdateEntryCommand_OnExecute)); }
+        }
+
+        public ICommand DeleteEntryCommand {
+            get { return _deleteEntryCommand ?? (_deleteEntryCommand = new DelegateCommand(DeleteEntryCommand_OnExecute)); }
+        }
+
+        public ICommand SelectAttachmentCommand {
+            get { return _selectAttachmentCommand ?? (_selectAttachmentCommand = new DelegateCommand(SelectAttachmentCommand_OnExecute)); }
+        }
+
         #endregion
 
         #region View Bindings
@@ -54,24 +76,18 @@ namespace NtErp.Modules.CashJournal.ViewModels {
                 _selectedJournal = value;
                 RaisePropertyChanged();
 
-                SelectedJournal.HasChanges = false;
-
-                RaisePropertyChanged(nameof(HasRootEntity));
-                RaisePropertyChanged(nameof(CanUpdateJournal));
-                RaisePropertyChanged(nameof(CanDeleteJournal));
-                RaisePropertyChanged(nameof(CanRefreshJournal));
-
-                SelectedJournal.PropertyChanged += (sender, args) => {
-                    if (args.PropertyName == nameof(SelectedJournal.HasChanges)) {
-                        RaisePropertyChanged(nameof(CanUpdateJournal));
-                    }
-                };
+                evaluateEnabledBindings();
             }
         }
 
         public JournalEntry SelectedJournalEntry {
             get { return _selectedJournalEntry; }
-            set { _selectedJournalEntry = value; RaisePropertyChanged(); }
+            set {
+                _selectedJournalEntry = value;
+                RaisePropertyChanged();
+
+                evaluateEnabledBindings();
+            }
         }
 
         public bool HasRootEntity {
@@ -79,7 +95,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         }
 
         public bool CanUpdateJournal {
-            get { return HasRootEntity && SelectedJournal.HasChanges; }
+            get { return HasRootEntity; }
         }
 
         public bool CanDeleteJournal {
@@ -89,8 +105,26 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         public bool CanRefreshJournal {
             get { return HasRootEntity; }
         }
+
+        public bool CanCreateEntry {
+            get { return HasRootEntity; }
+        }
+
+        public bool CanUpdateEntry {
+            get { return HasRootEntity; }
+        }
+
+        public bool CanDeleteEntry {
+            get { return HasRootEntity && SelectedJournalEntry != null; }
+        }
+
+        public bool CanAttachDocument {
+            get { return HasRootEntity && SelectedJournalEntry != null; }
+        }
+
         #endregion
 
+        #region Initialization
 
         public JournalBookViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IJournalBookRepository repository) {
             _scope = scope;
@@ -98,13 +132,16 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             _repository = repository;
         }
 
+        #endregion
+
+        #region Command Actions
 
         private void RefreshJournalCommand_OnExecute() {
             SelectedJournal = _repository.GetSingle(SelectedJournal.Id);
         }
 
         private void CreateJournalCommand_OnExecute() {
-            SelectedJournal = _repository.New();
+            SelectedJournal = _repository.NewJournal();
         }
 
         private void UpdateJournalCommand_OnExecute() {
@@ -124,6 +161,42 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             searchWindow.ShowDialog();
         }
 
+        private void CreateEntryCommand_OnExecute() {
+            SelectedJournalEntry = _repository.NewEntry(SelectedJournal);
+        }
+
+        private void UpdateEntryCommand_OnExecute() {
+            _repository.UpdateEntry(SelectedJournalEntry);
+        }
+
+        private void DeleteEntryCommand_OnExecute() {
+            _repository.DeleteEntry(SelectedJournalEntry);
+        }
+
+        private void SelectAttachmentCommand_OnExecute() {
+            OpenFileDialog ofd = new OpenFileDialog() {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Multiselect = false,
+                Title = "Select attachment"
+            };
+
+            ofd.ShowDialog();
+
+            if (string.IsNullOrEmpty(ofd.FileName))
+                return;
+
+            FileInfo f = new FileInfo(ofd.FileName);
+            if (!f.Exists)
+                throw new FileNotFoundException("File not found: " + f.FullName);
+
+            SelectedJournalEntry.DocumentFolderPath = f.DirectoryName;
+            SelectedJournalEntry.DocumentName = f.Name;
+        }
+
+        #endregion
+
+
         private void JournalSearch_OnReply(EntitySearchResultEvent response) {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Unsubscribe(JournalSearch_OnReply);
@@ -132,6 +205,17 @@ namespace NtErp.Modules.CashJournal.ViewModels {
                 SelectedJournal = _repository.GetSingle(response.EntityId);
                 //StatusText = "Selected Product: " + SelectedProduct.Number;
             }
+        }
+
+        private void evaluateEnabledBindings() {
+            RaisePropertyChanged(nameof(HasRootEntity));
+            RaisePropertyChanged(nameof(CanUpdateJournal));
+            RaisePropertyChanged(nameof(CanDeleteJournal));
+            RaisePropertyChanged(nameof(CanRefreshJournal));
+            RaisePropertyChanged(nameof(CanCreateEntry));
+            RaisePropertyChanged(nameof(CanUpdateEntry));
+            RaisePropertyChanged(nameof(CanDeleteEntry));
+            RaisePropertyChanged(nameof(CanAttachDocument));
         }
     }
 }

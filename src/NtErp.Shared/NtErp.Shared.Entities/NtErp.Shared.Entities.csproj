@@ -51,6 +51,7 @@
     <Compile Include="CashJournal\JournalEntry.cs" />
     <Compile Include="MasterFileData\Product.cs" />
     <Compile Include="MasterFileData\ProductComponent.cs" />
+    <Compile Include="MasterFileData\TaxRate.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

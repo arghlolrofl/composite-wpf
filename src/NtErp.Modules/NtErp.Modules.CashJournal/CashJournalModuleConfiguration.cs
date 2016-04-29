@@ -7,8 +7,13 @@ namespace NtErp.Modules.CashJournal {
             base.Load(builder);
 
             builder.RegisterType<CashJournalModule>();
+
             builder.RegisterType<ViewModels.JournalBookViewModel>();
             builder.RegisterType<Views.JournalBookView>();
+
+            builder.RegisterType<ViewModels.TaxRateViewModel>();
+            builder.RegisterType<Views.TaxRateView>();
+
             builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
                    .As<Shared.Services.Contracts.IMenuItemViewModel>();
 
