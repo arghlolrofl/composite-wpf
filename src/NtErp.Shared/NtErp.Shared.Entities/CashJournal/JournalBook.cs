@@ -54,6 +54,8 @@ namespace NtErp.Shared.Entities.CashJournal {
 
         public JournalBook() {
             Entries = new ObservableCollection<JournalEntry>();
+
+            trackProperties(nameof(Number), nameof(StartDate), nameof(EndDate), nameof(Description));
         }
     }
 }

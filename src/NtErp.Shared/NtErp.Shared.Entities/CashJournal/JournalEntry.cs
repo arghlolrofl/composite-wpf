@@ -1,5 +1,4 @@
 ﻿using NtErp.Shared.Entities.Base;
-using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,34 +7,13 @@ using System.IO;
 namespace NtErp.Shared.Entities.CashJournal {
     public class JournalEntry : EntityBase {
         private DateTime _date;
-        private string _documentNumber;
         private string _documentFolderPath;
         private string _documentName;
-        private string _businessProcessDescription;
-        private decimal _taxRate;
-        private decimal _earning;
-        private decimal _expenditure;
-        private decimal _prepaidTax;
+        private string _processDescription;
         private decimal _cashBalance;
         private JournalBook _journalBook;
-        private ObservableCollection<TaxRate> _taxRates = new ObservableCollection<MasterFileData.TaxRate>();
+        private ObservableCollection<JournalEntryPosition> _positions = new ObservableCollection<JournalEntryPosition>();
 
-
-        /// <summary>
-        /// Navigation property to <see cref="JournalBook"/>
-        /// </summary>
-        public virtual JournalBook JournalBook {
-            get { return _journalBook; }
-            set { _journalBook = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// DocumentDate (Belegdatum)
-        /// </summary>
-        public DateTime Date {
-            get { return _date; }
-            set { _date = value; RaisePropertyChanged(); }
-        }
 
         [NotMapped]
         public string DocumentFullName {
@@ -64,51 +42,19 @@ namespace NtErp.Shared.Entities.CashJournal {
         }
 
         /// <summary>
-        /// Document number (Belegnummer)
+        /// DocumentDate (Belegdatum)
         /// </summary>
-        public string DocumentNumber {
-            get { return _documentNumber; }
-            set { _documentNumber = value; RaisePropertyChanged(); }
+        public DateTime Date {
+            get { return _date; }
+            set { _date = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// Business process (Geschäftsvorgangsbeschreibung)
         /// </summary>
-        public string BusinessProcessDescription {
-            get { return _businessProcessDescription; }
-            set { _businessProcessDescription = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// Tax rate (Steuersatz)
-        /// </summary>
-        public decimal TaxRate {
-            get { return _taxRate; }
-            set { _taxRate = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// Earning (Einnahmen)
-        /// </summary>
-        public decimal Earning {
-            get { return _earning; }
-            set { _earning = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// Expenditure (Ausgabe)
-        /// </summary>
-        public decimal Expenditure {
-            get { return _expenditure; }
-            set { _expenditure = value; RaisePropertyChanged(); }
-        }
-
-        /// <summary>
-        /// Prepaid tax (Vorsteuer)
-        /// </summary>
-        public decimal PrepaidTax {
-            get { return _prepaidTax; }
-            set { _prepaidTax = value; RaisePropertyChanged(); }
+        public string ProcessDescription {
+            get { return _processDescription; }
+            set { _processDescription = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -119,9 +65,20 @@ namespace NtErp.Shared.Entities.CashJournal {
             set { _cashBalance = value; RaisePropertyChanged(); }
         }
 
-        public virtual ObservableCollection<TaxRate> TaxRates {
-            get { return _taxRates; }
-            set { _taxRates = value; RaisePropertyChanged(); }
+        /// <summary>
+        /// Navigation property to <see cref="JournalBook"/>
+        /// </summary>
+        public virtual JournalBook JournalBook {
+            get { return _journalBook; }
+            set { _journalBook = value; RaisePropertyChanged(); }
+        }
+
+        /// <summary>
+        /// List of positions for this entry.
+        /// </summary>
+        public virtual ObservableCollection<JournalEntryPosition> Positions {
+            get { return _positions; }
+            set { _positions = value; RaisePropertyChanged(); }
         }
     }
 }

@@ -36,7 +36,7 @@
                     Command="{Binding Path=CreateProductCommand}" />
             <Button Content="Save" Width="100" Margin="10,0,0,0" 
                     Command="{Binding Path=UpdateProductCommand}"
-                    IsEnabled="{Binding Path=CanUpdateProduct}"  />
+                    IsEnabled="{Binding Path=SelectedProduct.HasChanges}"  />
             <Button Content="Delete" Width="100" Margin="10,0,0,0" 
                     Command="{Binding Path=DeleteProductCommand}"
                     IsEnabled="{Binding Path=CanDeleteProduct}"  />

@@ -1,12 +1,9 @@
 ﻿using NtErp.Shared.Entities.Base;
-using NtErp.Shared.Entities.CashJournal;
-using System.Collections.ObjectModel;
 
 namespace NtErp.Shared.Entities.MasterFileData {
     public class TaxRate : EntityBase {
         private string _category;
         private decimal _value;
-        private ObservableCollection<JournalEntry> _journalEntries;
         private string _description;
 
         public string Category {
@@ -24,9 +21,9 @@ namespace NtErp.Shared.Entities.MasterFileData {
             set { _description = value; RaisePropertyChanged(); }
         }
 
-        public virtual ObservableCollection<JournalEntry> JournalEntries {
-            get { return _journalEntries; }
-            set { _journalEntries = value; RaisePropertyChanged(); }
+
+        public TaxRate() {
+            trackProperties(nameof(Category), nameof(Value), nameof(Description));
         }
     }
 }

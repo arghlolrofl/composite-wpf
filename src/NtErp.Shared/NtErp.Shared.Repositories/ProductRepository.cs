@@ -101,6 +101,8 @@ namespace NtErp.Shared.Repositories {
             }
 
             _context.SaveChanges();
+
+            entity.UpdateTrackedProperties();
         }
 
         /// <summary>
@@ -111,6 +113,10 @@ namespace NtErp.Shared.Repositories {
             _context.Entry(entity).State = EntityState.Deleted;
 
             _context.SaveChanges();
+        }
+
+        public void Refresh(Product entity) {
+            _context.Entry(entity).Reload();
         }
 
         public Product AddComponent(Product kit, Product component) {

@@ -38,7 +38,8 @@
             <Button Content="New" 
                     Width="100" 
                     Margin="0,0,5,0" 
-                    Command="{Binding Path=CreateTaxRateCommand}" />
+                    Command="{Binding Path=CreateTaxRateCommand}"
+                    IsEnabled="{Binding Path=CanCreateNewTaxRate}"/>
             <Button Content="Refresh" 
                     Width="100" 
                     Margin="5,0,5,0" 
@@ -61,16 +62,16 @@
         <TextBox Grid.Row="2" Grid.Column="3" Text="{Binding Path=SelectedTaxRate.Id}" IsReadOnly="True" />
 
         <Label Grid.Row="4" Grid.Column="1" Content="Category:" HorizontalAlignment="Right" />
-        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Path=SelectedTaxRate.Category}" />
+        <TextBox Grid.Row="4" Grid.Column="3" Text="{Binding Path=SelectedTaxRate.Category, UpdateSourceTrigger=PropertyChanged}" />
 
         <Label Grid.Row="6" Grid.Column="1" Content="Tax Rate:" HorizontalAlignment="Right" />
         <Grid Grid.Row="6" Grid.Column="3">
-            <TextBox Text="{Binding Path=SelectedTaxRate.Value}" Margin="0,0,20,0" />
+            <TextBox Text="{Binding Path=SelectedTaxRate.Value, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,20,0" />
             <Label Content="%" HorizontalContentAlignment="Center" HorizontalAlignment="Right" />
         </Grid>
 
         <Label Grid.Row="8" Grid.Column="1" Content="Description:" HorizontalAlignment="Right" />
-        <TextBox Grid.Row="8" Grid.Column="3" Grid.RowSpan="3" Text="{Binding Path=SelectedTaxRate.Description}" />
+        <TextBox Grid.Row="8" Grid.Column="3" Grid.RowSpan="3" Text="{Binding Path=SelectedTaxRate.Description, UpdateSourceTrigger=PropertyChanged}" />
 
         <!-- List of entities -->
         <DataGrid Grid.Row="2" Grid.Column="5" Grid.RowSpan="11"

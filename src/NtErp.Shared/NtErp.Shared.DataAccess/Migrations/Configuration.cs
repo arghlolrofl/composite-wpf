@@ -2,6 +2,7 @@ using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data.Entity.Migrations;
 using System.Diagnostics;
@@ -94,19 +95,22 @@ namespace NtErp.Shared.DataAccess.Migrations {
         private void SeedJournalEntries(NtErpContext context) {
             JournalBook book = context.CashJournals.Local.First();
 
-            JournalEntry entry = new JournalEntry() {
-                Date = DateTime.Now,
-                DocumentNumber = "CJ-123-456",
-                Earning = 100.0m,
-                Expenditure = -200.0m,
-                TaxRate = 19.0m,
-                PrepaidTax = 11.11m,
-                CashBalance = -100.0m,
-                BusinessProcessDescription = "Some business process",
-                JournalBook = book
+            JournalEntryPosition position = new JournalEntryPosition() {
+                Delta = -200.0m,
+                Description = "Devel Test",
+                TaxRate = context.TaxRates.Local.First()
             };
 
-            context.CashJournalEntries.AddOrUpdate(e => e.DocumentNumber, entry);
+            JournalEntry entry = new JournalEntry() {
+                Date = DateTime.Now,
+                DocumentName = "ScanXY.pdf",
+                ProcessDescription = "Some business process",
+                CashBalance = position.Delta,
+                JournalBook = book,
+                Positions = new ObservableCollection<JournalEntryPosition>(new JournalEntryPosition[] { position })
+            };
+
+            context.CashJournalEntries.AddOrUpdate(e => e.ProcessDescription, entry);
         }
     }
 }

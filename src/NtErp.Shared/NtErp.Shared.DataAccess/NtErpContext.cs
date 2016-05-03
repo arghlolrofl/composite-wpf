@@ -35,6 +35,8 @@ namespace NtErp.Shared.DataAccess {
         /// Initializes a new instance of the database context class.
         /// </summary>
         public NtErpContext() : base(NtErpConnectionStringName) {
+            this.Configuration.AutoDetectChangesEnabled = false;
+
             string path = AppDomain.CurrentDomain.GetData(DataDirectoryKey) as String;
             if (String.IsNullOrEmpty(path)) {
                 // Set |DataDirectory| value

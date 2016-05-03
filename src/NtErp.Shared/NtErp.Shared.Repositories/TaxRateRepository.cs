@@ -48,11 +48,17 @@ namespace NtErp.Shared.Repositories {
             }
 
             _context.SaveChanges();
+
+            entity.UpdateTrackedProperties();
         }
         public void Delete(TaxRate entity) {
             _context.Entry(entity).State = EntityState.Deleted;
 
             _context.SaveChanges();
+        }
+
+        public void Refresh(TaxRate entity) {
+            _context.Entry(entity).Reload();
         }
 
         #region IDisposable

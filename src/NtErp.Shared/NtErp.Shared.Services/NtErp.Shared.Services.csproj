@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="Behaviors\DialogResultBehavior.cs" />
     <Compile Include="Contracts\IJournalBookRepository.cs" />
+    <Compile Include="Contracts\IJournalEntryRepository.cs" />
     <Compile Include="Contracts\IMenuItemViewModel.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\IRepository.cs" />

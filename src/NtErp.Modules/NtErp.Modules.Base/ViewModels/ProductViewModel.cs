@@ -6,8 +6,6 @@ using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
 using Prism.Events;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 
@@ -27,7 +25,6 @@ namespace NtErp.Modules.Base.ViewModels {
         private Product _selectedProduct;
         private ProductComponent _selectedProductComponent;
         private string _statusText;
-        private bool _hasChanges;
 
         #region Commands
 
@@ -66,21 +63,14 @@ namespace NtErp.Modules.Base.ViewModels {
         public Product SelectedProduct {
             get { return _selectedProduct; }
             set {
-                if (_selectedProduct != null)
-                    _selectedProduct.PropertyChanged -= SelectedProduct_OnPropertyChanged;
-
                 _selectedProduct = value;
-                HasChanges = false;
 
                 RaisePropertyChanged();
                 RaisePropertyChanged(nameof(HasRootEntity));
                 RaisePropertyChanged(nameof(CanDeleteProduct));
-                RaisePropertyChanged(nameof(CanUpdateProduct));
                 RaisePropertyChanged(nameof(CanRefreshProduct));
                 RaisePropertyChanged(nameof(CanAddComponents));
                 RaisePropertyChanged(nameof(CanRemoveComponents));
-
-                _selectedProduct.PropertyChanged += SelectedProduct_OnPropertyChanged;
             }
         }
 
@@ -111,10 +101,6 @@ namespace NtErp.Modules.Base.ViewModels {
 
         }
 
-        public bool CanUpdateProduct {
-            get { return HasRootEntity && HasChanges; }
-        }
-
         public bool CanDeleteProduct {
             get { return HasRootEntity; }
         }
@@ -137,16 +123,6 @@ namespace NtErp.Modules.Base.ViewModels {
             }
         }
 
-        public bool HasChanges {
-            get { return _hasChanges; }
-            set {
-                _hasChanges = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(CanUpdateProduct));
-            }
-        }
-
-
         #endregion
 
         public ProductViewModel(ILifetimeScope scope, IProductRepository repository, IEventAggregator eventAggregator) {
@@ -155,20 +131,8 @@ namespace NtErp.Modules.Base.ViewModels {
             _eventAggregator = eventAggregator;
         }
 
-        private void SelectedProduct_OnPropertyChanged(object sender, PropertyChangedEventArgs e) {
-            Debug.WriteLine($"SelectedProduct_OnPropertyChanged => {e.PropertyName}");
-
-            switch (e.PropertyName) {
-                case "Id":
-                    break;
-                default:
-                    HasChanges = true;
-                    break;
-            }
-        }
-
         private void RefreshProductCommand_OnExecute() {
-            SelectedProduct = _repository.GetSingle(SelectedProduct.Id);
+            _repository.Refresh(SelectedProduct);
         }
 
         private void OpenProductSearchCommand_OnExecute() {
@@ -197,7 +161,6 @@ namespace NtErp.Modules.Base.ViewModels {
         private void UpdateProductCommand_OnExecute() {
             _repository.Save(SelectedProduct);
             //StatusText = "Product saved";
-            HasChanges = false;
             RaisePropertyChanged(nameof(SelectedProduct));
         }
 

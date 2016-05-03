@@ -17,6 +17,7 @@ namespace NtErp.Shell.Demo {
             builder.RegisterType<NtErpContext>();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
             builder.RegisterType<JournalBookRepository>().As<IJournalBookRepository>();
+            builder.RegisterType<JournalEntryRepository>().As<IJournalEntryRepository>();
             builder.RegisterType<TaxRateRepository>().As<ITaxRateRepository>();
         }
 

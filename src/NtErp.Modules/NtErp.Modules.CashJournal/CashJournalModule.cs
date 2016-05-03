@@ -22,6 +22,7 @@ namespace NtErp.Modules.CashJournal {
         public void Initialize() {
             RegionManager.RegisterViewWithRegion(RegionNames.ShellMenuBar, typeof(ModuleMenuView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(JournalBookView));
+            RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(JournalEntryView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(TaxRateView));
         }
     }

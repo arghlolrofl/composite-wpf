@@ -1,0 +1,145 @@
+﻿<UserControl x:Class="NtErp.Modules.CashJournal.Views.JournalEntryView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.CashJournal.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="645" d:DesignWidth="950">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="50" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="10" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="5" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="35" />
+            <RowDefinition Height="10" />
+        </Grid.RowDefinitions>
+        
+        <!-- Form CRUD controls -->
+        <StackPanel Orientation="Horizontal" Margin="0,5,0,5" 
+                    Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="9">
+            <Button Content="Attach document" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=AttachDocumentCommand}"
+                    IsEnabled="{Binding Path=CanAttachDocument}" />
+            <Button Content="Refresh" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=RefreshEntryCommand}"
+                    IsEnabled="{Binding Path=CanRefreshEntry}" />
+            <Button Content="Save" 
+                    Width="100" 
+                    Margin="5,0,5,0" 
+                    Command="{Binding Path=SaveEntryCommand}"
+                    IsEnabled="{Binding Path=CanSaveEntry}" />
+        </StackPanel>
+        
+        <Border Grid.Row="7" Grid.Column="0"
+                Grid.RowSpan="7" Grid.ColumnSpan="13"
+                Margin="5,5,5,5" 
+                Background="Transparent" 
+                BorderThickness="1"
+                BorderBrush="DarkGray"/>
+
+        <Label Content="Id:"
+               Grid.Row="2" Grid.Column="1"
+               HorizontalAlignment="Right" />
+        <TextBox Text="{Binding Path=SelectedEntry.Id}" IsReadOnly="True"
+                 Grid.Row="2" Grid.Column="3" />
+
+        <Label Content="Date:"
+               Grid.Row="2" Grid.Column="5"
+               HorizontalAlignment="Right" />
+        <DatePicker SelectedDate="{Binding Path=SelectedEntry.Date}" 
+                    HorizontalContentAlignment="Stretch"
+                    Grid.Row="2" Grid.Column="7" />
+
+        <Label Content="Document:"
+               Grid.Row="4" Grid.Column="1"
+               HorizontalAlignment="Right" />
+        <TextBox Text="{Binding Path=SelectedEntry.DocumentFullName, Mode=OneWay}"
+                 IsReadOnly="True"
+                 Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" />
+
+        <Label Content="Process:"
+               Grid.Row="6" Grid.Column="1"
+               HorizontalAlignment="Right" />
+        <TextBox Text="{Binding Path=SelectedEntry.ProcessDescription}"
+                 Grid.Row="6" Grid.Column="3" />
+
+        <Label Content="Delta:"
+               Grid.Row="8" Grid.Column="1"
+               HorizontalAlignment="Right" />
+        <TextBox Text="{Binding Path=SelectedPosition.Delta}"
+                 Grid.Row="8" Grid.Column="3" />
+
+        <Label Content="Tax Rate:"
+               Grid.Row="8" Grid.Column="5"
+               HorizontalAlignment="Right" />
+        <ComboBox ItemsSource="{Binding Path=AvailableTaxRates}" 
+                  DisplayMemberPath="Category"
+                  SelectedItem="{Binding Path=SelectedPosition.TaxRate}"
+                  Grid.Row="8" Grid.Column="7" />
+
+        <Label Content="Description:"
+               Grid.Row="10" Grid.Column="1"
+               HorizontalAlignment="Right" />
+        <TextBox Text="{Binding Path=SelectedPosition.Description}"
+                 Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="5" />
+        <Button Command="{Binding Path=AddPositionCommand}" Content="Add" 
+                ToolTip="Adds a new position to this entry."
+                Grid.Row="10" Grid.Column="9" />
+
+        <DataGrid ItemsSource="{Binding Path=SelectedEntry.Positions}" 
+                  SelectedItem="{Binding Path=SelectedPosition}"
+                  AutoGenerateColumns="False"
+                  CanUserAddRows="False" CanUserDeleteRows="False"
+                  Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="11">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Id" Width="75" Binding="{Binding Path=Id}" />
+                <DataGridTextColumn Header="Delta" Width="*" Binding="{Binding Path=Delta}" />
+                <DataGridTextColumn Header="Tax Rate" Width="*" Binding="{Binding Path=TaxRate.Value}" />
+                <DataGridTextColumn Header="Prepaid Tax" Width="*" Binding="{Binding Path=PrepaidTax}" />
+                <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Path=Description}" />
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+                    Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="11"
+                    Margin="0,5,0,5">
+            <Button Content="OK" 
+                    Command="{Binding Path=ApplyCommand}"
+                    Width="100" Margin="0,0,10,0" />
+            <Button Content="Cancel" 
+                    Command="{Binding Path=CancelCommand}"
+                    Width="100" />
+        </StackPanel>
+    </Grid>
+</UserControl>

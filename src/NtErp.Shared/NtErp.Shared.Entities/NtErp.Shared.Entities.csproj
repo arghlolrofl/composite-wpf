@@ -46,9 +46,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\EntityBase.cs" />
+    <Compile Include="Base\TrackedProperty.cs" />
     <Compile Include="Base\ViewModelBase.cs" />
     <Compile Include="CashJournal\JournalBook.cs" />
     <Compile Include="CashJournal\JournalEntry.cs" />
+    <Compile Include="CashJournal\JournalEntryPosition.cs" />
     <Compile Include="MasterFileData\Product.cs" />
     <Compile Include="MasterFileData\ProductComponent.cs" />
     <Compile Include="MasterFileData\TaxRate.cs" />

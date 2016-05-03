@@ -35,5 +35,8 @@ namespace NtErp.Shared.Entities.MasterFileData {
             set { _amount = value; RaisePropertyChanged(); }
         }
 
+        public ProductComponent() {
+
+        }
     }
 }

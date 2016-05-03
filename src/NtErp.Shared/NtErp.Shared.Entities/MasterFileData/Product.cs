@@ -52,5 +52,10 @@ namespace NtErp.Shared.Entities.MasterFileData {
             get { return _components; }
             set { _components = value; RaisePropertyChanged(); }
         }
+
+
+        public Product() {
+            trackProperties(nameof(Version), nameof(Number), nameof(Name), nameof(Description));
+        }
     }
 }

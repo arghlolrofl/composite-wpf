@@ -77,10 +77,14 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\JournalBookSearchViewModel.cs" />
     <Compile Include="ViewModels\JournalBookViewModel.cs" />
+    <Compile Include="ViewModels\JournalEntryViewModel.cs" />
     <Compile Include="ViewModels\ModuleMenuViewModel.cs" />
     <Compile Include="ViewModels\TaxRateViewModel.cs" />
     <Compile Include="Views\JournalBookView.xaml.cs">
       <DependentUpon>JournalBookView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JournalEntryView.xaml.cs">
+      <DependentUpon>JournalEntryView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ModuleMenuView.xaml.cs">
       <DependentUpon>ModuleMenuView.xaml</DependentUpon>
@@ -107,6 +111,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\JournalBookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JournalEntryView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -4,8 +4,6 @@ using NtErp.Shared.Services.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
-using System.Diagnostics;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
@@ -17,7 +15,7 @@ namespace NtErp.Shared.Repositories {
         }
 
 
-        public JournalBook NewJournal() {
+        public JournalBook New() {
             return new JournalBook() {
                 Id = 0,
                 StartDate = DateTime.Now,
@@ -25,29 +23,24 @@ namespace NtErp.Shared.Repositories {
             };
         }
 
-        public JournalEntry NewEntry(JournalBook book) {
-            return new JournalEntry() {
-                Id = 0,
-                Date = DateTime.Now,
-                JournalBook = book
-            };
-        }
+        //public JournalEntry NewEntry(JournalBook book) {
+        //    return new JournalEntry() {
+        //        Id = 0,
+        //        Date = DateTime.Now,
+        //        JournalBook = book
+        //    };
+        //}
 
         public JournalBook GetSingle(long id) {
-            var book = _context.CashJournals.Include(j => j.Entries).Single(j => j.Id == id);
+            var book = _context.CashJournals.Find(id);
+
+            _context.Entry(book).Reload();
+
             return book;
         }
 
         public IEnumerable<JournalBook> GetAll() {
             return _context.CashJournals.ToList();
-        }
-
-        public IEnumerable<JournalBook> Find(long key) {
-            throw new NotImplementedException();
-        }
-
-        public IEnumerable<JournalBook> FindAll() {
-            throw new NotImplementedException();
         }
 
         public void Save(JournalBook entity) {
@@ -59,6 +52,8 @@ namespace NtErp.Shared.Repositories {
             }
 
             _context.SaveChanges();
+
+            entity.UpdateTrackedProperties();
         }
 
         public void Delete(JournalBook entity) {
@@ -67,31 +62,35 @@ namespace NtErp.Shared.Repositories {
             _context.SaveChanges();
         }
 
-        public void UpdateEntry(JournalEntry entry) {
+        //public void UpdateEntry(JournalEntry entry) {
 
-            try {
-                if (entry.JournalBook != null)
-                    _context.CashJournals.Attach(entry.JournalBook);
+        //    try {
+        //        if (entry.JournalBook != null)
+        //            _context.CashJournals.Attach(entry.JournalBook);
 
-                if (entry.Id > 0) {
-                    _context.CashJournalEntries.Attach(entry);
-                    _context.Entry(entry).State = EntityState.Modified;
-                } else {
-                    _context.Entry(entry).State = EntityState.Added;
-                }
+        //        if (entry.Id > 0) {
+        //            _context.CashJournalEntries.Attach(entry);
+        //            _context.Entry(entry).State = EntityState.Modified;
+        //        } else {
+        //            _context.Entry(entry).State = EntityState.Added;
+        //        }
 
-                _context.SaveChanges();
-            } catch (DbEntityValidationException ex) {
-                Debug.WriteLine("ERROR: " + ex.GetType().Name);
-                Debug.WriteLine("MESSAGE: " + ex.Message);
-                Debugger.Break();
-            }
-        }
+        //        _context.SaveChanges();
+        //    } catch (DbEntityValidationException ex) {
+        //        Debug.WriteLine("ERROR: " + ex.GetType().Name);
+        //        Debug.WriteLine("MESSAGE: " + ex.Message);
+        //        Debugger.Break();
+        //    }
+        //}
 
-        public void DeleteEntry(JournalEntry entry) {
-            _context.Entry(entry).State = EntityState.Deleted;
+        //public void DeleteEntry(JournalEntry entry) {
+        //    _context.Entry(entry).State = EntityState.Deleted;
 
-            _context.SaveChanges();
+        //    _context.SaveChanges();
+        //}
+
+        public void Refresh(JournalBook entity) {
+            _context.Entry(entity).Reload();
         }
 
         #region IDisposable

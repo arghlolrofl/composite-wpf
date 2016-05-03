@@ -11,6 +11,9 @@ namespace NtErp.Modules.CashJournal {
             builder.RegisterType<ViewModels.JournalBookViewModel>();
             builder.RegisterType<Views.JournalBookView>();
 
+            builder.RegisterType<ViewModels.JournalEntryViewModel>();
+            builder.RegisterType<Views.JournalEntryView>();
+
             builder.RegisterType<ViewModels.TaxRateViewModel>();
             builder.RegisterType<Views.TaxRateView>();
 
