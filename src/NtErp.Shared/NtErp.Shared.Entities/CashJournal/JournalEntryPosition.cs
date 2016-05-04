@@ -1,5 +1,5 @@
-﻿using NtErp.Shared.Entities.Base;
-using NtErp.Shared.Entities.MasterFileData;
+﻿using NtErp.Shared.Entities.MasterFileData;
+using NtErp.Shared.Services.Base;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class JournalEntryPosition : EntityBase {

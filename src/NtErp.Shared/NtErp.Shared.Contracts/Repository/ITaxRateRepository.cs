@@ -1,6 +1,6 @@
 ﻿using NtErp.Shared.Entities.MasterFileData;
 
-namespace NtErp.Shared.Services.Contracts {
+namespace NtErp.Shared.Contracts.Repository {
     public interface ITaxRateRepository : IRepository<TaxRate, long> {
         TaxRate New();
     }

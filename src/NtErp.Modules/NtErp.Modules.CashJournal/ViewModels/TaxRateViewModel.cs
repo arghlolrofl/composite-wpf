@@ -1,7 +1,7 @@
 ﻿using Autofac;
-using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Contracts;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using System.Collections.ObjectModel;

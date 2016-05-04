@@ -1,6 +1,4 @@
-﻿
-using NtErp.Shared.Entities.Base;
-using NtErp.Shared.Services.Contracts;
+﻿using NtErp.Shared.Contracts.Infrastructure;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 

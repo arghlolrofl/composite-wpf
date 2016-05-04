@@ -19,6 +19,7 @@ namespace NtErp.Shared.DataAccess {
         public DbSet<ProductComponent> Components { get; set; }
         public DbSet<JournalBook> CashJournals { get; set; }
         public DbSet<JournalEntry> CashJournalEntries { get; set; }
+        public DbSet<JournalEntryPosition> CashJournalEntryPositions { get; set; }
         public DbSet<TaxRate> TaxRates { get; set; }
 
         #endregion

@@ -1,6 +1,6 @@
 ﻿using NtErp.Shared.Entities.MasterFileData;
 
-namespace NtErp.Shared.Services.Contracts {
+namespace NtErp.Shared.Contracts.Repository {
     public interface IProductRepository : IRepository<Product, long> {
         Product New(int version = 1);
 

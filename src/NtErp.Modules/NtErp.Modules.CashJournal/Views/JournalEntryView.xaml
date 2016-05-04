@@ -92,7 +92,7 @@
                Grid.Row="6" Grid.Column="1"
                HorizontalAlignment="Right" />
         <TextBox Text="{Binding Path=SelectedEntry.ProcessDescription}"
-                 Grid.Row="6" Grid.Column="3" />
+                 Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="5" />
 
         <Label Content="Delta:"
                Grid.Row="8" Grid.Column="1"
@@ -107,13 +107,20 @@
                   DisplayMemberPath="Category"
                   SelectedItem="{Binding Path=SelectedPosition.TaxRate}"
                   Grid.Row="8" Grid.Column="7" />
+        <Button Content="New" 
+                Command="{Binding Path=CreatePositionCommand}"
+                IsEnabled="{Binding Path=CanCreatePosition}"
+                ToolTip="Creates a new position for this entry."
+                Grid.Row="8" Grid.Column="9" />
 
         <Label Content="Description:"
                Grid.Row="10" Grid.Column="1"
                HorizontalAlignment="Right" />
         <TextBox Text="{Binding Path=SelectedPosition.Description}"
                  Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="5" />
-        <Button Command="{Binding Path=AddPositionCommand}" Content="Add" 
+        <Button Content="Add" 
+                Command="{Binding Path=AddPositionCommand}"
+                IsEnabled="{Binding Path=CanAddPosition}"
                 ToolTip="Adds a new position to this entry."
                 Grid.Row="10" Grid.Column="9" />
 
@@ -124,9 +131,9 @@
                   Grid.Row="12" Grid.Column="1" Grid.ColumnSpan="11">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Width="75" Binding="{Binding Path=Id}" />
-                <DataGridTextColumn Header="Delta" Width="*" Binding="{Binding Path=Delta}" />
-                <DataGridTextColumn Header="Tax Rate" Width="*" Binding="{Binding Path=TaxRate.Value}" />
-                <DataGridTextColumn Header="Prepaid Tax" Width="*" Binding="{Binding Path=PrepaidTax}" />
+                <DataGridTextColumn Header="Delta" Width="125" Binding="{Binding Path=Delta}" />
+                <DataGridTextColumn Header="Tax Rate" Width="125" Binding="{Binding Path=TaxRate.Value}" />
+                <DataGridTextColumn Header="Prepaid Tax" Width="125" Binding="{Binding Path=PrepaidTax}" />
                 <DataGridTextColumn Header="Description" Width="*" Binding="{Binding Path=Description}" />
             </DataGrid.Columns>
         </DataGrid>

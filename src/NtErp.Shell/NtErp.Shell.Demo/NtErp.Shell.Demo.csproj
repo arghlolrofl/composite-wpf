@@ -173,6 +173,10 @@
       <Project>{223a9e40-290b-478d-843d-c00639527966}</Project>
       <Name>NtErp.Modules.CashJournal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Contracts\NtErp.Shared.Contracts.csproj">
+      <Project>{E12F7242-10E0-4493-BE34-6FF5879B7B92}</Project>
+      <Name>NtErp.Shared.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.DataAccess\NtErp.Shared.DataAccess.csproj">
       <Project>{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE}</Project>
       <Name>NtErp.Shared.DataAccess</Name>

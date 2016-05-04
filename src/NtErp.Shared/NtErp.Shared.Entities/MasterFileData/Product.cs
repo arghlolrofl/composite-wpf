@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Entities.Base;
+﻿using NtErp.Shared.Services.Base;
 using System.Collections.ObjectModel;
 
 namespace NtErp.Shared.Entities.MasterFileData {

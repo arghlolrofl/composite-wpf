@@ -1,8 +1,8 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
 using NtErp.Modules.Base.Views;
-using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Services.Regions;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
@@ -11,7 +11,6 @@ using System.Windows.Input;
 namespace NtErp.Modules.Base.ViewModels {
     public class ModuleMenuViewModel : ViewModelBase {
         private ICommand _goToProductViewCommand;
-        private IRegionManager _regionManager;
         private ILifetimeScope _scope;
         private IModuleManager _moduleManager;
 

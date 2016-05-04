@@ -1,11 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using NtErp.Shared.Entities.Base;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace NtErp.Shared.Entities.Base {
+namespace NtErp.Shared.Services.Base {
     public abstract class EntityBase : INotifyPropertyChanged {
         #region INotifyPropertyChanged
 
@@ -34,6 +35,12 @@ namespace NtErp.Shared.Entities.Base {
             get { return Id > 0 ? _hasChanges : true; }
             set { _hasChanges = value; RaisePropertyChanged(); }
         }
+
+        [NotMapped]
+        public bool Exists {
+            get { return Id > 0; }
+        }
+
 
         #endregion
 

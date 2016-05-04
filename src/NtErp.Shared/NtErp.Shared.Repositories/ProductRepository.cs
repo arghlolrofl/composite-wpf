@@ -1,6 +1,7 @@
-﻿using NtErp.Shared.DataAccess;
+﻿using NtErp.Shared.Contracts.Repository;
+using NtErp.Shared.DataAccess;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Contracts;
+using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,7 +9,7 @@ using System.Diagnostics;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class ProductRepository : IProductRepository {
+    public class ProductRepository : RepositoryBase<Product>, IProductRepository {
         /// <summary>
         ///   Dev: Startup integrity check
         ///   
@@ -37,16 +38,11 @@ namespace NtErp.Shared.Repositories {
         }
 
         /// <summary>
-        ///   Private EF context instance
-        /// </summary>
-        private NtErpContext _context;
-
-        /// <summary>
         ///   Constructor
         /// </summary>
         /// <param name="context"></param>
-        public ProductRepository(NtErpContext context) {
-            _context = context;
+        public ProductRepository(NtErpContext context) : base(context) {
+
         }
 
         public Product New(int version = 1) {
@@ -57,7 +53,7 @@ namespace NtErp.Shared.Repositories {
         ///   Fetches all <see cref="Product"/>s including detailed information
         /// </summary>
         /// <returns>List of Products</returns>
-        public IEnumerable<Product> GetAll() {
+        public override IEnumerable<Product> GetAll() {
             return _context.Products.ToList();
         }
 
@@ -66,57 +62,22 @@ namespace NtErp.Shared.Repositories {
         /// </summary>
         /// <param name="id">Primary Key</param>
         /// <returns>Single <see cref="Product"/></returns>
-        public Product GetSingle(long id) {
+        public override Product GetSingle(long id) {
             var product = _context.Products.Include(p => p.Components).Single(p => p.Id == id);
             return product;
-        }
-
-        /// <summary>
-        ///   @TODO
-        /// </summary>
-        /// <returns>List of <see cref="Product"/>s</returns>
-        public IEnumerable<Product> FindAll() {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
-        ///   @TODO
-        /// </summary>
-        /// <param name="key">Primary Key</param>
-        /// <returns>List of <see cref="Product"/>s</returns>
-        public IEnumerable<Product> Find(long key) {
-            throw new NotImplementedException();
         }
 
         /// <summary>
         ///   Saves an existing <see cref="Product"/> or creates a new one
         /// </summary>
         /// <param name="entity"><see cref="Product"/></param>
-        public void Save(Product entity) {
-            if (entity.Id > 0) {
-                _context.Products.Attach(entity);
-                _context.Entry(entity).State = EntityState.Modified;
-            } else {
-                _context.Entry(entity).State = EntityState.Added;
-            }
+        public override void Save(EntityBase entity) {
+            Product p = null;
 
-            _context.SaveChanges();
+            if (entity.Exists && ((p = entity as Product) != null))
+                _context.Products.Attach(p);
 
-            entity.UpdateTrackedProperties();
-        }
-
-        /// <summary>
-        ///   Deletes an existing <see cref="Product"/>
-        /// </summary>
-        /// <param name="entity"><see cref="Product"/></param>
-        public void Delete(Product entity) {
-            _context.Entry(entity).State = EntityState.Deleted;
-
-            _context.SaveChanges();
-        }
-
-        public void Refresh(Product entity) {
-            _context.Entry(entity).Reload();
+            base.Save(entity);
         }
 
         public Product AddComponent(Product kit, Product component) {
@@ -140,25 +101,5 @@ namespace NtErp.Shared.Repositories {
 
             return product;
         }
-
-        #region IDisposable
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing) {
-            if (!this.disposed) {
-                if (disposing) {
-                    _context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

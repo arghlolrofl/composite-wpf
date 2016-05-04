@@ -6,12 +6,12 @@ using Prism.Modularity;
 using Prism.Regions;
 
 namespace NtErp.Modules.Base {
+
     public class BaseModule : IModule {
         private ILifetimeScope _scope;
         private IEventAggregator _eventAggregator;
 
         public IRegionManager RegionManager { get; set; }
-
 
         public BaseModule(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator) {
             _scope = scope;

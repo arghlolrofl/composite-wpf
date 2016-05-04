@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Entities.Base;
+﻿using NtErp.Shared.Services.Base;
 
 namespace NtErp.Shared.Entities.MasterFileData {
     /// <summary>

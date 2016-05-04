@@ -10,7 +10,7 @@ namespace NtErp.Modules.Base {
             builder.RegisterType<ViewModels.ProductViewModel>();
             builder.RegisterType<Views.ProductView>();
             builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
-                   .As<Shared.Services.Contracts.IMenuItemViewModel>();
+                   .As<Shared.Contracts.Infrastructure.IMenuItemViewModel>();
 
             Debug.WriteLine(" > MODULE LOADED: " + nameof(BaseModule));
         }

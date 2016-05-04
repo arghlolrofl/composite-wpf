@@ -1,10 +1,10 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
 using NtErp.Modules.Base.Views;
-using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
 using System.Linq;
 using System.Windows.Input;

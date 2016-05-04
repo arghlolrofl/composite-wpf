@@ -1,15 +1,15 @@
 ﻿using Autofac;
 using NtErp.Modules.Base.Views;
 using NtErp.Modules.CashJournal.Views;
-using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.Regions;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
-using System;
 using System.Windows.Input;
 
 namespace NtErp.Modules.CashJournal.ViewModels {
@@ -24,7 +24,6 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         private ICommand _deleteEntryCommand;
         private ILifetimeScope _scope;
         private IEventAggregator _eventAggregator;
-        private IRegionManager _regionManager;
         private JournalBook _selectedJournal;
         private JournalEntry _selectedJournalEntry;
         private IJournalBookRepository _repository;
@@ -169,20 +168,20 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         }
 
         private void CreateEntryCommand_OnExecute() {
-            IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            Uri viewUri = new Uri(nameof(JournalEntryView), UriKind.Relative);
+            var param = new NavigationParameters() {
+                { ParameterNames.NextView, nameof(JournalBookView) }
+            };
 
-            region.RequestNavigate(viewUri);
+            NavigateToView(nameof(JournalEntryView), RegionNames.MainContent, param);
         }
 
         private void EditEntryCommand_OnExecute() {
-            IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            var param = new NavigationParameters();
-            param.Add("id", SelectedJournalEntry.Id);
+            var param = new NavigationParameters() {
+                { ParameterNames.Id,        SelectedJournalEntry.Id },
+                { ParameterNames.NextView,  nameof(JournalBookView) }
+            };
 
-            Uri viewUri = new Uri(nameof(JournalEntryView) + param.ToString(), UriKind.Relative);
-
-            region.RequestNavigate(viewUri);
+            NavigateToView(nameof(JournalEntryView), RegionNames.MainContent, param);
         }
 
         private void DeleteEntryCommand_OnExecute() {
@@ -216,7 +215,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         #region INavigationAware Members
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
-            
+
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) {
@@ -224,7 +223,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext) {
-            
+
         }
 
         #endregion

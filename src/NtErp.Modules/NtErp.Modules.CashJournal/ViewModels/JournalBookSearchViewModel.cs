@@ -1,7 +1,7 @@
-﻿using NtErp.Shared.Entities.Base;
+﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.CashJournal;
-using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using System;

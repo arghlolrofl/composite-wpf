@@ -1,29 +1,57 @@
 ﻿using Autofac;
-using NtErp.Shared.Entities.Base;
+using Microsoft.Win32;
+using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Contracts;
+using NtErp.Shared.Services.Regions;
+using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Windows.Input;
 
 namespace NtErp.Modules.CashJournal.ViewModels {
     public class JournalEntryViewModel : ViewModelBase, INavigationAware {
+        #region INavigationAware Members
+
+        public void OnNavigatedTo(NavigationContext navigationContext) {
+            string entryId = (string)navigationContext.Parameters[ParameterNames.Id];
+            if (!String.IsNullOrEmpty(entryId)) {
+                long id = Int64.Parse(entryId);
+                SelectedEntity = _repository.GetSingle(id);
+            } else
+                SelectedEntity = _repository.New();
+
+            string nextView = (string)navigationContext.Parameters[ParameterNames.NextView];
+            if (!String.IsNullOrEmpty(nextView))
+                _nextView = nextView;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) {
+
+        }
+
+        #endregion
+
+        #region Fields
+
         private IEventAggregator _eventAggregator;
         private IJournalEntryRepository _repository;
         private ITaxRateRepository _taxRateRepository;
         private ILifetimeScope _scope;
-        private JournalEntry _selectedEntry;
         private JournalEntryPosition _selectedPosition;
         private ObservableCollection<TaxRate> _availableTaxRates;
 
-        public JournalEntry SelectedEntry {
-            get { return _selectedEntry; }
-            set { _selectedEntry = value; RaisePropertyChanged(); }
-        }
+        #endregion
+
 
         public JournalEntryPosition SelectedPosition {
             get { return _selectedPosition; }
@@ -35,13 +63,36 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             set { _availableTaxRates = value; RaisePropertyChanged(); }
         }
 
+        public bool CanAttachDocument {
+            get { return HasEntitySelected; }
+        }
+
+        public bool CanRefreshEntry {
+            get { return HasEntitySelected && SelectedEntity.Id > 0; }
+        }
+
+        public bool CanSaveEntry {
+            get { return HasEntitySelected && SelectedEntity.HasChanges; }
+        }
+
+        public bool CanCreatePosition {
+            get { return HasEntitySelected; }
+        }
+
+        public bool CanAddPosition {
+            get { return HasEntitySelected && SelectedPosition != null; }
+        }
+
 
         #region Commands
 
         private ICommand _refreshEntryCommand;
         private ICommand _saveEntryCommand;
         private ICommand _attachDocumentCommand;
+        private ICommand _createPositionCommand;
         private ICommand _addPositionCommand;
+        private ICommand _applyCommand;
+        private ICommand _cancelCommand;
 
 
         public ICommand RefreshEntryCommand {
@@ -56,63 +107,96 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             get { return _attachDocumentCommand ?? (_attachDocumentCommand = new DelegateCommand(AttachDocumentCommand_OnExecute)); }
         }
 
+        public ICommand CreatePositionCommand {
+            get { return _createPositionCommand ?? (_createPositionCommand = new DelegateCommand(CreatePositionCommand_OnExecute)); }
+        }
+
         public ICommand AddPositionCommand {
             get { return _addPositionCommand ?? (_addPositionCommand = new DelegateCommand(AddPositionCommand_OnExecute)); }
         }
 
+        public ICommand ApplyCommand {
+            get { return _applyCommand ?? (_applyCommand = new DelegateCommand(ApplyCommand_OnExecute)); }
+        }
+
+        public ICommand CancelCommand {
+            get { return _cancelCommand ?? (_cancelCommand = new DelegateCommand(CancelCommand_OnExecute)); }
+        }
+
         #endregion
 
+        #region Initialization
 
-
-        public JournalEntryViewModel(ILifetimeScope scope, IEventAggregator eventAggregator,
+        public JournalEntryViewModel(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator,
             IJournalEntryRepository repository, ITaxRateRepository taxRateRepository) {
             _scope = scope;
             _eventAggregator = eventAggregator;
             _repository = repository;
+            _regionManager = regionManager;
             _taxRateRepository = taxRateRepository;
 
-            refreshAvailableTaxRates();
+            RefreshAvailableTaxRates();
         }
 
-        private void refreshAvailableTaxRates() {
+        #endregion
+
+
+        private void RefreshAvailableTaxRates() {
             AvailableTaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.GetAll());
         }
 
         private void RefreshEntryCommand_OnExecute() {
-            throw new NotImplementedException();
+            _repository.Refresh(SelectedEntity);
         }
 
         private void SaveEntryCommand_OnExecute() {
-            throw new NotImplementedException();
+            _repository.Save(SelectedEntity);
         }
 
         private void AttachDocumentCommand_OnExecute() {
-            throw new NotImplementedException();
+            OpenFileDialog ofd = new OpenFileDialog() {
+                CheckFileExists = true,
+                CheckPathExists = true,
+                Multiselect = false,
+                Title = "Select document"
+            };
+
+            ofd.ShowDialog();
+
+            string fileName = ofd.FileName;
+            if (!File.Exists(fileName))
+                return;
+
+            FileInfo file = new FileInfo(fileName);
+
+            JournalEntry entry = SelectedEntity as JournalEntry;
+            if (entry == null)
+                throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AttachDocumentCommand_OnExecute()");
+
+            entry.DocumentName = file.Name;
+            entry.DocumentFolderPath = file.DirectoryName;
+        }
+
+        private void CreatePositionCommand_OnExecute() {
+            SelectedPosition = _repository.NewPosition();
         }
 
         private void AddPositionCommand_OnExecute() {
-            throw new NotImplementedException();
+            JournalEntry entry = SelectedEntity as JournalEntry;
+            if (entry == null)
+                throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AddPositionCommand_OnExecute()");
+
+            _repository.AddPosition(entry, SelectedPosition);
         }
 
-        #region INavigationAware Members
+        private void ApplyCommand_OnExecute() {
+            //@TODO: Check for changes
 
-        public void OnNavigatedTo(NavigationContext navigationContext) {
-            string entryId = (string)navigationContext.Parameters["id"];
-
-            if (!String.IsNullOrEmpty(entryId)) {
-                long id = Int64.Parse(entryId);
-                SelectedEntry = _repository.GetSingle(id);
-            }
+            NavigateToView(_nextView, RegionNames.MainContent);
         }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext) {
-            return true;
+        private void CancelCommand_OnExecute() {
+            NavigateToView(_nextView, RegionNames.MainContent);
         }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext) {
-
-        }
-
-        #endregion
     }
 }

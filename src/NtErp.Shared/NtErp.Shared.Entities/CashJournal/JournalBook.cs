@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Entities.Base;
+﻿using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.ObjectModel;
 

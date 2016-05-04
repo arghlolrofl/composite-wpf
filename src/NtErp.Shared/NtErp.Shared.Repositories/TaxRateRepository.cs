@@ -1,17 +1,14 @@
-﻿using NtErp.Shared.DataAccess;
+﻿using NtErp.Shared.Contracts.Repository;
+using NtErp.Shared.DataAccess;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Contracts;
-using System;
+using NtErp.Shared.Services.Base;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class TaxRateRepository : ITaxRateRepository {
-        private readonly NtErpContext _context;
+    public class TaxRateRepository : RepositoryBase<TaxRate>, ITaxRateRepository {
+        public TaxRateRepository(NtErpContext context) : base(context) {
 
-        public TaxRateRepository(NtErpContext context) {
-            _context = context;
         }
 
         public TaxRate New() {
@@ -23,62 +20,21 @@ namespace NtErp.Shared.Repositories {
             };
         }
 
-        public TaxRate GetSingle(long id) {
+        public override TaxRate GetSingle(long id) {
             return _context.TaxRates.Find(id);
         }
 
-        public IEnumerable<TaxRate> GetAll() {
+        public override IEnumerable<TaxRate> GetAll() {
             return _context.TaxRates.ToList();
         }
 
-        public IEnumerable<TaxRate> Find(long key) {
-            throw new NotImplementedException();
+        public override void Save(EntityBase entity) {
+            TaxRate tr = null;
+
+            if (entity.Exists && ((tr = entity as TaxRate) != null))
+                _context.TaxRates.Attach(tr);
+
+            base.Save(entity);
         }
-
-        public IEnumerable<TaxRate> FindAll() {
-            throw new NotImplementedException();
-        }
-
-        public void Save(TaxRate entity) {
-            if (entity.Id > 0) {
-                _context.TaxRates.Attach(entity);
-                _context.Entry(entity).State = EntityState.Modified;
-            } else {
-                _context.Entry(entity).State = EntityState.Added;
-            }
-
-            _context.SaveChanges();
-
-            entity.UpdateTrackedProperties();
-        }
-        public void Delete(TaxRate entity) {
-            _context.Entry(entity).State = EntityState.Deleted;
-
-            _context.SaveChanges();
-        }
-
-        public void Refresh(TaxRate entity) {
-            _context.Entry(entity).Reload();
-        }
-
-        #region IDisposable
-
-        private bool disposed = false;
-
-        protected virtual void Dispose(bool disposing) {
-            if (!this.disposed) {
-                if (disposing) {
-                    _context.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose() {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
     }
 }

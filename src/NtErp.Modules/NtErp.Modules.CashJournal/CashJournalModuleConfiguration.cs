@@ -18,7 +18,7 @@ namespace NtErp.Modules.CashJournal {
             builder.RegisterType<Views.TaxRateView>();
 
             builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
-                   .As<Shared.Services.Contracts.IMenuItemViewModel>();
+                   .As<Shared.Contracts.Infrastructure.IMenuItemViewModel>();
 
             Debug.WriteLine(" > MODULE LOADED: " + nameof(CashJournalModule));
         }

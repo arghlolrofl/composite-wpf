@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{46BC1775-84A1-4213-B7D0-4C65F5365579}</ProjectGuid>
+    <ProjectGuid>{E12F7242-10E0-4493-BE34-6FF5879B7B92}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NtErp.Shared.Services</RootNamespace>
-    <AssemblyName>NtErp.Shared.Services</AssemblyName>
+    <RootNamespace>NtErp.Shared.Contracts</RootNamespace>
+    <AssemblyName>NtErp.Shared.Contracts</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -34,40 +34,22 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ViewModels\ViewModelBase.cs" />
-    <Compile Include="Behaviors\DialogResultBehavior.cs" />
-    <Compile Include="Contracts\ParameterNames.cs" />
-    <Compile Include="Events\EntitySearchResultEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Regions\RegionNames.cs" />
-    <Compile Include="ViewModels\MenuItemViewModel.cs" />
+    <Compile Include="Repository\IJournalBookRepository.cs" />
+    <Compile Include="Repository\IJournalEntryRepository.cs" />
+    <Compile Include="Infrastructure\IMenuItemViewModel.cs" />
+    <Compile Include="Repository\IProductRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\ITaxRateRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\NtErp.Shared.Contracts\NtErp.Shared.Contracts.csproj">
-      <Project>{E12F7242-10E0-4493-BE34-6FF5879B7B92}</Project>
-      <Name>NtErp.Shared.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj">
       <Project>{dabebf34-52f1-40d6-a9c3-f50dcaea235a}</Project>
       <Name>NtErp.Shared.Entities</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Base\" />
-    <Folder Include="Views\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

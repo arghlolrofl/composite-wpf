@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Practices.ServiceLocation;
+using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
 using NtErp.Shared.Repositories;
 using NtErp.Shared.Services.Contracts;

@@ -38,28 +38,21 @@
       <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JournalBookRepository.cs" />
     <Compile Include="JournalEntryRepository.cs" />
     <Compile Include="ProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RepositoryBase.cs" />
     <Compile Include="TaxRateRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NtErp.Shared.Contracts\NtErp.Shared.Contracts.csproj">
+      <Project>{E12F7242-10E0-4493-BE34-6FF5879B7B92}</Project>
+      <Name>NtErp.Shared.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NtErp.Shared.DataAccess\NtErp.Shared.DataAccess.csproj">
       <Project>{fc1b2772-a68e-4cc0-8bd0-7912b0ddf6ae}</Project>
       <Name>NtErp.Shared.DataAccess</Name>
@@ -67,10 +60,6 @@
     <ProjectReference Include="..\NtErp.Shared.Entities\NtErp.Shared.Entities.csproj">
       <Project>{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}</Project>
       <Name>NtErp.Shared.Entities</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\NtErp.Shared.Services\NtErp.Shared.Services.csproj">
-      <Project>{46BC1775-84A1-4213-B7D0-4C65F5365579}</Project>
-      <Name>NtErp.Shared.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
