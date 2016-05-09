@@ -68,6 +68,7 @@
     <Compile Include="ViewModels\ModuleMenuViewModel.cs" />
     <Compile Include="ViewModels\ProductSearchViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
+    <Compile Include="ViewModels\TaxRateViewModel.cs" />
     <Compile Include="Views\ModuleMenuView.xaml.cs">
       <DependentUpon>ModuleMenuView.xaml</DependentUpon>
     </Compile>
@@ -76,6 +77,9 @@
     </Compile>
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxRateView.xaml.cs">
+      <DependentUpon>TaxRateView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +109,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\ProductView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaxRateView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -80,5 +80,10 @@ namespace NtErp.Shared.Entities.CashJournal {
             get { return _positions; }
             set { _positions = value; RaisePropertyChanged(); }
         }
+
+
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(DocumentFolderPath), nameof(DocumentName), nameof(Date), nameof(ProcessDescription));
+        }
     }
 }

@@ -7,5 +7,6 @@
              mc:Ignorable="d" 
              d:DesignHeight="25" d:DesignWidth="200"
              Header="_MasterFileData">
-    <MenuItem Header="_Product" Command="{Binding Path=GoToProductViewCommand}" />
+    <MenuItem Header="_Products" Command="{Binding Path=GoToProductViewCommand}" />
+    <MenuItem Header="_Tax Rates" Command="{Binding Path=GoToTaxRateViewCommand}" />
 </MenuItem>

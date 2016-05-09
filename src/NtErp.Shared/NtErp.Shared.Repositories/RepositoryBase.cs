@@ -22,11 +22,13 @@ namespace NtErp.Shared.Repositories {
 
             _context.SaveChanges();
 
-            entity.UpdateTrackedProperties();
+            entity.ResetChangedProperties();
         }
 
         public virtual void Refresh(EntityBase entity) {
             _context.Entry(entity).Reload();
+
+            entity.ResetChangedProperties();
         }
 
         public void Delete(EntityBase entity) {

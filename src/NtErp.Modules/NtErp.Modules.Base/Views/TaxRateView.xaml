@@ -1,9 +1,9 @@
-﻿<UserControl x:Class="NtErp.Modules.CashJournal.Views.TaxRateView"
+﻿<UserControl x:Class="NtErp.Modules.Base.Views.TaxRateView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:NtErp.Modules.CashJournal.Views"
+             xmlns:local="clr-namespace:NtErp.Modules.Base.Views"
              mc:Ignorable="d" 
              d:DesignHeight="700" d:DesignWidth="950">
     <Grid>
@@ -48,8 +48,8 @@
             <Button Content="Save" 
                     Width="100" 
                     Margin="5,0,5,0" 
-                    Command="{Binding Path=UpdateTaxRateCommand}"
-                    IsEnabled="{Binding Path=CanUpdateTaxRate}" />
+                    Command="{Binding Path=SaveTaxRateCommand}"
+                    IsEnabled="{Binding Path=CanSaveTaxRate}" />
             <Button Content="Delete" 
                     Width="100" 
                     Margin="5,0,5,0" 

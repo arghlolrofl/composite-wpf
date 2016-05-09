@@ -22,8 +22,8 @@ namespace NtErp.Shared.Entities.MasterFileData {
         }
 
 
-        public TaxRate() {
-            trackProperties(nameof(Category), nameof(Value), nameof(Description));
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(Category), nameof(Value), nameof(Description));
         }
     }
 }

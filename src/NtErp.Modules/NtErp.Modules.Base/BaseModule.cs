@@ -22,6 +22,7 @@ namespace NtErp.Modules.Base {
         public void Initialize() {
             RegionManager.RegisterViewWithRegion(RegionNames.ShellMenuBar, typeof(ModuleMenuView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(ProductView));
+            RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(TaxRateView));
         }
     }
 }

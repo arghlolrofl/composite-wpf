@@ -36,10 +36,17 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Base\EntityBase.cs" />
-    <Compile Include="Base\TrackedProperty.cs" />
+    <Compile Include="Base\TrackedScalarProperty.cs" />
     <Compile Include="CashJournal\JournalBook.cs" />
     <Compile Include="CashJournal\JournalEntry.cs" />
     <Compile Include="CashJournal\JournalEntryPosition.cs" />

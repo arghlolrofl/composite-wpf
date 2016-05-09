@@ -83,9 +83,7 @@ namespace NtErp.Shared.Repositories {
         public Product AddComponent(Product kit, Product component) {
             _context.Products.Attach(kit);
             _context.Products.Attach(component);
-
-            _context.Entry(kit).Entity.Components.Add(
-                new ProductComponent() { Product = kit, Component = component, Amount = 1 });
+            _context.Components.Add(new ProductComponent() { Product = kit, Component = component, Amount = 1 });
 
             _context.SaveChanges();
 

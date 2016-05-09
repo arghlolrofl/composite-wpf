@@ -8,7 +8,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         private DateTime _StartDate;
         private DateTime _EndDate;
         private string _Description;
-        private ObservableCollection<JournalEntry> _entries;
+        private ObservableCollection<JournalEntry> _entries = new ObservableCollection<JournalEntry>();
 
 
         /// <summary>
@@ -52,10 +52,8 @@ namespace NtErp.Shared.Entities.CashJournal {
         }
 
 
-        public JournalBook() {
-            Entries = new ObservableCollection<JournalEntry>();
-
-            trackProperties(nameof(Number), nameof(StartDate), nameof(EndDate), nameof(Description));
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(Number), nameof(StartDate), nameof(EndDate), nameof(Description));
         }
     }
 }

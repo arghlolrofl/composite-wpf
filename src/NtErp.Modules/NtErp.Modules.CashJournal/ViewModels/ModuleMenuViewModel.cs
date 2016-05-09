@@ -11,16 +11,11 @@ using System.Windows.Input;
 namespace NtErp.Modules.CashJournal.ViewModels {
     public class ModuleMenuViewModel : ViewModelBase {
         private ICommand _goToJournalViewCommand;
-        private ICommand _goToTaxRateViewCommand;
         private ILifetimeScope _scope;
         private IModuleManager _moduleManager;
 
         public ICommand GoToJournalViewCommand {
             get { return _goToJournalViewCommand ?? (_goToJournalViewCommand = new DelegateCommand(GoToJournalViewCommand_OnExecute)); }
-        }
-
-        public ICommand GoToTaxRateViewCommand {
-            get { return _goToTaxRateViewCommand ?? (_goToTaxRateViewCommand = new DelegateCommand(GoToTaxRateViewCommand_OnExecute)); }
         }
 
         public ModuleMenuViewModel(ILifetimeScope scope, IRegionManager regionManager, IModuleManager moduleManager) {
@@ -36,11 +31,8 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             region.RequestNavigate(viewUri);
         }
 
-        private void GoToTaxRateViewCommand_OnExecute() {
-            IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            Uri viewUri = new Uri(nameof(TaxRateView), UriKind.Relative);
+        protected override void RefreshEnabledBindings() {
 
-            region.RequestNavigate(viewUri);
         }
     }
 }

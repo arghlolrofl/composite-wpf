@@ -35,8 +35,9 @@ namespace NtErp.Shared.Entities.MasterFileData {
             set { _amount = value; RaisePropertyChanged(); }
         }
 
-        public ProductComponent() {
 
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(Amount));
         }
     }
 }

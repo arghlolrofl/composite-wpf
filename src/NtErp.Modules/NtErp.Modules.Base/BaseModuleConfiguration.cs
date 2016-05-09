@@ -7,8 +7,13 @@ namespace NtErp.Modules.Base {
             base.Load(builder);
 
             builder.RegisterType<BaseModule>();
+
             builder.RegisterType<ViewModels.ProductViewModel>();
             builder.RegisterType<Views.ProductView>();
+
+            builder.RegisterType<ViewModels.TaxRateViewModel>();
+            builder.RegisterType<Views.TaxRateView>();
+
             builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
                    .As<Shared.Contracts.Infrastructure.IMenuItemViewModel>();
 

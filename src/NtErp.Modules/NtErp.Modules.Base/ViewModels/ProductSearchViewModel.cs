@@ -110,10 +110,16 @@ namespace NtErp.ViewModel.MasterFileData {
         }
 
         private void SendResponseAndRequestCloseDialog() {
+            long id = SelectedProduct == null ? 0 : SelectedProduct.Id;
+
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
-                            .Publish(new EntitySearchResultEvent(SelectedProduct.Id, DialogResult));
+                            .Publish(new EntitySearchResultEvent(id, DialogResult));
 
             RaiseCloseDialogRequested();
+        }
+
+        protected override void RefreshEnabledBindings() {
+
         }
     }
 }

@@ -108,5 +108,8 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             RaiseCloseDialogRequested();
         }
 
+        protected override void RefreshEnabledBindings() {
+
+        }
     }
 }

@@ -12,16 +12,17 @@ namespace NtErp.Shared.Services.Base {
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected void RaisePropertyChanged([CallerMemberName]string propertyName = "") {
-            updateHasChanges(propertyName);
+            CheckHasChanges(propertyName);
 
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion
 
+
         private bool _hasChanges;
         private IList<string> _propertiesToTrack = new List<string>();
-        protected HashSet<TrackedProperty> _trackedProperties = new HashSet<TrackedProperty>();
+        protected HashSet<TrackedScalarProperty> _trackedProperties = new HashSet<TrackedScalarProperty>();
 
 
         #region Properties
@@ -44,23 +45,26 @@ namespace NtErp.Shared.Services.Base {
 
         #endregion
 
-        protected void trackProperties(params string[] propertyNames) {
+
+        protected abstract void RegisterPropertiesToTrack();
+
+        protected void TrackProperties(params string[] propertyNames) {
             foreach (string propertyName in propertyNames)
                 _propertiesToTrack.Add(propertyName);
         }
 
-        private void updateHasChanges(string propertyName) {
+        private void CheckHasChanges(string propertyName) {
             if (!_propertiesToTrack.Contains(propertyName))
                 return;
 
             object newValue = GetType().GetProperty(propertyName).GetValue(this);
 
             if (!_trackedProperties.Any(tp => tp.Name == propertyName)) {
-                _trackedProperties.Add(new TrackedProperty(propertyName, newValue));
+                _trackedProperties.Add(new TrackedScalarProperty(propertyName, newValue));
                 return;
             }
 
-            TrackedProperty trackedProperty = _trackedProperties.Single(tp => tp.Name == propertyName);
+            TrackedScalarProperty trackedProperty = _trackedProperties.Single(tp => tp.Name == propertyName);
 
             if (trackedProperty.Value.Equals(newValue))
                 trackedProperty.HasChanged = false;
@@ -72,12 +76,12 @@ namespace NtErp.Shared.Services.Base {
                 HasChanges = hasChanges;
         }
 
-        public void UpdateTrackedProperties() {
+        public void ResetChangedProperties() {
             _trackedProperties.Clear();
 
             foreach (string propertyName in _propertiesToTrack) {
                 object currentValue = GetType().GetProperty(propertyName).GetValue(this);
-                _trackedProperties.Add(new TrackedProperty(propertyName, currentValue));
+                _trackedProperties.Add(new TrackedScalarProperty(propertyName, currentValue));
             }
 
             HasChanges = false;

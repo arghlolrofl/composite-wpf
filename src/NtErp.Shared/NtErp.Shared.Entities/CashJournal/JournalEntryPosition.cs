@@ -36,8 +36,8 @@ namespace NtErp.Shared.Entities.CashJournal {
         }
 
 
-        public JournalEntryPosition() {
-            trackProperties(nameof(Description));
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(Description));
         }
     }
 }

@@ -25,7 +25,7 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
 
-        public MenuItemViewModel() {
+        protected override void RefreshEnabledBindings() {
 
         }
     }

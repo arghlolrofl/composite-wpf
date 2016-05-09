@@ -23,7 +23,7 @@ namespace NtErp.Modules.CashJournal {
             RegionManager.RegisterViewWithRegion(RegionNames.ShellMenuBar, typeof(ModuleMenuView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(JournalBookView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(JournalEntryView));
-            RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(TaxRateView));
+            //RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(TaxRateView));
         }
     }
 }

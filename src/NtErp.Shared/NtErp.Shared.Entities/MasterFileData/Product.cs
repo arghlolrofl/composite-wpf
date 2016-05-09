@@ -54,8 +54,8 @@ namespace NtErp.Shared.Entities.MasterFileData {
         }
 
 
-        public Product() {
-            trackProperties(nameof(Version), nameof(Number), nameof(Name), nameof(Description));
+        protected override void RegisterPropertiesToTrack() {
+            TrackProperties(nameof(Version), nameof(Number), nameof(Name), nameof(Description));
         }
     }
 }

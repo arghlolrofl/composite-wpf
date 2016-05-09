@@ -6,13 +6,12 @@ using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
-using System.Linq;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
     public class ProductViewModel : ViewModelBase {
         private ICommand _createProductCommand;
-        private ICommand _updateProductCommand;
+        private ICommand _saveProductCommand;
         private ICommand _deleteProductCommand;
         private ICommand _openProductSearchCommand;
         private ICommand _addComponentCommand;
@@ -22,7 +21,6 @@ namespace NtErp.Modules.Base.ViewModels {
         private readonly ILifetimeScope _scope;
         private readonly IProductRepository _repository;
         private readonly IEventAggregator _eventAggregator;
-        private Product _selectedProduct;
         private ProductComponent _selectedProductComponent;
         private string _statusText;
 
@@ -36,8 +34,8 @@ namespace NtErp.Modules.Base.ViewModels {
             get { return _createProductCommand ?? (_createProductCommand = new DelegateCommand(CreateProductCommand_OnExecute)); }
         }
 
-        public ICommand UpdateProductCommand {
-            get { return _updateProductCommand ?? (_updateProductCommand = new DelegateCommand(UpdateProductCommand_OnExecute)); }
+        public ICommand SaveProductCommand {
+            get { return _saveProductCommand ?? (_saveProductCommand = new DelegateCommand(SaveProductCommand_OnExecute)); }
         }
 
         public ICommand DeleteProductCommand {
@@ -60,21 +58,12 @@ namespace NtErp.Modules.Base.ViewModels {
 
         #region View Bindings
 
-        public Product SelectedProduct {
-            get { return _selectedProduct; }
-            set {
-                _selectedProduct = value;
-
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(HasRootEntity));
-                RaisePropertyChanged(nameof(CanDeleteProduct));
-                RaisePropertyChanged(nameof(CanRefreshProduct));
-                RaisePropertyChanged(nameof(CanAddComponents));
-                RaisePropertyChanged(nameof(CanRemoveComponents));
-            }
+        public string StatusText {
+            get { return _statusText; }
+            set { _statusText = value; RaisePropertyChanged(); }
         }
 
-        public ProductComponent SelectedProductComponent {
+        public ProductComponent SelectedComponent {
             get { return _selectedProductComponent; }
             set {
                 _selectedProductComponent = value;
@@ -85,29 +74,9 @@ namespace NtErp.Modules.Base.ViewModels {
             }
         }
 
-        public string StatusText {
-            get { return _statusText; }
-            set { _statusText = value; RaisePropertyChanged(); }
-        }
-
-        public bool HasRootEntity {
-            get { return SelectedProduct != null; }
-        }
-
-        public bool CanRefreshProduct {
-            get {
-                return HasRootEntity;
-            }
-
-        }
-
-        public bool CanDeleteProduct {
-            get { return HasRootEntity; }
-        }
-
         public bool HasComponentSelected {
             get {
-                return SelectedProductComponent != null;
+                return SelectedComponent != null;
             }
         }
 
@@ -119,7 +88,7 @@ namespace NtErp.Modules.Base.ViewModels {
 
         public bool CanRemoveComponents {
             get {
-                return HasRootEntity && HasComponentSelected && SelectedProduct.Components.Any();
+                return HasRootEntity && HasComponentSelected;
             }
         }
 
@@ -132,7 +101,7 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         private void RefreshProductCommand_OnExecute() {
-            _repository.Refresh(SelectedProduct);
+            _repository.Refresh(SelectedEntity);
         }
 
         private void OpenProductSearchCommand_OnExecute() {
@@ -148,24 +117,23 @@ namespace NtErp.Modules.Base.ViewModels {
                             .Unsubscribe(ProductSearch_OnReply);
 
             if (response.DialogResult.Equals(true)) {
-                SelectedProduct = _repository.GetSingle(response.EntityId);
+                SelectedEntity = _repository.GetSingle(response.EntityId);
                 //StatusText = "Selected Product: " + SelectedProduct.Number;
             }
         }
 
         private void CreateProductCommand_OnExecute() {
-            SelectedProduct = _repository.New();
+            SelectedEntity = _repository.New();
             //StatusText = "Create new Product";
         }
 
-        private void UpdateProductCommand_OnExecute() {
-            _repository.Save(SelectedProduct);
+        private void SaveProductCommand_OnExecute() {
+            _repository.Save(SelectedEntity);
             //StatusText = "Product saved";
-            RaisePropertyChanged(nameof(SelectedProduct));
         }
 
         private void DeleteProductCommand_OnExecute() {
-            _repository.Delete(SelectedProduct);
+            _repository.Delete(SelectedEntity);
             //StatusText = "Product deleted";
         }
 
@@ -179,25 +147,35 @@ namespace NtErp.Modules.Base.ViewModels {
 
         private void ComponentSearch_OnReply(EntitySearchResultEvent response) {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
-                            .Unsubscribe(ProductSearch_OnReply);
+                            .Unsubscribe(ComponentSearch_OnReply);
 
             if (!response.DialogResult.Equals(true))
                 return;
 
             Product component = _repository.GetSingle(response.EntityId);
-            _repository.AddComponent(SelectedProduct, component);
+            Product kit = SelectedEntity as Product;
+
+            _repository.AddComponent(kit, component);
 
             //StatusText = "Selected Product: " + SelectedProduct.Number;
         }
 
         private void RemoveComponentCommand_OnExecute() {
-            if (SelectedProductComponent == null)
+            if (SelectedComponent == null)
                 return;
 
             //string componentName = SelectedProductComponent.Name;
 
-            _repository.RemoveComponent(SelectedProductComponent);
+            _repository.RemoveComponent(SelectedComponent);
             //StatusText = $"Removed component {SelectedProduct.Name} from product {componentName}";
+        }
+
+        protected override void RefreshEnabledBindings() {
+            RaisePropertyChanged(nameof(CanCreateNew));
+            RaisePropertyChanged(nameof(CanDelete));
+            RaisePropertyChanged(nameof(CanSave));
+            RaisePropertyChanged(nameof(CanRefresh));
+
         }
     }
 }
