@@ -15,7 +15,7 @@ using System.IO;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class CashJournalEntryViewModel : ViewModelBase, INavigationAware {
+    public class CashJournalEntryViewModel : EntityViewModelBase, INavigationAware {
         #region INavigationAware Members
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
@@ -52,6 +52,7 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #endregion
 
+        #region Properties
 
         public CashJournalEntryPosition SelectedPosition {
             get { return _selectedPosition; }
@@ -75,6 +76,7 @@ namespace NtErp.Modules.Finances.ViewModels {
             get { return HasRootEntity && SelectedPosition != null; }
         }
 
+        #endregion
 
         #region Commands
 
@@ -163,7 +165,7 @@ namespace NtErp.Modules.Finances.ViewModels {
 
             CashJournalEntry entry = RootEntity as CashJournalEntry;
             if (entry == null)
-                throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AttachDocumentCommand_OnExecute()");
+                throw new ArgumentNullException("ERROR: Selected Entity is 'null' => CashJournalEntryViewModel.AttachDocumentCommand_OnExecute()");
 
             entry.DocumentName = file.Name;
             entry.DocumentFolderPath = file.DirectoryName;
@@ -192,7 +194,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         protected override void RefreshEnabledBindings() {
-            throw new NotImplementedException();
+
         }
     }
 }

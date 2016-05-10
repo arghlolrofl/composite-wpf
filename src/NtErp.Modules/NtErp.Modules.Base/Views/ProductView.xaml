@@ -31,15 +31,15 @@
         <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
             <Button Content="Refresh" Width="100" Margin="10,0,0,0" 
                     Command="{Binding Path=RefreshProductCommand}"
-                    IsEnabled="{Binding Path=CanRefreshProduct}"/>
+                    IsEnabled="{Binding Path=CanRefresh}"/>
             <Button Content="New" Width="100" Margin="10,0,0,0" 
                     Command="{Binding Path=CreateProductCommand}" />
             <Button Content="Save" Width="100" Margin="10,0,0,0" 
-                    Command="{Binding Path=UpdateProductCommand}"
-                    IsEnabled="{Binding Path=SelectedProduct.HasChanges}"  />
+                    Command="{Binding Path=SaveProductCommand}"
+                    IsEnabled="{Binding Path=RootEntity.HasChanges}"  />
             <Button Content="Delete" Width="100" Margin="10,0,0,0" 
                     Command="{Binding Path=DeleteProductCommand}"
-                    IsEnabled="{Binding Path=CanDeleteProduct}"  />
+                    IsEnabled="{Binding Path=CanDelete}"  />
         </StackPanel>
 
         <!-- Product Form -->
@@ -48,7 +48,7 @@
                 <Label Content="Id:" 
                        Width="{StaticResource FormLabelWidth}" 
                        HorizontalContentAlignment="Right" />
-                <TextBox Text="{Binding Path=SelectedProduct.Id}" 
+                <TextBox Text="{Binding Path=RootEntity.Id}" 
                          IsEnabled="false" 
                          Width="150"
                          IsReadOnly="True"
@@ -62,7 +62,7 @@
                 <Label Content="Version:" 
                        Width="{StaticResource FormLabelWidth}" 
                        HorizontalContentAlignment="Right" />
-                <TextBox Text="{Binding Path=SelectedProduct.Version, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox Text="{Binding Path=RootEntity.Version, UpdateSourceTrigger=PropertyChanged}" 
                          IsEnabled="{Binding Path=HasRootEntity}" 
                          Width="{StaticResource FormTextBoxWidth}"
                          HorizontalContentAlignment="Center"
@@ -73,7 +73,7 @@
                 <Label Content="Number:" 
                        Width="{StaticResource FormLabelWidth}" 
                        HorizontalContentAlignment="Right" />
-                <TextBox Text="{Binding Path=SelectedProduct.Number, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox Text="{Binding Path=RootEntity.Number, UpdateSourceTrigger=PropertyChanged}" 
                          IsEnabled="{Binding Path=HasRootEntity}"
                          Width="{StaticResource FormTextBoxWidth}"
                          HorizontalContentAlignment="Center"
@@ -84,7 +84,7 @@
                 <Label Content="Name:" 
                        Width="{StaticResource FormLabelWidth}" 
                        HorizontalContentAlignment="Right" />
-                <TextBox Text="{Binding Path=SelectedProduct.Name, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox Text="{Binding Path=RootEntity.Name, UpdateSourceTrigger=PropertyChanged}" 
                          IsEnabled="{Binding Path=HasRootEntity}"
                          Width="{StaticResource FormTextBoxWidth}"
                          HorizontalContentAlignment="Center"
@@ -95,7 +95,7 @@
                 <Label Content="Description:" 
                        Width="{StaticResource FormLabelWidth}" 
                        HorizontalContentAlignment="Right" />
-                <TextBox Text="{Binding Path=SelectedProduct.Description, UpdateSourceTrigger=PropertyChanged}" 
+                <TextBox Text="{Binding Path=RootEntity.Description, UpdateSourceTrigger=PropertyChanged}" 
                          IsEnabled="{Binding Path=HasRootEntity}"
                          Width="{StaticResource FormTextBoxWidth}"
                          Height="100"
@@ -122,8 +122,8 @@
                   Margin="10"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False"
-                  ItemsSource="{Binding Path=SelectedProduct.Components}"
-                  SelectedItem="{Binding Path=SelectedProductComponent}">
+                  ItemsSource="{Binding Path=RootEntity.Components}"
+                  SelectedItem="{Binding Path=SelectedComponent}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Id" Binding="{Binding Path=Component.Id}" Width="*" />
                 <DataGridTextColumn Header="Version" Binding="{Binding Path=Component.Version}" Width="*" />
@@ -134,8 +134,8 @@
         </DataGrid>
 
         <!-- Status Bar -->
-        <StatusBar Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5">
+        <!--<StatusBar Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="5">
             <StatusBarItem Content="{Binding Path=StatusText}" HorizontalContentAlignment="Right" />
-        </StatusBar>
+        </StatusBar>-->
     </Grid>
 </UserControl>

@@ -30,9 +30,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Repositories", "src\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj", "{E490DDAE-B664-4103-B54A-7B34313125CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.Finances", "src\NtErp.Modules\NtErp.Modules.Finances\NtErp.Modules.Finances.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Contracts", "src\NtErp.Shared\NtErp.Shared.Contracts\NtErp.Shared.Contracts.csproj", "{E12F7242-10E0-4493-BE34-6FF5879B7B92}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.Finances", "src\NtErp.Modules\NtErp.Modules.Finances\NtErp.Modules.Finances.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -68,14 +68,14 @@ Global
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E490DDAE-B664-4103-B54A-7B34313125CD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -87,8 +87,8 @@ Global
 		{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{FC1B2772-A68E-4CC0-8BD0-7912B0DDF6AE} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{E490DDAE-B664-4103-B54A-7B34313125CD} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
-		{223A9E40-290B-478D-843D-C00639527966} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
+		{223A9E40-290B-478D-843D-C00639527966} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 10
@@ -126,9 +126,9 @@ Global
 		SccProjectTopLevelParentUniqueName8 = NtErp.sln
 		SccProjectName8 = src/NtErp.Shared/NtErp.Shared.Contracts
 		SccLocalPath8 = src\\NtErp.Shared\\NtErp.Shared.Contracts
-		SccProjectUniqueName9 = src\\NtErp.Modules\\NtErp.Modules.CashJournal\\NtErp.Modules.Finances.csproj
+		SccProjectUniqueName9 = src\\NtErp.Modules\\NtErp.Modules.Finances\\NtErp.Modules.Finances.csproj
 		SccProjectTopLevelParentUniqueName9 = NtErp.sln
-		SccProjectName9 = src/NtErp.Modules/NtErp.Modules.CashJournal
-		SccLocalPath9 = src\\NtErp.Modules\\NtErp.Modules.CashJournal
+		SccProjectName9 = src/NtErp.Modules/NtErp.Modules.Finances
+		SccLocalPath9 = src\\NtErp.Modules\\NtErp.Modules.Finances
 	EndGlobalSection
 EndGlobal

@@ -1,17 +1,21 @@
-﻿using NtErp.Shared.Contracts.Infrastructure;
+﻿using Autofac;
+using NtErp.Shared.Contracts.Infrastructure;
+using NtErp.Shared.Services.Base;
+using Prism.Events;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace NtErp.Shared.Services.ViewModels {
-    public class MenuItemViewModel : ViewModelBase, IMenuItemViewModel {
+    public abstract class MenuItemViewModel : CommonViewModel, IMenuItemViewModel {
         private string _header;
         private ICommand _command;
+        private EntityBase _selectedEntity;
         private ObservableCollection<IMenuItemViewModel> _items = new ObservableCollection<IMenuItemViewModel>();
 
 
-        public ObservableCollection<IMenuItemViewModel> Items {
-            get { return _items; }
-            set { _items = value; RaisePropertyChanged(); }
+        public string Header {
+            get { return _header; }
+            set { _header = value; RaisePropertyChanged(); }
         }
 
         public ICommand Command {
@@ -19,14 +23,15 @@ namespace NtErp.Shared.Services.ViewModels {
             set { _command = value; RaisePropertyChanged(); }
         }
 
-        public string Header {
-            get { return _header; }
-            set { _header = value; RaisePropertyChanged(); }
+        public ObservableCollection<IMenuItemViewModel> Items {
+            get { return _items; }
+            set { _items = value; RaisePropertyChanged(); }
         }
 
 
-        protected override void RefreshEnabledBindings() {
+        public MenuItemViewModel(ILifetimeScope scope, IEventAggregator eventAggregator) : base(scope, eventAggregator) {
 
         }
+
     }
 }

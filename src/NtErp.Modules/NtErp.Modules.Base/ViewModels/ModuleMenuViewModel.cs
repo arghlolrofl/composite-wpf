@@ -9,7 +9,7 @@ using System;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
-    public class ModuleMenuViewModel : ViewModelBase {
+    public class ModuleMenuViewModel : EntityViewModelBase {
         private ICommand _goToProductViewCommand;
         private ICommand _goToTaxRateViewCommand;
         private ILifetimeScope _scope;

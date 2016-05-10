@@ -8,7 +8,7 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
-    public class TaxRateViewModel : ViewModelBase {
+    public class TaxRateViewModel : EntityViewModelBase {
         #region Commands
 
         private ICommand _createTaxRateCommand;

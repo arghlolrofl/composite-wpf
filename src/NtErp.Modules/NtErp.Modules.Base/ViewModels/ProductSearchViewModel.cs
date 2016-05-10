@@ -1,4 +1,4 @@
-using Microsoft.Practices.Prism.Commands;
+using Autofac;
 using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Events;
@@ -6,70 +6,26 @@ using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
 using System;
 using System.Collections.ObjectModel;
-using System.Windows.Input;
 
 namespace NtErp.ViewModel.MasterFileData {
-    public class ProductSearchViewModel : ViewModelBase {
-        private bool? _dialogResult;
+    public class ProductSearchViewModel : SearchViewModel {
         private IProductRepository _productRepository;
-        private IEventAggregator _eventAggregator;
-        private Product _selectedProduct;
         private ObservableCollection<Product> _products = new ObservableCollection<Product>();
 
-        #region Commands
-
-        private ICommand _selectCommand;
-        private ICommand _searchCommand;
-        private ICommand _resetCommand;
-        private ICommand _cancelCommand;
-        private ICommand _mouseDoubleClickCommand;
-
-        public ICommand MouseDoubleClickCommand {
-            get { return _mouseDoubleClickCommand ?? (_mouseDoubleClickCommand = new DelegateCommand(MouseDoubleClickCommand_OnExecute)); }
-        }
-
-        public ICommand SelectCommand {
-            get { return _selectCommand ?? (_selectCommand = new DelegateCommand(SelectCommand_OnExecute)); }
-        }
-
-        public ICommand SearchCommand {
-            get { return _searchCommand ?? (_searchCommand = new DelegateCommand(SearchCommand_OnExecute)); }
-        }
-
-        public ICommand ResetCommand {
-            get { return _resetCommand ?? (_resetCommand = new DelegateCommand(ResetCommand_OnExecute)); }
-        }
-
-        public ICommand CancelCommand {
-            get { return _cancelCommand ?? (_cancelCommand = new DelegateCommand(CancelCommand_OnExecute)); }
-        }
-
-        #endregion
 
         #region Properties
-
-        public bool? DialogResult {
-            get { return _dialogResult; }
-            set { _dialogResult = value; RaisePropertyChanged(); }
-        }
 
         public ObservableCollection<Product> Products {
             get { return _products; }
             set { _products = value; RaisePropertyChanged(); }
         }
 
-        public Product SelectedProduct {
-            get { return _selectedProduct; }
-            set { _selectedProduct = value; RaisePropertyChanged(); }
-        }
-
         #endregion
 
         #region Initialization
 
-        public ProductSearchViewModel(IProductRepository productRepository, IEventAggregator eventAggregator) {
+        public ProductSearchViewModel(IProductRepository productRepository, IEventAggregator eventAggregator, ILifetimeScope scope) : base(scope, eventAggregator) {
             _productRepository = productRepository;
-            _eventAggregator = eventAggregator;
 
             RefreshComponents();
         }
@@ -77,29 +33,29 @@ namespace NtErp.ViewModel.MasterFileData {
         #endregion
 
 
-        private void SelectCommand_OnExecute() {
-            if (SelectedProduct != null) {
+        protected override void SelectCommand_OnExecute() {
+            if (SelectedEntity != null) {
                 DialogResult = true;
                 SendResponseAndRequestCloseDialog();
             }
         }
 
-        private void MouseDoubleClickCommand_OnExecute() {
-            if (SelectedProduct != null) {
+        protected override void MouseDoubleClickCommand_OnExecute() {
+            if (SelectedEntity != null) {
                 DialogResult = true;
                 SendResponseAndRequestCloseDialog();
             }
         }
 
-        private void SearchCommand_OnExecute() {
+        protected override void SearchCommand_OnExecute() {
             RefreshComponents();
         }
 
-        private void ResetCommand_OnExecute() {
+        protected override void ResetCommand_OnExecute() {
             throw new NotImplementedException();
         }
 
-        private void CancelCommand_OnExecute() {
+        protected override void CancelCommand_OnExecute() {
             DialogResult = false;
             SendResponseAndRequestCloseDialog();
         }
@@ -110,16 +66,12 @@ namespace NtErp.ViewModel.MasterFileData {
         }
 
         private void SendResponseAndRequestCloseDialog() {
-            long id = SelectedProduct == null ? 0 : SelectedProduct.Id;
+            long id = SelectedEntity == null ? 0 : SelectedEntity.Id;
 
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Publish(new EntitySearchResultEvent(id, DialogResult));
 
             RaiseCloseDialogRequested();
-        }
-
-        protected override void RefreshEnabledBindings() {
-
         }
     }
 }

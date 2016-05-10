@@ -6,15 +6,14 @@ using System.Runtime.CompilerServices;
 
 namespace NtErp.Shared.Services.ViewModels {
     public abstract class ViewModelBase : INotifyPropertyChanged {
-        protected string _nextView;
         protected IRegionManager _regionManager;
-        private EntityBase _selectedEntity;
+        private EntityBase _rootEntity;
 
 
         public EntityBase RootEntity {
-            get { return _selectedEntity; }
-            protected set {
-                _selectedEntity = value;
+            get { return _rootEntity; }
+            set {
+                _rootEntity = value;
                 RaisePropertyChanged();
                 RefreshEnabledBindings();
 
@@ -26,28 +25,14 @@ namespace NtErp.Shared.Services.ViewModels {
                 }
             }
         }
+
         public virtual bool HasRootEntity {
             get { return RootEntity != null; }
         }
 
-        public virtual bool CanCreateNew {
-            get { return !HasRootEntity && (HasRootEntity && RootEntity.Id > 0); }
-        }
-
-        public virtual bool CanRefresh {
-            get { return HasRootEntity && RootEntity.Id > 0; }
-        }
-
-        public virtual bool CanSave {
-            get { return HasRootEntity && RootEntity.HasChanges; }
-        }
-
-        public virtual bool CanDelete {
-            get { return HasRootEntity && RootEntity.Id > 0; }
-        }
+        public virtual bool CanSave { get { return true; } }
 
         protected abstract void RefreshEnabledBindings();
-
 
 
         #region INotifyPropertyChanged Members
@@ -58,12 +43,14 @@ namespace NtErp.Shared.Services.ViewModels {
 
         #endregion
 
+
         #region CloseDialog Event Members
 
         public event EventHandler CloseDialogRequested;
         protected void RaiseCloseDialogRequested() => CloseDialogRequested?.Invoke(this, EventArgs.Empty);
 
         #endregion
+
 
         #region Navigation Implementation
 
@@ -76,6 +63,5 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
         #endregion
-
     }
 }

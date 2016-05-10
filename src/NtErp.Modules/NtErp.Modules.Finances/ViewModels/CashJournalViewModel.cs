@@ -12,7 +12,7 @@ using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class CashJournalViewModel : ViewModelBase, INavigationAware {
+    public class CashJournalViewModel : EntityViewModelBase, INavigationAware {
         private ICommand _createJournalCommand;
         private ICommand _saveJournalCommand;
         private ICommand _deleteJournalCommand;
@@ -24,8 +24,8 @@ namespace NtErp.Modules.Finances.ViewModels {
         private ILifetimeScope _scope;
         private IEventAggregator _eventAggregator;
         private CashJournalEntry _selectedEntry;
-        private IJournalBookRepository _repository;
-        private IJournalEntryRepository _entryRepository;
+        private IJournalBookRepository _cashJournalRepository;
+        private IJournalEntryRepository _cashJournalEntryRepository;
 
 
         #region Commands
@@ -94,12 +94,14 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         public CashJournalViewModel(
             ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager,
-            IJournalBookRepository repository, IJournalEntryRepository entryRepository, ITaxRateRepository taxRateRepository) {
+            IJournalBookRepository cashJournalRepository,
+            IJournalEntryRepository cashJournalEntryRepository,
+            ITaxRateRepository taxRateRepository) {
             _scope = scope;
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
-            _repository = repository;
-            _entryRepository = entryRepository;
+            _cashJournalRepository = cashJournalRepository;
+            _cashJournalEntryRepository = cashJournalEntryRepository;
         }
 
         #endregion
@@ -117,26 +119,24 @@ namespace NtErp.Modules.Finances.ViewModels {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Unsubscribe(JournalSearch_OnReply);
 
-            if (response.DialogResult.Equals(true)) {
-                RootEntity = _repository.Find(response.EntityId);
-                //StatusText = "Selected Product: " + SelectedProduct.Number;
-            }
+            if (response.DialogResult.Equals(true))
+                RootEntity = _cashJournalRepository.Find(response.EntityId);
         }
 
         private void RefreshJournalCommand_OnExecute() {
-            _repository.Refresh(RootEntity);
+            _cashJournalRepository.Refresh(RootEntity);
         }
 
         private void CreateJournalCommand_OnExecute() {
-            RootEntity = _repository.New();
+            RootEntity = _cashJournalRepository.New();
         }
 
         private void SaveJournalCommand_OnExecute() {
-            _repository.Save(RootEntity);
+            _cashJournalRepository.Save(RootEntity);
         }
 
         private void DeleteJournalCommand_OnExecute() {
-            _repository.Delete(RootEntity);
+            _cashJournalRepository.Delete(RootEntity);
         }
 
         private void CreateEntryCommand_OnExecute() {
@@ -157,7 +157,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         private void DeleteEntryCommand_OnExecute() {
-            _entryRepository.Delete(SelectedEntry);
+            _cashJournalEntryRepository.Delete(SelectedEntry);
         }
 
 

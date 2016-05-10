@@ -9,13 +9,13 @@ using System;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class ModuleMenuViewModel : ViewModelBase {
-        private ICommand _goToJournalViewCommand;
+    public class ModuleMenuViewModel : EntityViewModelBase {
+        private ICommand _goToCashJournalViewCommand;
         private ILifetimeScope _scope;
         private IModuleManager _moduleManager;
 
-        public ICommand GoToJournalViewCommand {
-            get { return _goToJournalViewCommand ?? (_goToJournalViewCommand = new DelegateCommand(GoToJournalViewCommand_OnExecute)); }
+        public ICommand GoToCashJournalViewCommand {
+            get { return _goToCashJournalViewCommand ?? (_goToCashJournalViewCommand = new DelegateCommand(GoToCashJournalViewCommand_OnExecute)); }
         }
 
         public ModuleMenuViewModel(ILifetimeScope scope, IRegionManager regionManager, IModuleManager moduleManager) {
@@ -24,7 +24,7 @@ namespace NtErp.Modules.Finances.ViewModels {
             _moduleManager = moduleManager;
         }
 
-        private void GoToJournalViewCommand_OnExecute() {
+        private void GoToCashJournalViewCommand_OnExecute() {
             IRegion region = _regionManager.Regions[RegionNames.MainContent];
             Uri viewUri = new Uri(nameof(CashJournalView), UriKind.Relative);
 

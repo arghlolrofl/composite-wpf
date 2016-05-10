@@ -24,5 +24,6 @@ namespace NtErp.Modules.Finances {
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalEntryView));
         }
+
     }
 }

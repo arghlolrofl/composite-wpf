@@ -52,12 +52,12 @@
                     Width="100" 
                     Margin="5,0,5,0" 
                     Command="{Binding Path=RefreshEntryCommand}"
-                    IsEnabled="{Binding Path=CanRefreshEntry}" />
+                    IsEnabled="{Binding Path=CanRefresh}" />
             <Button Content="Save" 
                     Width="100" 
                     Margin="5,0,5,0" 
                     Command="{Binding Path=SaveEntryCommand}"
-                    IsEnabled="{Binding Path=CanSaveEntry}" />
+                    IsEnabled="{Binding Path=CanSave}" />
         </StackPanel>
         
         <Border Grid.Row="7" Grid.Column="0"
@@ -70,27 +70,27 @@
         <Label Content="Id:"
                Grid.Row="2" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=SelectedEntity.Id}" IsReadOnly="True"
+        <TextBox Text="{Binding Path=RootEntity.Id}" IsReadOnly="True"
                  Grid.Row="2" Grid.Column="3" />
 
         <Label Content="Date:"
                Grid.Row="2" Grid.Column="5"
                HorizontalAlignment="Right" />
-        <DatePicker SelectedDate="{Binding Path=SelectedEntity.Date}" 
+        <DatePicker SelectedDate="{Binding Path=RootEntity.Date}" 
                     HorizontalContentAlignment="Stretch"
                     Grid.Row="2" Grid.Column="7" />
 
         <Label Content="Document:"
                Grid.Row="4" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=SelectedEntity.DocumentFullName, Mode=OneWay}"
+        <TextBox Text="{Binding Path=RootEntity.DocumentFullName, Mode=OneWay}"
                  IsReadOnly="True"
                  Grid.Row="4" Grid.Column="3" Grid.ColumnSpan="5" />
 
         <Label Content="Process:"
                Grid.Row="6" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=SelectedEntity.ProcessDescription}"
+        <TextBox Text="{Binding Path=RootEntity.ProcessDescription}"
                  Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="5" />
 
         <Label Content="Delta:"
@@ -123,7 +123,7 @@
                 ToolTip="Adds a new position to this entry."
                 Grid.Row="10" Grid.Column="9" />
 
-        <DataGrid ItemsSource="{Binding Path=SelectedEntity.Positions}" 
+        <DataGrid ItemsSource="{Binding Path=RootEntity.Positions}" 
                   SelectedItem="{Binding Path=SelectedPosition}"
                   AutoGenerateColumns="False"
                   CanUserAddRows="False" CanUserDeleteRows="False"

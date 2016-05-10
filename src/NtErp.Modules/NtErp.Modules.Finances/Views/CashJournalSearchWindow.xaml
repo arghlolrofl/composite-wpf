@@ -9,7 +9,6 @@
              beh:DialogResultBehavior.DialogResult="{Binding Path=DialogResult, UpdateSourceTrigger=PropertyChanged}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="800" Height="600">
-    <!--xmlns:cmd="clr-namespace:GalaSoft.MvvmLight.Command;assembly=GalaSoft.MvvmLight.Platform"-->
     <Grid Margin="10">
         <Grid.Resources>
             <sys:Double x:Key="CriteriaLabelWidth">100</sys:Double>
@@ -89,7 +88,7 @@
         <!-- Search results -->
         <DataGrid Name="ResultsDataGrid" 
                   ItemsSource="{Binding Path=Journals}"
-                  SelectedItem="{Binding Path=SelectedJournal}"
+                  SelectedItem="{Binding Path=RootEntity}"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserReorderColumns="False"
