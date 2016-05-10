@@ -5,14 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 
 namespace NtErp.Shared.Entities.CashJournal {
-    public class JournalEntry : EntityBase {
+    public class CashJournalEntry : EntityBase {
         private DateTime _date;
         private string _documentFolderPath;
         private string _documentName;
         private string _processDescription;
         private decimal _cashBalance;
-        private JournalBook _journalBook;
-        private ObservableCollection<JournalEntryPosition> _positions = new ObservableCollection<JournalEntryPosition>();
+        private CashJournal _journal;
+        private ObservableCollection<CashJournalEntryPosition> _positions = new ObservableCollection<CashJournalEntryPosition>();
 
 
         [NotMapped]
@@ -66,17 +66,17 @@ namespace NtErp.Shared.Entities.CashJournal {
         }
 
         /// <summary>
-        /// Navigation property to <see cref="JournalBook"/>
+        /// Navigation property to <see cref="Entities.CashJournal.CashJournal"/>
         /// </summary>
-        public virtual JournalBook JournalBook {
-            get { return _journalBook; }
-            set { _journalBook = value; RaisePropertyChanged(); }
+        public virtual CashJournal Journal {
+            get { return _journal; }
+            set { _journal = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// List of positions for this entry.
         /// </summary>
-        public virtual ObservableCollection<JournalEntryPosition> Positions {
+        public virtual ObservableCollection<CashJournalEntryPosition> Positions {
             get { return _positions; }
             set { _positions = value; RaisePropertyChanged(); }
         }

@@ -11,7 +11,7 @@ using System.Windows.Input;
 namespace NtErp.ViewModel.MasterFileData {
     public class ProductSearchViewModel : ViewModelBase {
         private bool? _dialogResult;
-        private IProductRepository _repository;
+        private IProductRepository _productRepository;
         private IEventAggregator _eventAggregator;
         private Product _selectedProduct;
         private ObservableCollection<Product> _products = new ObservableCollection<Product>();
@@ -67,8 +67,8 @@ namespace NtErp.ViewModel.MasterFileData {
 
         #region Initialization
 
-        public ProductSearchViewModel(IProductRepository repository, IEventAggregator eventAggregator) {
-            _repository = repository;
+        public ProductSearchViewModel(IProductRepository productRepository, IEventAggregator eventAggregator) {
+            _productRepository = productRepository;
             _eventAggregator = eventAggregator;
 
             RefreshComponents();
@@ -106,7 +106,7 @@ namespace NtErp.ViewModel.MasterFileData {
 
         private void RefreshComponents() {
             Products.Clear();
-            Products.AddRange(_repository.GetAll());
+            Products.AddRange(_productRepository.Fetch());
         }
 
         private void SendResponseAndRequestCloseDialog() {

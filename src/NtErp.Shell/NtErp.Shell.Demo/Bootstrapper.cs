@@ -3,7 +3,6 @@ using Microsoft.Practices.ServiceLocation;
 using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
 using NtErp.Shared.Repositories;
-using NtErp.Shared.Services.Contracts;
 using NtErp.Shell.Demo.Views;
 using Prism.Autofac;
 using Prism.Modularity;
@@ -47,7 +46,7 @@ namespace NtErp.Shell.Demo {
                 }
             );
 
-            moduleType = typeof(Modules.CashJournal.CashJournalModule);
+            moduleType = typeof(Modules.Finances.FinancesModule);
             ModuleCatalog.AddModule(
                 new ModuleInfo() {
                     ModuleName = moduleType.Name,

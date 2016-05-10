@@ -101,7 +101,7 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         private void RefreshProductCommand_OnExecute() {
-            _repository.Refresh(SelectedEntity);
+            _repository.Refresh(RootEntity);
         }
 
         private void OpenProductSearchCommand_OnExecute() {
@@ -117,23 +117,23 @@ namespace NtErp.Modules.Base.ViewModels {
                             .Unsubscribe(ProductSearch_OnReply);
 
             if (response.DialogResult.Equals(true)) {
-                SelectedEntity = _repository.GetSingle(response.EntityId);
+                RootEntity = _repository.Find(response.EntityId);
                 //StatusText = "Selected Product: " + SelectedProduct.Number;
             }
         }
 
         private void CreateProductCommand_OnExecute() {
-            SelectedEntity = _repository.New();
+            RootEntity = _repository.New();
             //StatusText = "Create new Product";
         }
 
         private void SaveProductCommand_OnExecute() {
-            _repository.Save(SelectedEntity);
+            _repository.Save(RootEntity);
             //StatusText = "Product saved";
         }
 
         private void DeleteProductCommand_OnExecute() {
-            _repository.Delete(SelectedEntity);
+            _repository.Delete(RootEntity);
             //StatusText = "Product deleted";
         }
 
@@ -152,8 +152,8 @@ namespace NtErp.Modules.Base.ViewModels {
             if (!response.DialogResult.Equals(true))
                 return;
 
-            Product component = _repository.GetSingle(response.EntityId);
-            Product kit = SelectedEntity as Product;
+            Product component = _repository.Find(response.EntityId);
+            Product kit = RootEntity as Product;
 
             _repository.AddComponent(kit, component);
 

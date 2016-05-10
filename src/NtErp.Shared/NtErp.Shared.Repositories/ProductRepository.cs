@@ -53,8 +53,11 @@ namespace NtErp.Shared.Repositories {
         ///   Fetches all <see cref="Product"/>s including detailed information
         /// </summary>
         /// <returns>List of Products</returns>
-        public override IEnumerable<Product> GetAll() {
-            return _context.Products.ToList();
+        public override IEnumerable<Product> Fetch(int maxResultCount = -1) {
+            if (maxResultCount < 0)
+                return _context.Products.ToList();
+            else
+                return _context.Products.Take(maxResultCount).ToList();
         }
 
         /// <summary>
@@ -62,7 +65,7 @@ namespace NtErp.Shared.Repositories {
         /// </summary>
         /// <param name="id">Primary Key</param>
         /// <returns>Single <see cref="Product"/></returns>
-        public override Product GetSingle(long id) {
+        public override Product Find(long id) {
             var product = _context.Products.Include(p => p.Components).Single(p => p.Id == id);
             return product;
         }

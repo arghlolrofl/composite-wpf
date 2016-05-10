@@ -7,37 +7,40 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class JournalBookRepository : RepositoryBase<JournalBook>, IJournalBookRepository {
+    public class JournalBookRepository : RepositoryBase<CashJournal>, IJournalBookRepository {
         public JournalBookRepository(NtErpContext context) : base(context) {
 
         }
 
 
-        public JournalBook New() {
-            return new JournalBook() {
+        public CashJournal New() {
+            return new CashJournal() {
                 Id = 0,
                 StartDate = DateTime.Now,
                 EndDate = DateTime.Now.AddMonths(1)
             };
         }
 
-        public override JournalBook GetSingle(long id) {
-            var book = _context.CashJournals.Find(id);
+        public override CashJournal Find(long id) {
+            var journal = _context.CashJournals.Find(id);
 
-            _context.Entry(book).Reload();
+            _context.Entry(journal).Reload();
 
-            return book;
+            return journal;
         }
 
-        public override IEnumerable<JournalBook> GetAll() {
-            return _context.CashJournals.ToList();
+        public override IEnumerable<CashJournal> Fetch(int maxResultCount = -1) {
+            if (maxResultCount < 0)
+                return _context.CashJournals.ToList();
+            else
+                return _context.CashJournals.Take(maxResultCount).ToList();
         }
 
         public override void Save(EntityBase entity) {
-            JournalBook book = null;
+            CashJournal journal = null;
 
-            if (entity.Exists && ((book = entity as JournalBook) != null))
-                _context.CashJournals.Attach(book);
+            if (entity.Exists && ((journal = entity as CashJournal) != null))
+                _context.CashJournals.Attach(journal);
 
             base.Save(entity);
         }

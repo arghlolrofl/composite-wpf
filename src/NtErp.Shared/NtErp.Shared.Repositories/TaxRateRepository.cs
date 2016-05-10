@@ -20,12 +20,15 @@ namespace NtErp.Shared.Repositories {
             };
         }
 
-        public override TaxRate GetSingle(long id) {
+        public override TaxRate Find(long id) {
             return _context.TaxRates.Find(id);
         }
 
-        public override IEnumerable<TaxRate> GetAll() {
-            return _context.TaxRates.ToList();
+        public override IEnumerable<TaxRate> Fetch(int maxResultCount = -1) {
+            if (maxResultCount < 0)
+                return _context.TaxRates.ToList();
+            else
+                return _context.TaxRates.Take(maxResultCount).ToList();
         }
 
         public override void Save(EntityBase entity) {

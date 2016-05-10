@@ -11,39 +11,39 @@ namespace NtErp.Shared.Services.ViewModels {
         private EntityBase _selectedEntity;
 
 
-        public EntityBase SelectedEntity {
+        public EntityBase RootEntity {
             get { return _selectedEntity; }
             protected set {
                 _selectedEntity = value;
                 RaisePropertyChanged();
                 RefreshEnabledBindings();
 
-                if (SelectedEntity != null) {
-                    SelectedEntity.PropertyChanged += (sender, args) => {
-                        if (args.PropertyName == nameof(SelectedEntity.HasChanges))
+                if (RootEntity != null) {
+                    RootEntity.PropertyChanged += (sender, args) => {
+                        if (args.PropertyName == nameof(RootEntity.HasChanges))
                             RaisePropertyChanged(nameof(CanSave));
                     };
                 }
             }
         }
         public virtual bool HasRootEntity {
-            get { return SelectedEntity != null; }
+            get { return RootEntity != null; }
         }
 
         public virtual bool CanCreateNew {
-            get { return !HasRootEntity && (HasRootEntity && SelectedEntity.Id > 0); }
+            get { return !HasRootEntity && (HasRootEntity && RootEntity.Id > 0); }
         }
 
         public virtual bool CanRefresh {
-            get { return HasRootEntity && SelectedEntity.Id > 0; }
+            get { return HasRootEntity && RootEntity.Id > 0; }
         }
 
         public virtual bool CanSave {
-            get { return HasRootEntity && SelectedEntity.HasChanges; }
+            get { return HasRootEntity && RootEntity.HasChanges; }
         }
 
         public virtual bool CanDelete {
-            get { return HasRootEntity && SelectedEntity.Id > 0; }
+            get { return HasRootEntity && RootEntity.Id > 0; }
         }
 
         protected abstract void RefreshEnabledBindings();

@@ -14,17 +14,17 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows.Input;
 
-namespace NtErp.Modules.CashJournal.ViewModels {
-    public class JournalEntryViewModel : ViewModelBase, INavigationAware {
+namespace NtErp.Modules.Finances.ViewModels {
+    public class CashJournalEntryViewModel : ViewModelBase, INavigationAware {
         #region INavigationAware Members
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
             string entryId = (string)navigationContext.Parameters[ParameterNames.Id];
             if (!String.IsNullOrEmpty(entryId)) {
                 long id = Int64.Parse(entryId);
-                SelectedEntity = _repository.GetSingle(id);
+                RootEntity = _repository.Find(id);
             } else
-                SelectedEntity = _repository.New();
+                RootEntity = _repository.New();
 
             string nextView = (string)navigationContext.Parameters[ParameterNames.NextView];
             if (!String.IsNullOrEmpty(nextView))
@@ -47,13 +47,13 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         private IJournalEntryRepository _repository;
         private ITaxRateRepository _taxRateRepository;
         private ILifetimeScope _scope;
-        private JournalEntryPosition _selectedPosition;
+        private CashJournalEntryPosition _selectedPosition;
         private ObservableCollection<TaxRate> _availableTaxRates;
 
         #endregion
 
 
-        public JournalEntryPosition SelectedPosition {
+        public CashJournalEntryPosition SelectedPosition {
             get { return _selectedPosition; }
             set { _selectedPosition = value; RaisePropertyChanged(); }
         }
@@ -64,23 +64,15 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         }
 
         public bool CanAttachDocument {
-            get { return HasEntitySelected; }
-        }
-
-        public bool CanRefreshEntry {
-            get { return HasEntitySelected && SelectedEntity.Id > 0; }
-        }
-
-        public bool CanSaveEntry {
-            get { return HasEntitySelected && SelectedEntity.HasChanges; }
+            get { return HasRootEntity; }
         }
 
         public bool CanCreatePosition {
-            get { return HasEntitySelected; }
+            get { return HasRootEntity; }
         }
 
         public bool CanAddPosition {
-            get { return HasEntitySelected && SelectedPosition != null; }
+            get { return HasRootEntity && SelectedPosition != null; }
         }
 
 
@@ -127,7 +119,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         #region Initialization
 
-        public JournalEntryViewModel(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator,
+        public CashJournalEntryViewModel(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator,
             IJournalEntryRepository repository, ITaxRateRepository taxRateRepository) {
             _scope = scope;
             _eventAggregator = eventAggregator;
@@ -142,15 +134,15 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
 
         private void RefreshAvailableTaxRates() {
-            AvailableTaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.GetAll());
+            AvailableTaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.Fetch());
         }
 
         private void RefreshEntryCommand_OnExecute() {
-            _repository.Refresh(SelectedEntity);
+            _repository.Refresh(RootEntity);
         }
 
         private void SaveEntryCommand_OnExecute() {
-            _repository.Save(SelectedEntity);
+            _repository.Save(RootEntity);
         }
 
         private void AttachDocumentCommand_OnExecute() {
@@ -169,7 +161,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
             FileInfo file = new FileInfo(fileName);
 
-            JournalEntry entry = SelectedEntity as JournalEntry;
+            CashJournalEntry entry = RootEntity as CashJournalEntry;
             if (entry == null)
                 throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AttachDocumentCommand_OnExecute()");
 
@@ -182,7 +174,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         }
 
         private void AddPositionCommand_OnExecute() {
-            JournalEntry entry = SelectedEntity as JournalEntry;
+            CashJournalEntry entry = RootEntity as CashJournalEntry;
             if (entry == null)
                 throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AddPositionCommand_OnExecute()");
 
@@ -197,6 +189,10 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         private void CancelCommand_OnExecute() {
             NavigateToView(_nextView, RegionNames.MainContent);
+        }
+
+        protected override void RefreshEnabledBindings() {
+            throw new NotImplementedException();
         }
     }
 }

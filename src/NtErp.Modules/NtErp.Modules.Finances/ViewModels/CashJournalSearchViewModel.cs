@@ -8,8 +8,8 @@ using System;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
-namespace NtErp.Modules.CashJournal.ViewModels {
-    public class JournalBookSearchViewModel : ViewModelBase {
+namespace NtErp.Modules.Finances.ViewModels {
+    public class CashJournalSearchViewModel : ViewModelBase {
         #region Commands
 
         private ICommand _selectCommand;
@@ -40,8 +40,8 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         private bool? _dialogResult;
         private IJournalBookRepository _repository;
         private IEventAggregator _eventAggregator;
-        private JournalBook _selectedJournal;
-        private ObservableCollection<JournalBook> _journals = new ObservableCollection<JournalBook>();
+        private CashJournal _selectedJournal;
+        private ObservableCollection<CashJournal> _journals = new ObservableCollection<CashJournal>();
 
 
         #region Properties
@@ -51,12 +51,12 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             set { _dialogResult = value; RaisePropertyChanged(); }
         }
 
-        public ObservableCollection<JournalBook> Journals {
+        public ObservableCollection<CashJournal> Journals {
             get { return _journals; }
             set { _journals = value; RaisePropertyChanged(); }
         }
 
-        public JournalBook SelectedJournal {
+        public CashJournal SelectedJournal {
             get { return _selectedJournal; }
             set { _selectedJournal = value; RaisePropertyChanged(); }
         }
@@ -66,7 +66,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         #region Initialization
 
-        public JournalBookSearchViewModel(IJournalBookRepository repository, IEventAggregator eventAggregator) {
+        public CashJournalSearchViewModel(IJournalBookRepository repository, IEventAggregator eventAggregator) {
             _repository = repository;
             _eventAggregator = eventAggregator;
 
@@ -98,7 +98,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         private void RefreshJournals() {
             Journals.Clear();
-            Journals.AddRange(_repository.GetAll());
+            Journals.AddRange(_repository.Fetch());
         }
 
         private void SendResponseAndRequestCloseDialog() {

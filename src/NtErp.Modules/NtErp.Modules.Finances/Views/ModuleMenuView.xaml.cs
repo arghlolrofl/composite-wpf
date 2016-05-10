@@ -1,8 +1,8 @@
 ﻿using Autofac;
-using NtErp.Modules.CashJournal.ViewModels;
+using NtErp.Modules.Finances.ViewModels;
 using System.Windows.Controls;
 
-namespace NtErp.Modules.CashJournal.Views {
+namespace NtErp.Modules.Finances.Views {
     /// <summary>
     /// Interaction logic for ModuleMenuView.xaml
     /// </summary>

@@ -2,12 +2,12 @@
 using NtErp.Shared.Services.Base;
 
 namespace NtErp.Shared.Entities.CashJournal {
-    public class JournalEntryPosition : EntityBase {
+    public class CashJournalEntryPosition : EntityBase {
         private decimal _delta;
         private string _description;
         private decimal _prepaidTax;
         private TaxRate _taxRate;
-        private JournalEntry _journalEntry;
+        private CashJournalEntry _entry;
 
 
         public decimal Delta {
@@ -30,9 +30,9 @@ namespace NtErp.Shared.Entities.CashJournal {
             set { _taxRate = value; RaisePropertyChanged(); }
         }
 
-        public virtual JournalEntry JournalEntry {
-            get { return _journalEntry; }
-            set { _journalEntry = value; RaisePropertyChanged(); }
+        public virtual CashJournalEntry Entry {
+            get { return _entry; }
+            set { _entry = value; RaisePropertyChanged(); }
         }
 
 

@@ -7,40 +7,43 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class JournalEntryRepository : RepositoryBase<JournalEntry>, IJournalEntryRepository {
+    public class JournalEntryRepository : RepositoryBase<CashJournalEntry>, IJournalEntryRepository {
         public JournalEntryRepository(NtErpContext context) : base(context) {
 
         }
 
-        public JournalEntry New() {
-            return new JournalEntry() {
+        public CashJournalEntry New() {
+            return new CashJournalEntry() {
                 Id = 0,
                 Date = DateTime.Now
             };
         }
 
-        public JournalEntryPosition NewPosition() {
-            return new JournalEntryPosition();
+        public CashJournalEntryPosition NewPosition() {
+            return new CashJournalEntryPosition();
         }
 
-        public override IEnumerable<JournalEntry> GetAll() {
-            return _context.CashJournalEntries.ToList();
+        public override IEnumerable<CashJournalEntry> Fetch(int maxResultCount = -1) {
+            if (maxResultCount < 0)
+                return _context.CashJournalEntries.ToList();
+            else
+                return _context.CashJournalEntries.Take(maxResultCount).ToList();
         }
 
-        public override JournalEntry GetSingle(long id) {
+        public override CashJournalEntry Find(long id) {
             return _context.CashJournalEntries.Find(id);
         }
 
         public override void Save(EntityBase entity) {
-            JournalEntry e = null;
+            CashJournalEntry e = null;
 
-            if (entity.Exists && ((e = entity as JournalEntry) != null))
+            if (entity.Exists && ((e = entity as CashJournalEntry) != null))
                 _context.CashJournalEntries.Attach(e);
 
             base.Save(entity);
         }
 
-        public void AddPosition(JournalEntry entry, JournalEntryPosition position) {
+        public void AddPosition(CashJournalEntry entry, CashJournalEntryPosition position) {
             _context.CashJournalEntries.Attach(entry);
 
             if (position.Id > 0) {
@@ -52,7 +55,7 @@ namespace NtErp.Shared.Repositories {
             _context.SaveChanges();
         }
 
-        public void RemovePosition(JournalEntryPosition position) {
+        public void RemovePosition(CashJournalEntryPosition position) {
             if (position.Id > 0)
                 _context.CashJournalEntryPositions.Attach(position);
 

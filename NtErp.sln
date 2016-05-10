@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.DataAccess", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Repositories", "src\NtErp.Shared\NtErp.Shared.Repositories\NtErp.Shared.Repositories.csproj", "{E490DDAE-B664-4103-B54A-7B34313125CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.CashJournal", "src\NtErp.Modules\NtErp.Modules.CashJournal\NtErp.Modules.CashJournal.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.Finances", "src\NtErp.Modules\NtErp.Modules.Finances\NtErp.Modules.Finances.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Contracts", "src\NtErp.Shared\NtErp.Shared.Contracts\NtErp.Shared.Contracts.csproj", "{E12F7242-10E0-4493-BE34-6FF5879B7B92}"
 EndProject
@@ -122,13 +122,13 @@ Global
 		SccProjectTopLevelParentUniqueName7 = NtErp.sln
 		SccProjectName7 = src/NtErp.Shared/NtErp.Shared.Repositories
 		SccLocalPath7 = src\\NtErp.Shared\\NtErp.Shared.Repositories
-		SccProjectUniqueName8 = src\\NtErp.Modules\\NtErp.Modules.CashJournal\\NtErp.Modules.CashJournal.csproj
+		SccProjectUniqueName8 = src\\NtErp.Shared\\NtErp.Shared.Contracts\\NtErp.Shared.Contracts.csproj
 		SccProjectTopLevelParentUniqueName8 = NtErp.sln
-		SccProjectName8 = src/NtErp.Modules/NtErp.Modules.CashJournal
-		SccLocalPath8 = src\\NtErp.Modules\\NtErp.Modules.CashJournal
-		SccProjectUniqueName9 = src\\NtErp.Shared\\NtErp.Shared.Contracts\\NtErp.Shared.Contracts.csproj
+		SccProjectName8 = src/NtErp.Shared/NtErp.Shared.Contracts
+		SccLocalPath8 = src\\NtErp.Shared\\NtErp.Shared.Contracts
+		SccProjectUniqueName9 = src\\NtErp.Modules\\NtErp.Modules.CashJournal\\NtErp.Modules.Finances.csproj
 		SccProjectTopLevelParentUniqueName9 = NtErp.sln
-		SccProjectName9 = src/NtErp.Shared/NtErp.Shared.Contracts
-		SccLocalPath9 = src\\NtErp.Shared\\NtErp.Shared.Contracts
+		SccProjectName9 = src/NtErp.Modules/NtErp.Modules.CashJournal
+		SccLocalPath9 = src\\NtErp.Modules\\NtErp.Modules.CashJournal
 	EndGlobalSection
 EndGlobal

@@ -36,7 +36,7 @@ namespace NtErp.Modules.Base.ViewModels {
         #endregion
 
         private IEventAggregator _eventAggregator;
-        private ITaxRateRepository _repository;
+        private ITaxRateRepository _taxRateRepository;
         private ILifetimeScope _scope;
         private ObservableCollection<TaxRate> _taxRates;
 
@@ -54,7 +54,7 @@ namespace NtErp.Modules.Base.ViewModels {
         public TaxRateViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, ITaxRateRepository repository) {
             _scope = scope;
             _eventAggregator = eventAggregator;
-            _repository = repository;
+            _taxRateRepository = repository;
             _taxRates = new ObservableCollection<TaxRate>();
 
             RefreshTaxRates();
@@ -64,23 +64,23 @@ namespace NtErp.Modules.Base.ViewModels {
 
 
         private void CreateTaxRateCommand_OnExecute() {
-            SelectedEntity = _repository.New();
+            RootEntity = _taxRateRepository.New();
         }
 
         private void RefreshTaxRateCommand_OnExecute() {
-            _repository.Refresh(SelectedEntity);
+            _taxRateRepository.Refresh(RootEntity);
         }
 
         private void SaveTaxRateCommand_OnExecute() {
-            _repository.Save(SelectedEntity);
+            _taxRateRepository.Save(RootEntity);
 
             RefreshEnabledBindings();
             RefreshTaxRates();
         }
 
         private void DeleteTaxRateCommand_OnExecute() {
-            _repository.Delete(SelectedEntity);
-            SelectedEntity = null;
+            _taxRateRepository.Delete(RootEntity);
+            RootEntity = null;
 
             RefreshEnabledBindings();
             RefreshTaxRates();
@@ -89,7 +89,7 @@ namespace NtErp.Modules.Base.ViewModels {
 
 
         private void RefreshTaxRates() {
-            TaxRates = new ObservableCollection<TaxRate>(_repository.GetAll());
+            TaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.Fetch());
         }
 
         protected override void RefreshEnabledBindings() {

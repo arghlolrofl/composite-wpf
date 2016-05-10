@@ -3,50 +3,50 @@ using System;
 using System.Collections.ObjectModel;
 
 namespace NtErp.Shared.Entities.CashJournal {
-    public class JournalBook : EntityBase {
-        private string _Number;
-        private DateTime _StartDate;
-        private DateTime _EndDate;
-        private string _Description;
-        private ObservableCollection<JournalEntry> _entries = new ObservableCollection<JournalEntry>();
+    public class CashJournal : EntityBase {
+        private string _number;
+        private DateTime _startDate;
+        private DateTime _endDate;
+        private string _description;
+        private ObservableCollection<CashJournalEntry> _entries = new ObservableCollection<CashJournalEntry>();
 
 
         /// <summary>
         /// A sequential number
         /// </summary>
         public string Number {
-            get { return _Number; }
-            set { _Number = value; RaisePropertyChanged(); }
+            get { return _number; }
+            set { _number = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// Start date of the journal
         /// </summary>
         public DateTime StartDate {
-            get { return _StartDate; }
-            set { _StartDate = value; RaisePropertyChanged(); }
+            get { return _startDate; }
+            set { _startDate = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// End date of the journal
         /// </summary>
         public DateTime EndDate {
-            get { return _EndDate; }
-            set { _EndDate = value; RaisePropertyChanged(); }
+            get { return _endDate; }
+            set { _endDate = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// Description of the journal (Kassenbuchbeschreibung)
         /// </summary>
         public string Description {
-            get { return _Description; }
-            set { _Description = value; RaisePropertyChanged(); }
+            get { return _description; }
+            set { _description = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// List of journal entries
         /// </summary>
-        public virtual ObservableCollection<JournalEntry> Entries {
+        public virtual ObservableCollection<CashJournalEntry> Entries {
             get { return _entries; }
             set { _entries = value; RaisePropertyChanged(); }
         }

@@ -1,6 +1,5 @@
 ﻿using Autofac;
-using NtErp.Modules.Base.Views;
-using NtErp.Modules.CashJournal.Views;
+using NtErp.Modules.Finances.Views;
 using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Services.Contracts;
@@ -12,8 +11,8 @@ using Prism.Events;
 using Prism.Regions;
 using System.Windows.Input;
 
-namespace NtErp.Modules.CashJournal.ViewModels {
-    public class JournalBookViewModel : ViewModelBase, INavigationAware {
+namespace NtErp.Modules.Finances.ViewModels {
+    public class CashJournalViewModel : ViewModelBase, INavigationAware {
         private ICommand _createJournalCommand;
         private ICommand _saveJournalCommand;
         private ICommand _deleteJournalCommand;
@@ -24,8 +23,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
         private ICommand _deleteEntryCommand;
         private ILifetimeScope _scope;
         private IEventAggregator _eventAggregator;
-        private JournalBook _selectedJournal;
-        private JournalEntry _selectedJournalEntry;
+        private CashJournalEntry _selectedEntry;
         private IJournalBookRepository _repository;
         private IJournalEntryRepository _entryRepository;
 
@@ -68,68 +66,33 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         #region View Bindings
 
-        public JournalBook SelectedJournal {
-            get { return _selectedJournal; }
+        public CashJournalEntry SelectedEntry {
+            get { return _selectedEntry; }
             set {
-                _selectedJournal = value;
-
-                raiseIsEnabledPropertyChanged();
-
-                if (SelectedJournal != null)
-                    SelectedJournal.PropertyChanged += (sender, args) => {
-                        if (args.PropertyName == nameof(SelectedJournal.HasChanges))
-                            RaisePropertyChanged(nameof(CanSaveJournal));
-                    };
-            }
-        }
-
-        public JournalEntry SelectedJournalEntry {
-            get { return _selectedJournalEntry; }
-            set {
-                _selectedJournalEntry = value;
+                _selectedEntry = value;
                 RaisePropertyChanged();
 
-                raiseIsEnabledPropertyChanged();
+                RefreshEnabledBindings();
             }
-        }
-
-        public bool HasRootEntity {
-            get { return SelectedJournal != null; }
-        }
-
-        public bool CanCreateJournal {
-            get { return !HasRootEntity || (HasRootEntity && !SelectedJournal.HasChanges); }
-        }
-
-        public bool CanRefreshJournal {
-            get { return HasRootEntity && SelectedJournal.Id > 0; }
-        }
-
-        public bool CanSaveJournal {
-            get { return HasRootEntity && SelectedJournal.HasChanges; }
-        }
-
-        public bool CanDeleteJournal {
-            get { return HasRootEntity && SelectedJournal.Id > 0; }
         }
 
         public bool CanCreateEntry {
-            get { return HasRootEntity && SelectedJournal.Id > 0 && !SelectedJournal.HasChanges; }
+            get { return HasRootEntity && RootEntity.Id > 0 && !RootEntity.HasChanges; }
         }
 
         public bool CanEditEntry {
-            get { return HasRootEntity && SelectedJournalEntry != null; }
+            get { return HasRootEntity && SelectedEntry != null; }
         }
 
         public bool CanDeleteEntry {
-            get { return HasRootEntity && SelectedJournalEntry != null; }
+            get { return HasRootEntity && SelectedEntry != null; }
         }
 
         #endregion
 
         #region Initialization
 
-        public JournalBookViewModel(
+        public CashJournalViewModel(
             ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager,
             IJournalBookRepository repository, IJournalEntryRepository entryRepository, ITaxRateRepository taxRateRepository) {
             _scope = scope;
@@ -146,66 +109,63 @@ namespace NtErp.Modules.CashJournal.ViewModels {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Subscribe(JournalSearch_OnReply);
 
-            var searchWindow = _scope.Resolve<JournalBookSearchWindow>();
+            var searchWindow = _scope.Resolve<CashJournalSearchWindow>();
             searchWindow.ShowDialog();
         }
-
-        private void RefreshJournalCommand_OnExecute() {
-            _repository.Refresh(SelectedJournal);
-        }
-
-        private void CreateJournalCommand_OnExecute() {
-            SelectedJournal = _repository.New();
-        }
-
-        private void SaveJournalCommand_OnExecute() {
-            _repository.Save(SelectedJournal);
-        }
-
-        private void DeleteJournalCommand_OnExecute() {
-            _repository.Delete(SelectedJournal);
-            SelectedJournal = null;
-        }
-
-        private void CreateEntryCommand_OnExecute() {
-            var param = new NavigationParameters() {
-                { ParameterNames.NextView, nameof(JournalBookView) }
-            };
-
-            NavigateToView(nameof(JournalEntryView), RegionNames.MainContent, param);
-        }
-
-        private void EditEntryCommand_OnExecute() {
-            var param = new NavigationParameters() {
-                { ParameterNames.Id,        SelectedJournalEntry.Id },
-                { ParameterNames.NextView,  nameof(JournalBookView) }
-            };
-
-            NavigateToView(nameof(JournalEntryView), RegionNames.MainContent, param);
-        }
-
-        private void DeleteEntryCommand_OnExecute() {
-            _entryRepository.Delete(SelectedJournalEntry);
-        }
-
-
 
         private void JournalSearch_OnReply(EntitySearchResultEvent response) {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Unsubscribe(JournalSearch_OnReply);
 
             if (response.DialogResult.Equals(true)) {
-                SelectedJournal = _repository.GetSingle(response.EntityId);
+                RootEntity = _repository.Find(response.EntityId);
                 //StatusText = "Selected Product: " + SelectedProduct.Number;
             }
         }
 
-        private void raiseIsEnabledPropertyChanged() {
-            RaisePropertyChanged(nameof(SelectedJournal));
+        private void RefreshJournalCommand_OnExecute() {
+            _repository.Refresh(RootEntity);
+        }
+
+        private void CreateJournalCommand_OnExecute() {
+            RootEntity = _repository.New();
+        }
+
+        private void SaveJournalCommand_OnExecute() {
+            _repository.Save(RootEntity);
+        }
+
+        private void DeleteJournalCommand_OnExecute() {
+            _repository.Delete(RootEntity);
+        }
+
+        private void CreateEntryCommand_OnExecute() {
+            var param = new NavigationParameters() {
+                { ParameterNames.NextView, nameof(CashJournalView) }
+            };
+
+            NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
+        }
+
+        private void EditEntryCommand_OnExecute() {
+            var param = new NavigationParameters() {
+                { ParameterNames.Id,        SelectedEntry.Id },
+                { ParameterNames.NextView,  nameof(CashJournalView) }
+            };
+
+            NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
+        }
+
+        private void DeleteEntryCommand_OnExecute() {
+            _entryRepository.Delete(SelectedEntry);
+        }
+
+
+        protected override void RefreshEnabledBindings() {
             RaisePropertyChanged(nameof(HasRootEntity));
-            RaisePropertyChanged(nameof(CanSaveJournal));
-            RaisePropertyChanged(nameof(CanDeleteJournal));
-            RaisePropertyChanged(nameof(CanRefreshJournal));
+            RaisePropertyChanged(nameof(CanSave));
+            RaisePropertyChanged(nameof(CanDelete));
+            RaisePropertyChanged(nameof(CanRefresh));
             RaisePropertyChanged(nameof(CanCreateEntry));
             RaisePropertyChanged(nameof(CanDeleteEntry));
             RaisePropertyChanged(nameof(CanEditEntry));

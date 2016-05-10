@@ -28,7 +28,7 @@ namespace NtErp.Shared.DataAccess.Migrations {
             SeedProducts(context);
             SeedKits(context);
             SeedTaxRates(context);
-            SeedJournalBooks(context);
+            SeedJournals(context);
             SeedJournalEntries(context);
         }
 
@@ -87,27 +87,27 @@ namespace NtErp.Shared.DataAccess.Migrations {
             context.TaxRates.AddOrUpdate(t => t.Category, rate);
         }
 
-        private void SeedJournalBooks(NtErpContext context) {
-            JournalBook book = new JournalBook() { Number = "SomeSequentialNumber", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(30), Description = "Test Book" };
-            context.CashJournals.AddOrUpdate(j => j.Number, book);
+        private void SeedJournals(NtErpContext context) {
+            CashJournal journal = new CashJournal() { Number = "SomeSequentialNumber", StartDate = DateTime.Now, EndDate = DateTime.Now.AddDays(30), Description = "Test Book" };
+            context.CashJournals.AddOrUpdate(j => j.Number, journal);
         }
 
         private void SeedJournalEntries(NtErpContext context) {
-            JournalBook book = context.CashJournals.Local.First();
+            CashJournal journal = context.CashJournals.Local.First();
 
-            JournalEntryPosition position = new JournalEntryPosition() {
+            CashJournalEntryPosition position = new CashJournalEntryPosition() {
                 Delta = -200.0m,
                 Description = "Devel Test",
                 TaxRate = context.TaxRates.Local.First()
             };
 
-            JournalEntry entry = new JournalEntry() {
+            CashJournalEntry entry = new CashJournalEntry() {
                 Date = DateTime.Now,
                 DocumentName = "ScanXY.pdf",
                 ProcessDescription = "Some business process",
                 CashBalance = position.Delta,
-                JournalBook = book,
-                Positions = new ObservableCollection<JournalEntryPosition>(new JournalEntryPosition[] { position })
+                Journal = journal,
+                Positions = new ObservableCollection<CashJournalEntryPosition>(new CashJournalEntryPosition[] { position })
             };
 
             context.CashJournalEntries.AddOrUpdate(e => e.ProcessDescription, entry);

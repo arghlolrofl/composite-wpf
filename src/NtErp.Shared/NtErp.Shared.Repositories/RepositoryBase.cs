@@ -5,15 +5,17 @@ using System;
 using System.Collections.Generic;
 
 namespace NtErp.Shared.Repositories {
-    public abstract class RepositoryBase<TEntity> : IRepository<TEntity, long> where TEntity : EntityBase {
+    public abstract class RepositoryBase<TEntity> : IDisposable, IRepository<TEntity, long> where TEntity : EntityBase {
         protected NtErpContext _context;
 
         public RepositoryBase(NtErpContext context) {
             _context = context;
         }
 
-        public abstract IEnumerable<TEntity> GetAll();
-        public abstract TEntity GetSingle(long id);
+        public abstract IEnumerable<TEntity> Fetch(int maxResultCount = -1);
+
+        public abstract TEntity Find(long id);
+
         public virtual void Save(EntityBase entity) {
             if (entity.Exists)
                 _context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
@@ -57,5 +59,6 @@ namespace NtErp.Shared.Repositories {
         }
 
         #endregion
+
     }
 }

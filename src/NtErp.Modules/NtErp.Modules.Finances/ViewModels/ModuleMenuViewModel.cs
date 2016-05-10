@@ -1,5 +1,5 @@
 ﻿using Autofac;
-using NtErp.Modules.CashJournal.Views;
+using NtErp.Modules.Finances.Views;
 using NtErp.Shared.Services.Regions;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
@@ -8,7 +8,7 @@ using Prism.Regions;
 using System;
 using System.Windows.Input;
 
-namespace NtErp.Modules.CashJournal.ViewModels {
+namespace NtErp.Modules.Finances.ViewModels {
     public class ModuleMenuViewModel : ViewModelBase {
         private ICommand _goToJournalViewCommand;
         private ILifetimeScope _scope;
@@ -26,7 +26,7 @@ namespace NtErp.Modules.CashJournal.ViewModels {
 
         private void GoToJournalViewCommand_OnExecute() {
             IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            Uri viewUri = new Uri(nameof(JournalBookView), UriKind.Relative);
+            Uri viewUri = new Uri(nameof(CashJournalView), UriKind.Relative);
 
             region.RequestNavigate(viewUri);
         }
