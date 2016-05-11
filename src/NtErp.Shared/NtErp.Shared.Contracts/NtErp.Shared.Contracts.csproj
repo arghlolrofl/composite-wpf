@@ -45,8 +45,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IJournalBookRepository.cs" />
-    <Compile Include="Repository\IJournalEntryRepository.cs" />
+    <Compile Include="Repository\ICashJournalRepository.cs" />
+    <Compile Include="Repository\ICashJournalEntryRepository.cs" />
     <Compile Include="Infrastructure\IMenuItemViewModel.cs" />
     <Compile Include="Repository\IProductRepository.cs" />
     <Compile Include="Repository\IRepository.cs" />

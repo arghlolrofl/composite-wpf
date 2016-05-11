@@ -88,7 +88,7 @@
         <!-- Search results -->
         <DataGrid Name="ResultsDataGrid" 
                   ItemsSource="{Binding Path=Journals}"
-                  SelectedItem="{Binding Path=RootEntity}"
+                  SelectedItem="{Binding Path=SelectedEntity}"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"
                   CanUserReorderColumns="False"

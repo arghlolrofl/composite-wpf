@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace NtErp.Modules.Finances.ViewModels {
     public class CashJournalSearchViewModel : SearchViewModel {
-        private IJournalBookRepository _cashJournalRepository;
+        private ICashJournalRepository _cashJournalRepository;
         private ObservableCollection<CashJournal> _journals = new ObservableCollection<CashJournal>();
 
 
@@ -25,7 +25,7 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #region Initialization
 
-        public CashJournalSearchViewModel(IJournalBookRepository cashJournalRepository, IEventAggregator eventAggregator, ILifetimeScope scope) : base(scope, eventAggregator) {
+        public CashJournalSearchViewModel(ICashJournalRepository cashJournalRepository, IEventAggregator eventAggregator, ILifetimeScope scope) : base(scope, eventAggregator) {
             _cashJournalRepository = cashJournalRepository;
 
             RefreshJournals();

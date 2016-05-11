@@ -74,7 +74,6 @@
   <ItemGroup>
     <Compile Include="ViewModels\CommonViewModel.cs" />
     <Compile Include="ViewModels\EntityViewModel.cs" />
-    <Compile Include="ViewModels\EntityViewModelBase.cs" />
     <Compile Include="Behaviors\DialogResultBehavior.cs" />
     <Compile Include="Contracts\ParameterNames.cs" />
     <Compile Include="Events\EntitySearchResultEvent.cs" />
@@ -82,7 +81,6 @@
     <Compile Include="Regions\RegionNames.cs" />
     <Compile Include="ViewModels\MenuItemViewModel.cs" />
     <Compile Include="ViewModels\SearchViewModel.cs" />
-    <Compile Include="ViewModels\ViewModelBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

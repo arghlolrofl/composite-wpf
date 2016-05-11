@@ -3,16 +3,16 @@ using Microsoft.Practices.Prism.Commands;
 using NtErp.Modules.Base.Views;
 using NtErp.Shared.Services.Regions;
 using NtErp.Shared.Services.ViewModels;
+using Prism.Events;
 using Prism.Modularity;
 using Prism.Regions;
 using System;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
-    public class ModuleMenuViewModel : EntityViewModelBase {
+    public class ModuleMenuViewModel : MenuItemViewModel {
         private ICommand _goToProductViewCommand;
         private ICommand _goToTaxRateViewCommand;
-        private ILifetimeScope _scope;
         private IModuleManager _moduleManager;
 
         public ICommand GoToProductViewCommand {
@@ -23,8 +23,8 @@ namespace NtErp.Modules.Base.ViewModels {
             get { return _goToTaxRateViewCommand ?? (_goToTaxRateViewCommand = new DelegateCommand(GoToTaxRateViewCommand_OnExecute)); }
         }
 
-        public ModuleMenuViewModel(ILifetimeScope scope, IRegionManager regionManager, IModuleManager moduleManager) {
-            _scope = scope;
+        public ModuleMenuViewModel(ILifetimeScope scope, IRegionManager regionManager, IModuleManager moduleManager, IEventAggregator eventAggregator)
+            : base(scope, eventAggregator) {
             _regionManager = regionManager;
             _moduleManager = moduleManager;
         }
@@ -47,8 +47,5 @@ namespace NtErp.Modules.Base.ViewModels {
 
         }
 
-        protected override void RefreshEnabledBindings() {
-
-        }
     }
 }

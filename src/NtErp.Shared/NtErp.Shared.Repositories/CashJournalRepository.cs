@@ -7,8 +7,8 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class JournalBookRepository : RepositoryBase<CashJournal>, IJournalBookRepository {
-        public JournalBookRepository(NtErpContext context) : base(context) {
+    public class CashJournalRepository : RepositoryBase<CashJournal>, ICashJournalRepository {
+        public CashJournalRepository(NtErpContext context) : base(context) {
 
         }
 

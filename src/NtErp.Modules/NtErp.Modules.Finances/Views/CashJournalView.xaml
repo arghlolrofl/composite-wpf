@@ -52,26 +52,26 @@
             <Button Content="Search" 
                     Width="100" 
                     Margin="10,0,0,0" 
-                    Command="{Binding Path=OpenJournalSearchCommand}" />
+                    Command="{Binding Path=OpenSearchCommand}" />
             <Button Content="New" 
                     Width="100" 
                     Margin="10,0,0,0" 
-                    Command="{Binding Path=CreateJournalCommand}"
+                    Command="{Binding Path=CreateCommand}"
                     IsEnabled="{Binding Path=CanCreateNew}"/>
             <Button Content="Refresh" 
                     Width="100" 
                     Margin="10,0,0,0" 
-                    Command="{Binding Path=RefreshJournalCommand}"
+                    Command="{Binding Path=RefreshCommand}"
                     IsEnabled="{Binding Path=CanRefresh}" />
             <Button Content="Save" 
                     Width="100" 
                     Margin="10,0,0,0" 
-                    Command="{Binding Path=SaveJournalCommand}"
+                    Command="{Binding Path=SaveCommand}"
                     IsEnabled="{Binding Path=CanSave}" />
             <Button Content="Delete" 
                     Width="100" 
                     Margin="10,0,0,0" 
-                    Command="{Binding Path=DeleteJournalCommand}"
+                    Command="{Binding Path=DeleteCommand}"
                     IsEnabled="{Binding Path=CanDelete}" />
         </StackPanel>
 

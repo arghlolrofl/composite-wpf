@@ -21,6 +21,7 @@ namespace NtErp.Shared.Services.Base {
 
 
         private bool _hasChanges;
+        private long _id;
         private IList<string> _propertiesToTrack = new List<string>();
         protected HashSet<TrackedScalarProperty> _trackedProperties = new HashSet<TrackedScalarProperty>();
 
@@ -29,7 +30,13 @@ namespace NtErp.Shared.Services.Base {
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public long Id {
+            get { return _id; }
+            set {
+                _id = value;
+                RaisePropertyChanged();
+            }
+        }
 
         [NotMapped]
         public bool HasChanges {
@@ -44,6 +51,11 @@ namespace NtErp.Shared.Services.Base {
 
 
         #endregion
+
+
+        public EntityBase() {
+            RegisterPropertiesToTrack();
+        }
 
 
         protected abstract void RegisterPropertiesToTrack();
@@ -66,10 +78,15 @@ namespace NtErp.Shared.Services.Base {
 
             TrackedScalarProperty trackedProperty = _trackedProperties.Single(tp => tp.Name == propertyName);
 
-            if (trackedProperty.Value.Equals(newValue))
-                trackedProperty.HasChanged = false;
-            else
-                trackedProperty.HasChanged = true;
+            // We have to use different comparison method for decimals:
+            //      e.g.: decimal value '19.00' equals '19.0'
+            if (trackedProperty.Value.GetType() == typeof(decimal)) {
+                string oldDecimalValueString = trackedProperty.Value.ToString();
+                string newDecimalValueString = newValue.ToString();
+
+                trackedProperty.HasChanged = !oldDecimalValueString.Equals(newDecimalValueString);
+            } else
+                trackedProperty.HasChanged = !trackedProperty.Value.Equals(newValue);
 
             bool hasChanges = _trackedProperties.Any(tp => tp.HasChanged);
             if (HasChanges != hasChanges)

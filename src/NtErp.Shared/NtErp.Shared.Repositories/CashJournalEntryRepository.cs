@@ -7,20 +7,21 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
-    public class JournalEntryRepository : RepositoryBase<CashJournalEntry>, IJournalEntryRepository {
-        public JournalEntryRepository(NtErpContext context) : base(context) {
+    public class CashJournalEntryRepository : RepositoryBase<CashJournalEntry>, ICashJournalEntryRepository {
+        public CashJournalEntryRepository(NtErpContext context) : base(context) {
 
         }
 
-        public CashJournalEntry New() {
+        public CashJournalEntry New(CashJournal journal) {
             return new CashJournalEntry() {
                 Id = 0,
-                Date = DateTime.Now
+                Date = DateTime.Now,
+                Journal = journal
             };
         }
 
-        public CashJournalEntryPosition NewPosition() {
-            return new CashJournalEntryPosition();
+        public CashJournalEntryPosition NewPosition(CashJournalEntry entry) {
+            return new CashJournalEntryPosition() { Entry = entry };
         }
 
         public override IEnumerable<CashJournalEntry> Fetch(int maxResultCount = -1) {
@@ -34,13 +35,22 @@ namespace NtErp.Shared.Repositories {
             return _context.CashJournalEntries.Find(id);
         }
 
+        /// <summary>
+        /// Saves the entity.
+        /// </summary>
+        /// <param name="entity"><see cref="CashJournalEntry"/></param>
         public override void Save(EntityBase entity) {
-            CashJournalEntry e = null;
+            CashJournalEntry e = entity as CashJournalEntry;
+            if (e == null)
+                throw new InvalidCastException("Unable to cast entity to CashJournalEntry!");
 
-            if (entity.Exists && ((e = entity as CashJournalEntry) != null))
+            if (e.Journal != null)
+                _context.CashJournals.Attach(e.Journal);
+
+            if (e.Exists)
                 _context.CashJournalEntries.Attach(e);
 
-            base.Save(entity);
+            base.Save(e);
         }
 
         public void AddPosition(CashJournalEntry entry, CashJournalEntryPosition position) {

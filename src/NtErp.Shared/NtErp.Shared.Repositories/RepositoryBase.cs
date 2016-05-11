@@ -36,8 +36,6 @@ namespace NtErp.Shared.Repositories {
         public void Delete(EntityBase entity) {
             _context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
             _context.SaveChanges();
-
-            entity = null;
         }
 
         #region IDisposable

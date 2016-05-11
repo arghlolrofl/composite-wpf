@@ -14,10 +14,10 @@ namespace NtErp.Shell.Demo {
         protected override void ConfigureContainerBuilder(ContainerBuilder builder) {
             base.ConfigureContainerBuilder(builder);
             builder.RegisterType<ShellView>();
-            builder.RegisterType<NtErpContext>();
+            builder.RegisterType<NtErpContext>().SingleInstance();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
-            builder.RegisterType<JournalBookRepository>().As<IJournalBookRepository>();
-            builder.RegisterType<JournalEntryRepository>().As<IJournalEntryRepository>();
+            builder.RegisterType<CashJournalRepository>().As<ICashJournalRepository>();
+            builder.RegisterType<CashJournalEntryRepository>().As<ICashJournalEntryRepository>();
             builder.RegisterType<TaxRateRepository>().As<ITaxRateRepository>();
         }
 

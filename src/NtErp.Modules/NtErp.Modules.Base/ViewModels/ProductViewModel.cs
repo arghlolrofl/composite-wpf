@@ -10,14 +10,17 @@ using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
     public class ProductViewModel : EntityViewModel {
-        private ICommand _addComponentCommand;
-        private ICommand _removeComponentCommand;
+        #region Fields
 
         private readonly IProductRepository _productRepository;
         private ProductComponent _selectedComponent;
 
+        #endregion
 
         #region Commands
+
+        private ICommand _addComponentCommand;
+        private ICommand _removeComponentCommand;
 
         public ICommand AddComponentCommand {
             get { return _addComponentCommand ?? (_addComponentCommand = new DelegateCommand(AddComponentCommand_OnExecute)); }
@@ -29,7 +32,7 @@ namespace NtErp.Modules.Base.ViewModels {
 
         #endregion
 
-        #region View Bindings
+        #region Properties
 
         public ProductComponent SelectedComponent {
             get { return _selectedComponent; }
@@ -50,7 +53,7 @@ namespace NtErp.Modules.Base.ViewModels {
 
         public bool CanAddComponents {
             get {
-                return HasRootEntity;
+                return HasRootEntity && (!RootEntity.HasChanges && RootEntity.Exists);
             }
         }
 
@@ -89,15 +92,23 @@ namespace NtErp.Modules.Base.ViewModels {
 
         protected override void CreateCommand_OnExecute() {
             RootEntity = _productRepository.New();
-            //StatusText = "Create new Product";
+
+            RaisePropertyChanged(nameof(CanCreateNew));
         }
 
         protected override void SaveCommand_OnExecute() {
             _productRepository.Save(RootEntity);
+
+            RaisePropertyChanged(nameof(CanDelete));
+            RaisePropertyChanged(nameof(CanRefresh));
+            RaisePropertyChanged(nameof(CanCreateNew));
+            RefreshEnabledBindings();
         }
 
         protected override void DeleteCommand_OnExecute() {
             _productRepository.Delete(RootEntity);
+
+            RootEntity = null;
         }
 
         private void AddComponentCommand_OnExecute() {
@@ -130,11 +141,7 @@ namespace NtErp.Modules.Base.ViewModels {
 
         protected override void RefreshEnabledBindings() {
             RaisePropertyChanged(nameof(CanAddComponents));
-            RaisePropertyChanged(nameof(CanCreateNew));
-            RaisePropertyChanged(nameof(CanDelete));
-            RaisePropertyChanged(nameof(CanSave));
-            RaisePropertyChanged(nameof(CanRefresh));
-
+            RaisePropertyChanged(nameof(CanRemoveComponents));
         }
     }
 }

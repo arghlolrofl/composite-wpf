@@ -12,43 +12,35 @@ using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class CashJournalViewModel : EntityViewModelBase, INavigationAware {
-        private ICommand _createJournalCommand;
-        private ICommand _saveJournalCommand;
-        private ICommand _deleteJournalCommand;
-        private ICommand _refreshJournalCommand;
-        private ICommand _openJournalSearchCommand;
+    public class CashJournalViewModel : EntityViewModel, INavigationAware {
+        #region INavigationAware Members
+
+        public void OnNavigatedTo(NavigationContext navigationContext) {
+
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) {
+
+        }
+
+        #endregion
+
+        #region Fields
+
         private ICommand _createEntryCommand;
         private ICommand _editEntryCommand;
         private ICommand _deleteEntryCommand;
-        private ILifetimeScope _scope;
-        private IEventAggregator _eventAggregator;
         private CashJournalEntry _selectedEntry;
-        private IJournalBookRepository _cashJournalRepository;
-        private IJournalEntryRepository _cashJournalEntryRepository;
+        private ICashJournalRepository _cashJournalRepository;
+        private ICashJournalEntryRepository _cashJournalEntryRepository;
 
+        #endregion
 
         #region Commands
-
-        public ICommand OpenJournalSearchCommand {
-            get { return _openJournalSearchCommand ?? (_openJournalSearchCommand = new DelegateCommand(OpenJournalSearchCommand_OnExecute)); }
-        }
-
-        public ICommand CreateJournalCommand {
-            get { return _createJournalCommand ?? (_createJournalCommand = new DelegateCommand(CreateJournalCommand_OnExecute)); }
-        }
-
-        public ICommand RefreshJournalCommand {
-            get { return _refreshJournalCommand ?? (_refreshJournalCommand = new DelegateCommand(RefreshJournalCommand_OnExecute)); }
-        }
-
-        public ICommand SaveJournalCommand {
-            get { return _saveJournalCommand ?? (_saveJournalCommand = new DelegateCommand(SaveJournalCommand_OnExecute)); }
-        }
-
-        public ICommand DeleteJournalCommand {
-            get { return _deleteJournalCommand ?? (_deleteJournalCommand = new DelegateCommand(DeleteJournalCommand_OnExecute)); }
-        }
 
         public ICommand CreateEntryCommand {
             get { return _createEntryCommand ?? (_createEntryCommand = new DelegateCommand(CreateEntryCommand_OnExecute)); }
@@ -64,7 +56,7 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #endregion
 
-        #region View Bindings
+        #region Properties
 
         public CashJournalEntry SelectedEntry {
             get { return _selectedEntry; }
@@ -77,7 +69,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         public bool CanCreateEntry {
-            get { return HasRootEntity && RootEntity.Id > 0 && !RootEntity.HasChanges; }
+            get { return HasRootEntity && RootEntity.Exists && !RootEntity.HasChanges; }
         }
 
         public bool CanEditEntry {
@@ -94,11 +86,10 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         public CashJournalViewModel(
             ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager,
-            IJournalBookRepository cashJournalRepository,
-            IJournalEntryRepository cashJournalEntryRepository,
-            ITaxRateRepository taxRateRepository) {
-            _scope = scope;
-            _eventAggregator = eventAggregator;
+            ICashJournalRepository cashJournalRepository,
+            ICashJournalEntryRepository cashJournalEntryRepository,
+            ITaxRateRepository taxRateRepository)
+            : base(scope, eventAggregator) {
             _regionManager = regionManager;
             _cashJournalRepository = cashJournalRepository;
             _cashJournalEntryRepository = cashJournalEntryRepository;
@@ -107,7 +98,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         #endregion
 
 
-        private void OpenJournalSearchCommand_OnExecute() {
+        protected override void OpenSearchCommand_OnExecute() {
             _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
                             .Subscribe(JournalSearch_OnReply);
 
@@ -123,25 +114,33 @@ namespace NtErp.Modules.Finances.ViewModels {
                 RootEntity = _cashJournalRepository.Find(response.EntityId);
         }
 
-        private void RefreshJournalCommand_OnExecute() {
+        protected override void RefreshCommand_OnExecute() {
             _cashJournalRepository.Refresh(RootEntity);
         }
 
-        private void CreateJournalCommand_OnExecute() {
+        protected override void CreateCommand_OnExecute() {
             RootEntity = _cashJournalRepository.New();
         }
 
-        private void SaveJournalCommand_OnExecute() {
+        protected override void SaveCommand_OnExecute() {
             _cashJournalRepository.Save(RootEntity);
         }
 
-        private void DeleteJournalCommand_OnExecute() {
+        protected override void DeleteCommand_OnExecute() {
             _cashJournalRepository.Delete(RootEntity);
+        }
+
+        protected override void RefreshEnabledBindings() {
+            RaisePropertyChanged(nameof(HasRootEntity));
+            RaisePropertyChanged(nameof(CanCreateEntry));
+            RaisePropertyChanged(nameof(CanDeleteEntry));
+            RaisePropertyChanged(nameof(CanEditEntry));
         }
 
         private void CreateEntryCommand_OnExecute() {
             var param = new NavigationParameters() {
-                { ParameterNames.NextView, nameof(CashJournalView) }
+                { ParameterNames.NextView, nameof(CashJournalView) },
+                { ParameterNames.ParentId, RootEntity.Id }
             };
 
             NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
@@ -150,7 +149,8 @@ namespace NtErp.Modules.Finances.ViewModels {
         private void EditEntryCommand_OnExecute() {
             var param = new NavigationParameters() {
                 { ParameterNames.Id,        SelectedEntry.Id },
-                { ParameterNames.NextView,  nameof(CashJournalView) }
+                { ParameterNames.NextView,  nameof(CashJournalView) },
+                { ParameterNames.ParentId, RootEntity.Id }
             };
 
             NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
@@ -160,32 +160,5 @@ namespace NtErp.Modules.Finances.ViewModels {
             _cashJournalEntryRepository.Delete(SelectedEntry);
         }
 
-
-        protected override void RefreshEnabledBindings() {
-            RaisePropertyChanged(nameof(HasRootEntity));
-            RaisePropertyChanged(nameof(CanSave));
-            RaisePropertyChanged(nameof(CanDelete));
-            RaisePropertyChanged(nameof(CanRefresh));
-            RaisePropertyChanged(nameof(CanCreateEntry));
-            RaisePropertyChanged(nameof(CanDeleteEntry));
-            RaisePropertyChanged(nameof(CanEditEntry));
-        }
-
-
-        #region INavigationAware Members
-
-        public void OnNavigatedTo(NavigationContext navigationContext) {
-
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext) {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext) {
-
-        }
-
-        #endregion
     }
 }

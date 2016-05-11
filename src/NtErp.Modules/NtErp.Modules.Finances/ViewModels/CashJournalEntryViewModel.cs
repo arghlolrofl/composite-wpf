@@ -15,20 +15,40 @@ using System.IO;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class CashJournalEntryViewModel : EntityViewModelBase, INavigationAware {
+    public class CashJournalEntryViewModel : EntityViewModel, INavigationAware {
         #region INavigationAware Members
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
+            // we do expect at least 2 parameters here:
+            //  - Parent Id (Id of the CashJournal)
+            //  - Next View (The view to call, after closing this one)
+            //  - Id (Id of the entry to be edited, optional)
+
+            // First, we fetch the entry id ...
             string entryId = (string)navigationContext.Parameters[ParameterNames.Id];
             if (!String.IsNullOrEmpty(entryId)) {
+                // ... and load the desired entity.
                 long id = Int64.Parse(entryId);
-                RootEntity = _repository.Find(id);
-            } else
-                RootEntity = _repository.New();
+                RootEntity = _cashJournalEntryRepository.Find(id);
+            } else {
+                // If it will be a new entry, we have to fetch the (parent) journal object first ...
+                long parentId = Int64.Parse((string)navigationContext.Parameters[ParameterNames.ParentId]);
+                var parent = _cashJournalRepository.Find(parentId);
 
+                // ... and then we can create the new entry for the journal.
+                RootEntity = _cashJournalEntryRepository.New(parent);
+
+                // For a new entry, we initialize a position too.
+                var entry = RootEntity as CashJournalEntry;
+                SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
+            }
+
+            // Store the name of the next view for later use
             string nextView = (string)navigationContext.Parameters[ParameterNames.NextView];
             if (!String.IsNullOrEmpty(nextView))
                 _nextView = nextView;
+
+            RefreshEnabledBindings();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) {
@@ -43,12 +63,11 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #region Fields
 
-        private IEventAggregator _eventAggregator;
-        private IJournalEntryRepository _repository;
+        private ICashJournalEntryRepository _cashJournalEntryRepository;
         private ITaxRateRepository _taxRateRepository;
-        private ILifetimeScope _scope;
         private CashJournalEntryPosition _selectedPosition;
         private ObservableCollection<TaxRate> _availableTaxRates;
+        private ICashJournalRepository _cashJournalRepository;
 
         #endregion
 
@@ -69,7 +88,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         public bool CanCreatePosition {
-            get { return HasRootEntity; }
+            get { return HasRootEntity && SelectedPosition != null && SelectedPosition.Exists; }
         }
 
         public bool CanAddPosition {
@@ -80,22 +99,11 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #region Commands
 
-        private ICommand _refreshEntryCommand;
-        private ICommand _saveEntryCommand;
         private ICommand _attachDocumentCommand;
         private ICommand _createPositionCommand;
         private ICommand _addPositionCommand;
         private ICommand _applyCommand;
         private ICommand _cancelCommand;
-
-
-        public ICommand RefreshEntryCommand {
-            get { return _refreshEntryCommand ?? (_refreshEntryCommand = new DelegateCommand(RefreshEntryCommand_OnExecute)); }
-        }
-
-        public ICommand SaveEntryCommand {
-            get { return _saveEntryCommand ?? (_saveEntryCommand = new DelegateCommand(SaveEntryCommand_OnExecute)); }
-        }
 
         public ICommand AttachDocumentCommand {
             get { return _attachDocumentCommand ?? (_attachDocumentCommand = new DelegateCommand(AttachDocumentCommand_OnExecute)); }
@@ -121,11 +129,16 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #region Initialization
 
-        public CashJournalEntryViewModel(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator,
-            IJournalEntryRepository repository, ITaxRateRepository taxRateRepository) {
-            _scope = scope;
-            _eventAggregator = eventAggregator;
-            _repository = repository;
+        public CashJournalEntryViewModel(
+            ILifetimeScope scope,
+            IRegionManager regionManager,
+            IEventAggregator eventAggregator,
+            ICashJournalRepository cashJournalRepository,
+            ICashJournalEntryRepository repository,
+            ITaxRateRepository taxRateRepository)
+            : base(scope, eventAggregator) {
+            _cashJournalRepository = cashJournalRepository;
+            _cashJournalEntryRepository = repository;
             _regionManager = regionManager;
             _taxRateRepository = taxRateRepository;
 
@@ -139,12 +152,30 @@ namespace NtErp.Modules.Finances.ViewModels {
             AvailableTaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.Fetch());
         }
 
-        private void RefreshEntryCommand_OnExecute() {
-            _repository.Refresh(RootEntity);
+        protected override void RefreshCommand_OnExecute() {
+            _cashJournalEntryRepository.Refresh(RootEntity);
         }
 
-        private void SaveEntryCommand_OnExecute() {
-            _repository.Save(RootEntity);
+        protected override void SaveCommand_OnExecute() {
+            _cashJournalEntryRepository.Save(RootEntity);
+        }
+
+        protected override void RefreshEnabledBindings() {
+            RaisePropertyChanged(nameof(CanAttachDocument));
+            RaisePropertyChanged(nameof(CanCreatePosition));
+            RaisePropertyChanged(nameof(CanAddPosition));
+        }
+
+        protected override void CreateCommand_OnExecute() {
+            throw new NotImplementedException();
+        }
+
+        protected override void DeleteCommand_OnExecute() {
+            throw new NotImplementedException();
+        }
+
+        protected override void OpenSearchCommand_OnExecute() {
+            throw new NotImplementedException();
         }
 
         private void AttachDocumentCommand_OnExecute() {
@@ -172,15 +203,20 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         private void CreatePositionCommand_OnExecute() {
-            SelectedPosition = _repository.NewPosition();
+            var entry = RootEntity as CashJournalEntry;
+
+            SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
         }
 
         private void AddPositionCommand_OnExecute() {
+            if (!RootEntity.Exists || (RootEntity.Exists && RootEntity.HasChanges))
+                _cashJournalEntryRepository.Save(RootEntity);
+
             CashJournalEntry entry = RootEntity as CashJournalEntry;
             if (entry == null)
                 throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AddPositionCommand_OnExecute()");
 
-            _repository.AddPosition(entry, SelectedPosition);
+            _cashJournalEntryRepository.AddPosition(entry, SelectedPosition);
         }
 
         private void ApplyCommand_OnExecute() {
@@ -191,10 +227,6 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         private void CancelCommand_OnExecute() {
             NavigateToView(_nextView, RegionNames.MainContent);
-        }
-
-        protected override void RefreshEnabledBindings() {
-
         }
     }
 }

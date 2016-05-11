@@ -30,15 +30,16 @@
         <!-- View Actions -->
         <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="5">
             <Button Content="Refresh" Width="100" Margin="10,0,0,0" 
-                    Command="{Binding Path=RefreshProductCommand}"
+                    Command="{Binding Path=RefreshCommand}"
                     IsEnabled="{Binding Path=CanRefresh}"/>
             <Button Content="New" Width="100" Margin="10,0,0,0" 
-                    Command="{Binding Path=CreateProductCommand}" />
+                    Command="{Binding Path=CreateCommand}"
+                    IsEnabled="{Binding Path=CanCreateNew}"/>
             <Button Content="Save" Width="100" Margin="10,0,0,0" 
-                    Command="{Binding Path=SaveProductCommand}"
-                    IsEnabled="{Binding Path=RootEntity.HasChanges}"  />
+                    Command="{Binding Path=SaveCommand}"
+                    IsEnabled="{Binding Path=CanSave}"  />
             <Button Content="Delete" Width="100" Margin="10,0,0,0" 
-                    Command="{Binding Path=DeleteProductCommand}"
+                    Command="{Binding Path=DeleteCommand}"
                     IsEnabled="{Binding Path=CanDelete}"  />
         </StackPanel>
 
@@ -55,7 +56,7 @@
                          HorizontalContentAlignment="Center"
                          VerticalContentAlignment="Center" />
                 <Button Content="Search" Width="75" Margin="10,0,0,0" 
-                        Command="{Binding Path=OpenProductSearchCommand}"/>
+                        Command="{Binding Path=OpenSearchCommand}"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="0,0,0,10">

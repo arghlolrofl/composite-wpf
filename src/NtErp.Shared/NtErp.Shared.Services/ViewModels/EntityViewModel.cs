@@ -46,6 +46,13 @@ namespace NtErp.Shared.Services.ViewModels {
             set {
                 _rootEntity = value;
                 RaisePropertyChanged();
+
+                RaisePropertyChanged(nameof(HasRootEntity));
+                RaisePropertyChanged(nameof(CanCreateNew));
+                RaisePropertyChanged(nameof(CanRefresh));
+                RaisePropertyChanged(nameof(CanSave));
+                RaisePropertyChanged(nameof(CanDelete));
+
                 RefreshEnabledBindings();
 
                 if (RootEntity != null) {
@@ -62,11 +69,11 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
         public virtual bool CanCreateNew {
-            get { return !HasRootEntity && (HasRootEntity && RootEntity.Id > 0); }
+            get { return !HasRootEntity || (HasRootEntity && RootEntity.Exists); }
         }
 
         public virtual bool CanRefresh {
-            get { return HasRootEntity && RootEntity.Id > 0; }
+            get { return HasRootEntity && RootEntity.Exists; }
         }
 
         public virtual bool CanSave {
@@ -74,7 +81,7 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
         public virtual bool CanDelete {
-            get { return HasRootEntity && RootEntity.Id > 0; }
+            get { return HasRootEntity && RootEntity.Exists; }
         }
 
 

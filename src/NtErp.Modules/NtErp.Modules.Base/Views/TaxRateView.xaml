@@ -37,22 +37,22 @@
             <Button Content="New" 
                     Width="100" 
                     Margin="0,0,5,0" 
-                    Command="{Binding Path=CreateTaxRateCommand}"
+                    Command="{Binding Path=CreateCommand}"
                     IsEnabled="{Binding Path=CanCreateNew}"/>
             <Button Content="Refresh" 
                     Width="100" 
                     Margin="5,0,5,0" 
-                    Command="{Binding Path=RefreshTaxRateCommand}"
+                    Command="{Binding Path=RefreshCommand}"
                     IsEnabled="{Binding Path=CanRefresh}" />
             <Button Content="Save" 
                     Width="100" 
                     Margin="5,0,5,0" 
-                    Command="{Binding Path=SaveTaxRateCommand}"
+                    Command="{Binding Path=SaveCommand}"
                     IsEnabled="{Binding Path=CanSave}" />
             <Button Content="Delete" 
                     Width="100" 
                     Margin="5,0,5,0" 
-                    Command="{Binding Path=DeleteTaxRateCommand}"
+                    Command="{Binding Path=DeleteCommand}"
                     IsEnabled="{Binding Path=CanDelete}" />
         </StackPanel>
 

@@ -1,10 +1,10 @@
 ﻿using NtErp.Shared.Entities.CashJournal;
 
 namespace NtErp.Shared.Contracts.Repository {
-    public interface IJournalEntryRepository : IRepository<CashJournalEntry, long> {
-        CashJournalEntry New();
+    public interface ICashJournalEntryRepository : IRepository<CashJournalEntry, long> {
+        CashJournalEntry New(CashJournal journal);
 
-        CashJournalEntryPosition NewPosition();
+        CashJournalEntryPosition NewPosition(CashJournalEntry parentEntry);
 
         void AddPosition(CashJournalEntry entry, CashJournalEntryPosition position);
 
