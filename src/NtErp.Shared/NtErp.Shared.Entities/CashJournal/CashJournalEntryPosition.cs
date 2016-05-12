@@ -1,5 +1,7 @@
 ﻿using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Base;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class CashJournalEntryPosition : EntityBase {
@@ -7,12 +9,17 @@ namespace NtErp.Shared.Entities.CashJournal {
         private string _description;
         private decimal _prepaidTax;
         private TaxRate _taxRate;
+        private long _entryId;
         private CashJournalEntry _entry;
 
-
+        [Required]
         public decimal Delta {
-            get { return _delta; }
-            set { _delta = value; RaisePropertyChanged(); }
+            get { return Math.Round(_delta, 2); }
+            set {
+                _delta = value;
+                RaisePropertyChanged();
+                CalculatePrepaidTax();
+            }
         }
 
         public string Description {
@@ -25,16 +32,37 @@ namespace NtErp.Shared.Entities.CashJournal {
             set { _prepaidTax = value; RaisePropertyChanged(); }
         }
 
+        [Required]
         public virtual TaxRate TaxRate {
             get { return _taxRate; }
-            set { _taxRate = value; RaisePropertyChanged(); }
+            set {
+                _taxRate = value;
+                RaisePropertyChanged();
+
+                CalculatePrepaidTax();
+            }
         }
 
+        [Required]
         public virtual CashJournalEntry Entry {
             get { return _entry; }
             set { _entry = value; RaisePropertyChanged(); }
         }
 
+
+        private void CalculatePrepaidTax() {
+            if (_delta == 0 || TaxRate == null) {
+                PrepaidTax = 0.00m;
+            } else {
+                decimal divisor = 100 + TaxRate.Value;
+
+                decimal prepaidTax = _delta - (_delta / divisor * 100);
+
+                PrepaidTax = Math.Round(prepaidTax, 2);
+            }
+
+            RaisePropertyChanged(nameof(PrepaidTax));
+        }
 
         protected override void RegisterPropertiesToTrack() {
             TrackProperties(nameof(Description));

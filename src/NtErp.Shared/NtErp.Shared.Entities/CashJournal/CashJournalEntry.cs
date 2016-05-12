@@ -1,8 +1,10 @@
 ﻿using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
+using System.Linq;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class CashJournalEntry : EntityBase {
@@ -10,7 +12,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         private string _documentFolderPath;
         private string _documentName;
         private string _processDescription;
-        private decimal _cashBalance;
+        //private decimal _cashBalance;
         private CashJournal _journal;
         private ObservableCollection<CashJournalEntryPosition> _positions = new ObservableCollection<CashJournalEntryPosition>();
 
@@ -44,6 +46,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// DocumentDate (Belegdatum)
         /// </summary>
+        [Required]
         public DateTime Date {
             get { return _date; }
             set { _date = value; RaisePropertyChanged(); }
@@ -52,6 +55,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// Business process (Geschäftsvorgangsbeschreibung)
         /// </summary>
+        [Required]
         public string ProcessDescription {
             get { return _processDescription; }
             set { _processDescription = value; RaisePropertyChanged(); }
@@ -60,14 +64,16 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// Current cash balance (Bestand)
         /// </summary>
+        [Required]
         public decimal CashBalance {
-            get { return _cashBalance; }
-            set { _cashBalance = value; RaisePropertyChanged(); }
+            get { return Positions.Sum(p => p.Delta); }
+            //set { _cashBalance = value; RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// Navigation property to <see cref="Entities.CashJournal.CashJournal"/>
         /// </summary>
+        [Required]
         public virtual CashJournal Journal {
             get { return _journal; }
             set { _journal = value; RaisePropertyChanged(); }
@@ -81,6 +87,10 @@ namespace NtErp.Shared.Entities.CashJournal {
             set { _positions = value; RaisePropertyChanged(); }
         }
 
+
+        public void RefreshCashBalance() {
+            RaisePropertyChanged(nameof(CashBalance));
+        }
 
         protected override void RegisterPropertiesToTrack() {
             TrackProperties(nameof(DocumentFolderPath), nameof(DocumentName), nameof(Date), nameof(ProcessDescription));

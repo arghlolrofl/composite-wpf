@@ -1,9 +1,11 @@
 ﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
 using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 
 namespace NtErp.Shared.Repositories {
@@ -21,7 +23,9 @@ namespace NtErp.Shared.Repositories {
         }
 
         public CashJournalEntryPosition NewPosition(CashJournalEntry entry) {
-            return new CashJournalEntryPosition() { Entry = entry };
+            TaxRate defaultTaxRate = _context.TaxRates.Where(tr => tr.Category == "VAT").Single();
+
+            return new CashJournalEntryPosition() { Entry = entry, TaxRate = defaultTaxRate };
         }
 
         public override IEnumerable<CashJournalEntry> Fetch(int maxResultCount = -1) {
@@ -32,7 +36,7 @@ namespace NtErp.Shared.Repositories {
         }
 
         public override CashJournalEntry Find(long id) {
-            return _context.CashJournalEntries.Find(id);
+            return _context.CashJournalEntries.Where(e => e.Id == id).Include(e => e.Positions).FirstOrDefault();
         }
 
         /// <summary>
@@ -58,9 +62,9 @@ namespace NtErp.Shared.Repositories {
 
             if (position.Id > 0) {
                 _context.CashJournalEntryPositions.Attach(position);
-            }
-
-            entry.Positions.Add(position);
+                _context.Entry(entry).State = System.Data.Entity.EntityState.Modified;
+            } else
+                _context.Entry(position).State = System.Data.Entity.EntityState.Added;
 
             _context.SaveChanges();
         }
@@ -72,6 +76,18 @@ namespace NtErp.Shared.Repositories {
             _context.Entry(position).State = System.Data.Entity.EntityState.Deleted;
 
             _context.SaveChanges();
+        }
+
+        public override void Delete(EntityBase entity) {
+            var entry = entity as CashJournalEntry;
+            if (entry == null)
+                throw new InvalidCastException("Unable to cast EntityBase to CashJournalEntry!");
+
+            if (entry.Exists) {
+                // Deletes all positions of this entry too.
+                _context.CashJournalEntries.Remove(entry);
+                _context.SaveChanges();
+            }
         }
     }
 }

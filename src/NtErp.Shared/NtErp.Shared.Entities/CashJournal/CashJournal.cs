@@ -1,6 +1,7 @@
 ﻿using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace NtErp.Shared.Entities.CashJournal {
     public class CashJournal : EntityBase {
@@ -14,6 +15,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// A sequential number
         /// </summary>
+        [Required]
         public string Number {
             get { return _number; }
             set { _number = value; RaisePropertyChanged(); }
@@ -22,6 +24,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// Start date of the journal
         /// </summary>
+        [Required]
         public DateTime StartDate {
             get { return _startDate; }
             set { _startDate = value; RaisePropertyChanged(); }
@@ -30,6 +33,7 @@ namespace NtErp.Shared.Entities.CashJournal {
         /// <summary>
         /// End date of the journal
         /// </summary>
+        [Required]
         public DateTime EndDate {
             get { return _endDate; }
             set { _endDate = value; RaisePropertyChanged(); }

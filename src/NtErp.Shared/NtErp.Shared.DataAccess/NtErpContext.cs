@@ -57,8 +57,6 @@ namespace NtErp.Shared.DataAccess {
 
             modelBuilder.Configurations.Add(new ProductConfiguration());
 
-            //modelBuilder.Entity<JournalEntry>().Property(e => e.Document).HasColumnType("image");
-
             base.OnModelCreating(modelBuilder);
 
         }

@@ -22,6 +22,10 @@ namespace NtErp.Shared.Entities.MasterFileData {
         }
 
 
+        public override string ToString() {
+            return $"{Value.ToString().PadLeft(5, '0')} % - {Category}";
+        }
+
         protected override void RegisterPropertiesToTrack() {
             TrackProperties(nameof(Category), nameof(Value), nameof(Description));
         }

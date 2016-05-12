@@ -3,6 +3,8 @@ using NtErp.Shared.DataAccess;
 using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
 
 namespace NtErp.Shared.Repositories {
     public abstract class RepositoryBase<TEntity> : IDisposable, IRepository<TEntity, long> where TEntity : EntityBase {
@@ -33,9 +35,23 @@ namespace NtErp.Shared.Repositories {
             entity.ResetChangedProperties();
         }
 
-        public void Delete(EntityBase entity) {
-            _context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
-            _context.SaveChanges();
+        public virtual void Delete(EntityBase entity) {
+            try {
+
+                _context.Entry(entity).State = System.Data.Entity.EntityState.Deleted;
+                _context.SaveChanges();
+
+            } catch (DbEntityValidationException ex) {
+                Debug.WriteLine(Environment.NewLine + "Got Validation Errors:");
+
+                foreach (var eve in ex.EntityValidationErrors) {
+                    Debug.WriteLine(" > " + eve.Entry.Entity.GetType().Name);
+
+                    foreach (var err in eve.ValidationErrors) {
+                        Debug.WriteLine("    > " + err.PropertyName + " --> " + err.ErrorMessage + Environment.NewLine);
+                    }
+                }
+            }
         }
 
         #region IDisposable

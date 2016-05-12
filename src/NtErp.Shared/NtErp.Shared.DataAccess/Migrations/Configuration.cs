@@ -105,7 +105,7 @@ namespace NtErp.Shared.DataAccess.Migrations {
                 Date = DateTime.Now,
                 DocumentName = "ScanXY.pdf",
                 ProcessDescription = "Some business process",
-                CashBalance = position.Delta,
+                //CashBalance = position.Delta,
                 Journal = journal,
                 Positions = new ObservableCollection<CashJournalEntryPosition>(new CashJournalEntryPosition[] { position })
             };

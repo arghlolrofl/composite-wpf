@@ -37,11 +37,11 @@ namespace NtErp.Modules.Finances.ViewModels {
 
                 // ... and then we can create the new entry for the journal.
                 RootEntity = _cashJournalEntryRepository.New(parent);
-
-                // For a new entry, we initialize a position too.
-                var entry = RootEntity as CashJournalEntry;
-                SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
             }
+
+            // Set a SelectedPosition for direct editing
+            var entry = RootEntity as CashJournalEntry;
+            SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
 
             // Store the name of the next view for later use
             string nextView = (string)navigationContext.Parameters[ParameterNames.NextView];
@@ -88,7 +88,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         public bool CanCreatePosition {
-            get { return HasRootEntity && SelectedPosition != null && SelectedPosition.Exists; }
+            get { return HasRootEntity && (SelectedPosition != null && SelectedPosition.Exists); }
         }
 
         public bool CanAddPosition {
@@ -206,6 +206,9 @@ namespace NtErp.Modules.Finances.ViewModels {
             var entry = RootEntity as CashJournalEntry;
 
             SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
+
+            RaisePropertyChanged(nameof(CanAddPosition));
+            RaisePropertyChanged(nameof(CanCreatePosition));
         }
 
         private void AddPositionCommand_OnExecute() {
@@ -217,6 +220,11 @@ namespace NtErp.Modules.Finances.ViewModels {
                 throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AddPositionCommand_OnExecute()");
 
             _cashJournalEntryRepository.AddPosition(entry, SelectedPosition);
+
+            entry.RefreshCashBalance();
+
+            RaisePropertyChanged(nameof(CanAddPosition));
+            RaisePropertyChanged(nameof(CanCreatePosition));
         }
 
         private void ApplyCommand_OnExecute() {

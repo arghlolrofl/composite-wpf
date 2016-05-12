@@ -1,8 +1,8 @@
 ﻿using NtErp.Modules.Finances.ViewModels;
-using System.Windows.Controls;
+using NtErp.Shared.Services.Views;
 
 namespace NtErp.Modules.Finances.Views {
-    public partial class CashJournalView : UserControl {
+    public partial class CashJournalView : CommonView {
         private CashJournalViewModel _viewModel;
 
         public CashJournalView(CashJournalViewModel viewModel) {
