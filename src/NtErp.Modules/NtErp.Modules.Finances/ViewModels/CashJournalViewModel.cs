@@ -9,6 +9,7 @@ using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Regions;
+using System.Windows;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
@@ -16,7 +17,7 @@ namespace NtErp.Modules.Finances.ViewModels {
         #region INavigationAware Members
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
-
+            IsViewActive = Visibility.Visible;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) {
@@ -24,23 +25,25 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         public void OnNavigatedFrom(NavigationContext navigationContext) {
-
+            IsViewActive = Visibility.Collapsed;
         }
 
         #endregion
 
         #region Fields
 
-        private ICommand _createEntryCommand;
-        private ICommand _editEntryCommand;
-        private ICommand _deleteEntryCommand;
         private CashJournalEntry _selectedEntry;
         private ICashJournalRepository _cashJournalRepository;
         private ICashJournalEntryRepository _cashJournalEntryRepository;
+        private RibbonViewModel _Ribbon;
 
         #endregion
 
         #region Commands
+
+        private ICommand _createEntryCommand;
+        private ICommand _editEntryCommand;
+        private ICommand _deleteEntryCommand;
 
         public ICommand CreateEntryCommand {
             get { return _createEntryCommand ?? (_createEntryCommand = new DelegateCommand(CreateEntryCommand_OnExecute)); }
@@ -57,6 +60,15 @@ namespace NtErp.Modules.Finances.ViewModels {
         #endregion
 
         #region Properties
+
+        private Visibility _isViewActive = Visibility.Collapsed;
+        public Visibility IsViewActive {
+            get { return _isViewActive; }
+            set {
+                _isViewActive = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public CashJournalEntry SelectedEntry {
             get { return _selectedEntry; }
@@ -80,6 +92,12 @@ namespace NtErp.Modules.Finances.ViewModels {
             get { return HasRootEntity && SelectedEntry != null; }
         }
 
+        public RibbonViewModel Ribbon {
+            get { return _Ribbon; }
+            set { _Ribbon = value; RaisePropertyChanged(); }
+        }
+
+
         #endregion
 
         #region Initialization
@@ -89,10 +107,11 @@ namespace NtErp.Modules.Finances.ViewModels {
             ICashJournalRepository cashJournalRepository,
             ICashJournalEntryRepository cashJournalEntryRepository,
             ITaxRateRepository taxRateRepository)
-            : base(scope, eventAggregator) {
-            _regionManager = regionManager;
+            : base(scope, eventAggregator, regionManager) {
             _cashJournalRepository = cashJournalRepository;
             _cashJournalEntryRepository = cashJournalEntryRepository;
+
+            Ribbon = _scope.Resolve<FinancesRibbonViewModel>();
         }
 
         #endregion

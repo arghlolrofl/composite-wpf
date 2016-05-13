@@ -12,9 +12,10 @@ namespace NtErp.Shared.Services.ViewModels {
         protected IEventAggregator _eventAggregator;
 
 
-        public CommonViewModel(ILifetimeScope scope, IEventAggregator eventAggregator) {
+        public CommonViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager) {
             _scope = scope;
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
         }
 
 

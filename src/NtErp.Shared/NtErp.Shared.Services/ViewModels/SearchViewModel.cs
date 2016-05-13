@@ -2,6 +2,7 @@
 using Microsoft.Practices.Prism.Commands;
 using NtErp.Shared.Services.Base;
 using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Windows.Input;
 
@@ -62,7 +63,8 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
 
-        public SearchViewModel(ILifetimeScope scope, IEventAggregator eventAggregator) : base(scope, eventAggregator) {
+        public SearchViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
 
         }
 

@@ -4,6 +4,7 @@ using NtErp.Shared.Entities.CashJournal;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 
@@ -25,7 +26,8 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #region Initialization
 
-        public CashJournalSearchViewModel(ICashJournalRepository cashJournalRepository, IEventAggregator eventAggregator, ILifetimeScope scope) : base(scope, eventAggregator) {
+        public CashJournalSearchViewModel(ICashJournalRepository cashJournalRepository, IEventAggregator eventAggregator, ILifetimeScope scope, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
             _cashJournalRepository = cashJournalRepository;
 
             RefreshJournals();

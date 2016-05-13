@@ -94,6 +94,8 @@
       <HintPath>..\..\..\packages\Microsoft.SqlServer.Compact.4.0.8876.1\lib\net40\System.Data.SqlServerCe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -156,8 +158,8 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Views\ShellView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Views\StartView.xaml">
       <SubType>Designer</SubType>
@@ -189,10 +191,23 @@
       <Project>{E490DDAE-B664-4103-B54A-7B34313125CD}</Project>
       <Name>NtErp.Shared.Repositories</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Resources\NtErp.Shared.Resources.csproj">
+      <Project>{e15cbd93-7b49-42a5-a3ac-54f43dd46b1e}</Project>
+      <Name>NtErp.Shared.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Services\NtErp.Shared.Services.csproj">
       <Project>{46bc1775-84a1-4213-b7d0-4c65f5365579}</Project>
       <Name>NtErp.Shared.Services</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon-search-1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon-search-2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icon-search-3.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

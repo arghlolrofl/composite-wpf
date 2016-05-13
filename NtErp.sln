@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Contracts", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.Finances", "src\NtErp.Modules\NtErp.Modules.Finances\NtErp.Modules.Finances.csproj", "{223A9E40-290B-478D-843D-C00639527966}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Resources", "src\NtErp.Shared\NtErp.Shared.Resources\NtErp.Shared.Resources.csproj", "{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -76,6 +78,10 @@ Global
 		{223A9E40-290B-478D-843D-C00639527966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{223A9E40-290B-478D-843D-C00639527966}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -89,9 +95,10 @@ Global
 		{E490DDAE-B664-4103-B54A-7B34313125CD} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{E12F7242-10E0-4493-BE34-6FF5879B7B92} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{223A9E40-290B-478D-843D-C00639527966} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
+		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 11
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfs2013-01:8080/tfs/ntinnovationcompanygmbh
 		SccLocalPath0 = .
@@ -130,5 +137,9 @@ Global
 		SccProjectTopLevelParentUniqueName9 = NtErp.sln
 		SccProjectName9 = src/NtErp.Modules/NtErp.Modules.Finances
 		SccLocalPath9 = src\\NtErp.Modules\\NtErp.Modules.Finances
+		SccProjectUniqueName10 = src\\NtErp.Shared\\NtErp.Shared.Resources\\NtErp.Shared.Resources.csproj
+		SccProjectTopLevelParentUniqueName10 = NtErp.sln
+		SccProjectName10 = src/NtErp.Shared/NtErp.Shared.Resources
+		SccLocalPath10 = src\\NtErp.Shared\\NtErp.Shared.Resources
 	EndGlobalSection
 EndGlobal

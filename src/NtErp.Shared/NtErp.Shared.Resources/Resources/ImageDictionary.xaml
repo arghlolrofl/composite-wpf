@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:NtErp.Shared.Resources">
+    <ImageSource x:Key="IconCreateNew">
+        icons/icon-create-new-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconDelete">
+        icons/icon-delete-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconEdit">
+        icons/icon-edit-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconHelp">
+        icons/icon-help-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconOptions">
+        icons/icon-options-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconRefresh">
+        icons/icon-refresh-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconSave">
+        icons/icon-save-1_256x256.png
+    </ImageSource>
+    <ImageSource x:Key="IconSearch">
+        icons/icon-search-1_256x256.png
+    </ImageSource>
+    
+    <!-- Module Images -->
+    <ImageSource x:Key="ImageFinancesCashJournal">
+        images/img-cashbook-1_512x512.png
+    </ImageSource>
+
+</ResourceDictionary>

@@ -20,7 +20,8 @@ namespace NtErp.Modules.Finances {
         }
 
         public void Initialize() {
-            RegionManager.RegisterViewWithRegion(RegionNames.ShellMenuBar, typeof(ModuleMenuView));
+            RegionManager.RegisterViewWithRegion(RegionNames.RibbonBar, typeof(FinancesRibbonView));
+
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalView));
             RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalEntryView));
         }

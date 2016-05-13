@@ -2,6 +2,7 @@
 using Microsoft.Practices.Prism.Commands;
 using NtErp.Shared.Services.Base;
 using Prism.Events;
+using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Shared.Services.ViewModels {
@@ -85,7 +86,8 @@ namespace NtErp.Shared.Services.ViewModels {
         }
 
 
-        public EntityViewModel(ILifetimeScope scope, IEventAggregator eventAggregator) : base(scope, eventAggregator) {
+        public EntityViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
 
         }
 

@@ -9,7 +9,6 @@ namespace NtErp.Shared.Entities.CashJournal {
         private string _description;
         private decimal _prepaidTax;
         private TaxRate _taxRate;
-        private long _entryId;
         private CashJournalEntry _entry;
 
         [Required]

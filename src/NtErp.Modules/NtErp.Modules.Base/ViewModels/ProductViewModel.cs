@@ -6,6 +6,7 @@ using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
+using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
@@ -66,7 +67,8 @@ namespace NtErp.Modules.Base.ViewModels {
         #endregion
 
 
-        public ProductViewModel(ILifetimeScope scope, IProductRepository productRepository, IEventAggregator eventAggregator) : base(scope, eventAggregator) {
+        public ProductViewModel(ILifetimeScope scope, IProductRepository productRepository, IEventAggregator eventAggregator, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
             _productRepository = productRepository;
         }
 

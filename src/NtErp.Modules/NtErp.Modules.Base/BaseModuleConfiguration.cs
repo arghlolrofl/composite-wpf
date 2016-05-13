@@ -14,9 +14,6 @@ namespace NtErp.Modules.Base {
             builder.RegisterType<ViewModels.TaxRateViewModel>();
             builder.RegisterType<Views.TaxRateView>();
 
-            builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
-                   .As<Shared.Contracts.Infrastructure.IMenuItemViewModel>();
-
             Debug.WriteLine(" > MODULE LOADED: " + nameof(BaseModule));
         }
     }

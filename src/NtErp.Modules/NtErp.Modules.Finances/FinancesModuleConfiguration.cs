@@ -14,9 +14,6 @@ namespace NtErp.Modules.Finances {
             builder.RegisterType<ViewModels.CashJournalEntryViewModel>();
             builder.RegisterType<Views.CashJournalEntryView>();
 
-            builder.RegisterType<Shared.Services.ViewModels.MenuItemViewModel>()
-                   .As<Shared.Contracts.Infrastructure.IMenuItemViewModel>();
-
             Debug.WriteLine(" > MODULE LOADED: " + nameof(FinancesModule));
         }
     }

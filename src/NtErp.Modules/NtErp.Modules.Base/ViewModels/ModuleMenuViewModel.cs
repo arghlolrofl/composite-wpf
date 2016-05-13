@@ -1,16 +1,12 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
-using NtErp.Modules.Base.Views;
-using NtErp.Shared.Services.Regions;
-using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
 using Prism.Modularity;
 using Prism.Regions;
-using System;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Base.ViewModels {
-    public class ModuleMenuViewModel : MenuItemViewModel {
+    public class ModuleMenuViewModel {
         private ICommand _goToProductViewCommand;
         private ICommand _goToTaxRateViewCommand;
         private IModuleManager _moduleManager;
@@ -24,23 +20,22 @@ namespace NtErp.Modules.Base.ViewModels {
         }
 
         public ModuleMenuViewModel(ILifetimeScope scope, IRegionManager regionManager, IModuleManager moduleManager, IEventAggregator eventAggregator)
-            : base(scope, eventAggregator) {
-            _regionManager = regionManager;
+            /*: base(scope, eventAggregator, regionManager)*/ {
             _moduleManager = moduleManager;
         }
 
         private void GoToProductViewCommand_OnExecute() {
-            IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            Uri viewUri = new Uri(nameof(ProductView), UriKind.Relative);
+            //IRegion region = _regionManager.Regions[RegionNames.MainContent];
+            //Uri viewUri = new Uri(nameof(ProductView), UriKind.Relative);
 
-            region.RequestNavigate(viewUri, Callback);
+            //region.RequestNavigate(viewUri, Callback);
         }
 
         private void GoToTaxRateViewCommand_OnExecute() {
-            IRegion region = _regionManager.Regions[RegionNames.MainContent];
-            Uri viewUri = new Uri(nameof(TaxRateView), UriKind.Relative);
+            //IRegion region = _regionManager.Regions[RegionNames.MainContent];
+            //Uri viewUri = new Uri(nameof(TaxRateView), UriKind.Relative);
 
-            region.RequestNavigate(viewUri);
+            //region.RequestNavigate(viewUri);
         }
 
         private void Callback(NavigationResult obj) {

@@ -136,10 +136,9 @@ namespace NtErp.Modules.Finances.ViewModels {
             ICashJournalRepository cashJournalRepository,
             ICashJournalEntryRepository repository,
             ITaxRateRepository taxRateRepository)
-            : base(scope, eventAggregator) {
+            : base(scope, eventAggregator, regionManager) {
             _cashJournalRepository = cashJournalRepository;
             _cashJournalEntryRepository = repository;
-            _regionManager = regionManager;
             _taxRateRepository = taxRateRepository;
 
             RefreshAvailableTaxRates();

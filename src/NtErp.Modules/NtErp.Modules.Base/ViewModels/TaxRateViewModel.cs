@@ -3,6 +3,7 @@ using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 
@@ -22,7 +23,8 @@ namespace NtErp.Modules.Base.ViewModels {
 
         #region Initialization
 
-        public TaxRateViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, ITaxRateRepository repository) : base(scope, eventAggregator) {
+        public TaxRateViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, ITaxRateRepository repository, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
             _taxRateRepository = repository;
             _taxRates = new ObservableCollection<TaxRate>();
 

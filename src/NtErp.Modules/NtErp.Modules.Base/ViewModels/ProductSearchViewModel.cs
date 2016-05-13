@@ -4,6 +4,7 @@ using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;
+using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 
@@ -24,7 +25,8 @@ namespace NtErp.ViewModel.MasterFileData {
 
         #region Initialization
 
-        public ProductSearchViewModel(IProductRepository productRepository, IEventAggregator eventAggregator, ILifetimeScope scope) : base(scope, eventAggregator) {
+        public ProductSearchViewModel(IProductRepository productRepository, IEventAggregator eventAggregator, ILifetimeScope scope, IRegionManager regionManager)
+            : base(scope, eventAggregator, regionManager) {
             _productRepository = productRepository;
 
             RefreshComponents();

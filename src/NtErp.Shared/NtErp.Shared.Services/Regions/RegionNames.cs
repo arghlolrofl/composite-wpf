@@ -10,5 +10,9 @@
 
         const string StatusBarRegionName = "StatusBarRegion";
         public static string StatusBar { get { return StatusBarRegionName; } }
+
+
+        const string RibbonBarRegionName = "RibbonBarRegion";
+        public static string RibbonBar { get { return RibbonBarRegionName; } }
     }
 }
