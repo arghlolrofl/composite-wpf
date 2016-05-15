@@ -22,11 +22,11 @@
                       Command="{Binding Path=Ribbon.GoToCashJournalViewCommand}" />
     </RibbonGroup>
 
-    <RibbonGroup Header="Journal">
+    <RibbonGroup Header="Journal"
+                 Visibility="{Binding Path=IsViewActive, Converter={StaticResource visibilityConverter}}">
         <RibbonButton LargeImageSource="{StaticResource IconRefresh}" 
                       Label="Refresh"
-                      Command="{Binding Path=RefreshCommand}"
-                      Visibility="{Binding Path=IsViewActive}" />
+                      Command="{Binding Path=RefreshCommand}" />
         <RibbonButton LargeImageSource="{StaticResource IconCreateNew}" 
                       Label="Create"
                       Command="{Binding Path=CreateCommand}" />
@@ -38,7 +38,7 @@
                       Command="{Binding Path=DeleteCommand}" />
     </RibbonGroup>
 
-    <RibbonGroup Header="Entry" Visibility="{Binding Path=IsViewActive}">
+    <RibbonGroup Header="Entry" Visibility="{Binding Path=IsViewActive, Converter={StaticResource visibilityConverter}}">
         <RibbonButton LargeImageSource="{StaticResource IconCreateNew}" 
                       Label="Create"
                       Command="{Binding Path=CreateEntryCommand}" />

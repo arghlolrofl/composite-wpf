@@ -6,25 +6,25 @@ using Prism.Modularity;
 using Prism.Regions;
 
 namespace NtErp.Modules.Finances {
-    public class FinancesModule : IModule {
-        private ILifetimeScope _scope;
-        private IEventAggregator _eventAggregator;
+  public class FinancesModule : IModule {
+    private ILifetimeScope _scope;
+    private IEventAggregator _eventAggregator;
 
-        public IRegionManager RegionManager { get; set; }
+    public IRegionManager RegionManager { get; set; }
 
 
-        public FinancesModule(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator) {
-            _scope = scope;
-            _eventAggregator = eventAggregator;
-            RegionManager = regionManager;
-        }
-
-        public void Initialize() {
-            RegionManager.RegisterViewWithRegion(RegionNames.RibbonBar, typeof(FinancesRibbonView));
-
-            RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalView));
-            RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalEntryView));
-        }
-
+    public FinancesModule(ILifetimeScope scope, IRegionManager regionManager, IEventAggregator eventAggregator) {
+      _scope = scope;
+      _eventAggregator = eventAggregator;
+      RegionManager = regionManager;
     }
+
+    public void Initialize() {
+      RegionManager.RegisterViewWithRegion(RegionNames.RibbonBar, typeof(FinancesRibbonView));
+
+      RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalView));
+      RegionManager.RegisterViewWithRegion(RegionNames.MainContent, typeof(CashJournalEntryView));
+    }
+
+  }
 }
