@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
-using NtErp.Modules.Base.Views;
+using NtErp.Modules.MasterFileData.Views;
 using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Events;
@@ -9,12 +9,13 @@ using Prism.Events;
 using Prism.Regions;
 using System.Windows.Input;
 
-namespace NtErp.Modules.Base.ViewModels {
-    public class ProductViewModel : EntityViewModel {
+namespace NtErp.Modules.MasterFileData.ViewModels {
+    public class ProductViewModel : EntityViewModel, INavigationAware {
         #region Fields
 
         private readonly IProductRepository _productRepository;
         private ProductComponent _selectedComponent;
+        private bool _isRibbonGroupActive;
 
         #endregion
 
@@ -62,6 +63,11 @@ namespace NtErp.Modules.Base.ViewModels {
             get {
                 return HasRootEntity && HasComponentSelected;
             }
+        }
+
+        public bool IsRibbonGroupActive {
+            get { return _isRibbonGroupActive; }
+            set { _isRibbonGroupActive = value; RaisePropertyChanged(); }
         }
 
         #endregion
@@ -145,5 +151,21 @@ namespace NtErp.Modules.Base.ViewModels {
             RaisePropertyChanged(nameof(CanAddComponents));
             RaisePropertyChanged(nameof(CanRemoveComponents));
         }
+
+        #region INavigationAware Members
+
+        public void OnNavigatedTo(NavigationContext navigationContext) {
+            IsRibbonGroupActive = true;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) {
+            IsRibbonGroupActive = false;
+        }
+
+        #endregion
     }
 }

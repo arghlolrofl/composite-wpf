@@ -149,5 +149,35 @@ namespace NtErp.Shared.Resources.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_masterfiledata_1_256x256 {
+            get {
+                object obj = ResourceManager.GetObject("img_masterfiledata_1_256x256", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_products_1_512x512 {
+            get {
+                object obj = ResourceManager.GetObject("img_products_1_512x512", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap img_taxrate_1_128x128 {
+            get {
+                object obj = ResourceManager.GetObject("img_taxrate_1_128x128", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

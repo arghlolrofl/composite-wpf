@@ -7,8 +7,8 @@
     <ProjectGuid>{06C24979-6910-4737-A4F8-6C71B34091C5}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NtErp.Modules.Base</RootNamespace>
-    <AssemblyName>NtErp.Modules.Base</AssemblyName>
+    <RootNamespace>NtErp.Modules.MasterFileData</RootNamespace>
+    <AssemblyName>NtErp.Modules.MasterFileData</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>
@@ -57,21 +57,24 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Windows.Controls.Ribbon" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseModule.cs" />
-    <Compile Include="BaseModuleConfiguration.cs" />
+    <Compile Include="MasterFileDataModule.cs" />
+    <Compile Include="MasterFileDataModule.Autofac.cs">
+      <DependentUpon>MasterFileDataModule.cs</DependentUpon>
+    </Compile>
+    <Compile Include="RibbonView.xaml.cs">
+      <DependentUpon>RibbonView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\ModuleMenuViewModel.cs" />
+    <Compile Include="RibbonViewModel.cs" />
     <Compile Include="ViewModels\ProductSearchViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="ViewModels\TaxRateViewModel.cs" />
-    <Compile Include="Views\ModuleMenuView.xaml.cs">
-      <DependentUpon>ModuleMenuView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ProductSearchWindow.xaml.cs">
       <DependentUpon>ProductSearchWindow.xaml</DependentUpon>
     </Compile>
@@ -94,13 +97,17 @@
       <Project>{DABEBF34-52F1-40D6-A9C3-F50DCAEA235A}</Project>
       <Name>NtErp.Shared.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Resources\NtErp.Shared.Resources.csproj">
+      <Project>{e15cbd93-7b49-42a5-a3ac-54f43dd46b1e}</Project>
+      <Name>NtErp.Shared.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\NtErp.Shared\NtErp.Shared.Services\NtErp.Shared.Services.csproj">
       <Project>{46bc1775-84a1-4213-b7d0-4c65f5365579}</Project>
       <Name>NtErp.Shared.Services</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Views\ModuleMenuView.xaml">
+    <Page Include="RibbonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -117,6 +124,7 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

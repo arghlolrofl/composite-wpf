@@ -1,12 +1,11 @@
-﻿using NtErp.Modules.Finances.ViewModels;
-using System.Windows.Controls.Ribbon;
+﻿using System.Windows.Controls.Ribbon;
 
 namespace NtErp.Modules.Finances {
     /// <summary>
     /// Interaction logic for CashJournalViewRibbon.xaml
     /// </summary>
-    public partial class FinancesRibbonView : RibbonTab {
-        public FinancesRibbonView(CashJournalViewModel viewModel) {
+    public partial class RibbonView : RibbonTab {
+        public RibbonView(RibbonViewModel viewModel) {
             InitializeComponent();
 
             DataContext = viewModel;

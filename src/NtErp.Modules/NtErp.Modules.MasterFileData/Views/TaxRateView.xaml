@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="NtErp.Modules.Base.Views.TaxRateView"
+﻿<UserControl x:Class="NtErp.Modules.MasterFileData.Views.TaxRateView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,8 +16,8 @@
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="9" />
             <RowDefinition Height="25" />
             <RowDefinition Height="10" />
             <RowDefinition Height="25" />
@@ -31,30 +31,6 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="10" />
         </Grid.RowDefinitions>
-
-        <!-- Form CRUD controls -->
-        <StackPanel Orientation="Horizontal" Margin="5" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="14">
-            <Button Content="New" 
-                    Width="100" 
-                    Margin="0,0,5,0" 
-                    Command="{Binding Path=CreateCommand}"
-                    IsEnabled="{Binding Path=CanCreateNew}"/>
-            <Button Content="Refresh" 
-                    Width="100" 
-                    Margin="5,0,5,0" 
-                    Command="{Binding Path=RefreshCommand}"
-                    IsEnabled="{Binding Path=CanRefresh}" />
-            <Button Content="Save" 
-                    Width="100" 
-                    Margin="5,0,5,0" 
-                    Command="{Binding Path=SaveCommand}"
-                    IsEnabled="{Binding Path=CanSave}" />
-            <Button Content="Delete" 
-                    Width="100" 
-                    Margin="5,0,5,0" 
-                    Command="{Binding Path=DeleteCommand}"
-                    IsEnabled="{Binding Path=CanDelete}" />
-        </StackPanel>
 
         <!-- Edit form -->
         <Label Grid.Row="2" Grid.Column="1" Content="Id:" HorizontalAlignment="Right" />

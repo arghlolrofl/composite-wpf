@@ -1,13 +1,11 @@
-﻿using Autofac.Core;
+﻿using Autofac;
 
 namespace NtErp.Shared.Services.Events {
-  public class ModuleLoadEvent {
-    public Autofac.Module Module { get; set; }
-    public IComponentRegistry ComponentRegistry { get; set; }
+    public class ModuleLoadEvent {
+        public Module Module { get; set; }
 
-    public ModuleLoadEvent(Autofac.Module module, IComponentRegistry reg) {
-      Module = module;
-      ComponentRegistry = reg;
+        public ModuleLoadEvent(Module module) {
+            Module = module;
+        }
     }
-  }
 }

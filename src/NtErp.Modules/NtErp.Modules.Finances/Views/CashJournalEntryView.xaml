@@ -26,8 +26,8 @@
             <ColumnDefinition Width="10" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="35" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="1" />
+            <RowDefinition Height="9" />
             <RowDefinition Height="25" />
             <RowDefinition Height="10" />
             <RowDefinition Height="25" />
@@ -45,7 +45,7 @@
         </Grid.RowDefinitions>
 
         <!-- Form CRUD controls -->
-        <StackPanel Orientation="Horizontal" Margin="0,5,0,5" 
+        <!--<StackPanel Orientation="Horizontal" Margin="0,5,0,5" 
                     Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="9">
             <Button Content="Refresh" 
                     Width="100" 
@@ -57,7 +57,7 @@
                     Margin="5,0,5,0" 
                     Command="{Binding Path=SaveCommand}"
                     IsEnabled="{Binding Path=CanSave}" />
-        </StackPanel>
+        </StackPanel>-->
 
         <Border Grid.Row="7" Grid.Column="0"
                 Grid.RowSpan="7" Grid.ColumnSpan="13"

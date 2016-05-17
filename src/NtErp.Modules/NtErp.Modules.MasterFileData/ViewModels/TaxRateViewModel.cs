@@ -7,7 +7,7 @@ using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 
-namespace NtErp.Modules.Base.ViewModels {
+namespace NtErp.Modules.MasterFileData.ViewModels {
     public class TaxRateViewModel : EntityViewModel {
         private ITaxRateRepository _taxRateRepository;
         private ObservableCollection<TaxRate> _taxRates;

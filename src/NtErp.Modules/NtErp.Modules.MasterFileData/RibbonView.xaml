@@ -1,0 +1,66 @@
+﻿<RibbonTab x:Class="NtErp.Modules.MasterFileData.RibbonView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.MasterFileData"
+             xmlns:view="clr-namespace:NtErp.Shared.Services.Views;assembly=NtErp.Shared.Services"
+             mc:Ignorable="d" 
+             d:DesignHeight="60" d:DesignWidth="800" Header="MasterFileData">
+    <RibbonTab.Resources>
+        <ResourceDictionary>
+            <view:BooleanToVisibilityConverter x:Key="visibilityConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/NtErp.Shared.Resources;component/Resources/ImageDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </RibbonTab.Resources>
+    <RibbonGroup Header="Navigation">
+        <RibbonButton LargeImageSource="{StaticResource ImageProducts}" 
+                      Label="Products"
+                      Command="{Binding Path=GoToProductViewCommand}" />
+        <RibbonButton LargeImageSource="{StaticResource ImageTaxRates}" 
+                      Label="Tax Rates"
+                      Command="{Binding Path=GoToTaxRateViewCommand}"/>
+    </RibbonGroup>
+    
+    <!-- Product -->
+    <RibbonGroup Header="Products" Visibility="{Binding Path=IsRibbonGroupVisibleProduct, Converter={StaticResource visibilityConverter}}">
+        <RibbonButton Label="Refresh"
+                      Command="{Binding Path=ActiveViewModel.RefreshCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanRefresh}"
+                      LargeImageSource="{StaticResource IconRefresh}" />
+        <RibbonButton Label="Create"
+                      Command="{Binding Path=ActiveViewModel.CreateCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanCreateNew}" 
+                      LargeImageSource="{StaticResource IconCreateNew}" />
+        <RibbonButton Label="Save"
+                      Command="{Binding Path=ActiveViewModel.SaveCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanSave}"
+                      LargeImageSource="{StaticResource IconSave}"  />
+        <RibbonButton Label="Delete"
+                      Command="{Binding Path=ActiveViewModel.DeleteCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanDelete}"
+                      LargeImageSource="{StaticResource IconDelete}"  />
+    </RibbonGroup>
+    
+    <!-- Tax Rate -->
+    <RibbonGroup Header="Tax Rates" Visibility="{Binding Path=IsRibbonGroupVisibleTaxRate, Converter={StaticResource visibilityConverter}}">
+        <RibbonButton Label="Refresh"
+                      Command="{Binding Path=ActiveViewModel.RefreshCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanRefresh}"
+                      LargeImageSource="{StaticResource IconRefresh}" />
+        <RibbonButton Label="Create"
+                      Command="{Binding Path=ActiveViewModel.CreateCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanCreateNew}" 
+                      LargeImageSource="{StaticResource IconCreateNew}" />
+        <RibbonButton Label="Save"
+                      Command="{Binding Path=ActiveViewModel.SaveCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanSave}"
+                      LargeImageSource="{StaticResource IconSave}"  />
+        <RibbonButton Label="Delete"
+                      Command="{Binding Path=ActiveViewModel.DeleteCommand}"
+                      IsEnabled="{Binding Path=ActiveViewModel.CanDelete}"
+                      LargeImageSource="{StaticResource IconDelete}"  />
+    </RibbonGroup>
+</RibbonTab>

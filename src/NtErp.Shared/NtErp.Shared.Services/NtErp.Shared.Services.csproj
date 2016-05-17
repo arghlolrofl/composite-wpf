@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Events\ModuleLoadEvent.cs" />
     <Compile Include="Events\TestEvent.cs" />
+    <Compile Include="Modules\ModuleBase.cs" />
     <Compile Include="ViewModels\CommonViewModel.cs" />
     <Compile Include="ViewModels\EntityViewModel.cs" />
     <Compile Include="Behaviors\DialogResultBehavior.cs" />

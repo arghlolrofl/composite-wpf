@@ -1,7 +1,7 @@
-﻿using NtErp.Modules.Base.ViewModels;
+﻿using NtErp.Modules.MasterFileData.ViewModels;
 using System.Windows.Controls;
 
-namespace NtErp.Modules.Base.Views {
+namespace NtErp.Modules.MasterFileData.Views {
     public partial class TaxRateView : UserControl {
         private TaxRateViewModel _viewModel;
 

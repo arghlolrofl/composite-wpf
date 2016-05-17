@@ -85,6 +85,8 @@ namespace NtErp.Shared.Services.ViewModels {
             get { return HasRootEntity && RootEntity.Exists; }
         }
 
+        public virtual RibbonViewModel Ribbon { get; set; }
+
 
         public EntityViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager)
             : base(scope, eventAggregator, regionManager) {

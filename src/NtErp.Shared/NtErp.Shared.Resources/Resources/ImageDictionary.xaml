@@ -30,5 +30,14 @@
     <ImageSource x:Key="ImageFinancesCashJournal">
         images/img-cashbook-1_512x512.png
     </ImageSource>
+    <ImageSource x:Key="ImageMasterFileData">
+        images/img-masterfiledata-1_256x256.png
+    </ImageSource>    
+    <ImageSource x:Key="ImageProducts">
+        images/img-products-1_512x512.png
+    </ImageSource>    
+    <ImageSource x:Key="ImageTaxRates">
+        images/img-taxrate-1_128x128.png
+    </ImageSource>
 
 </ResourceDictionary>

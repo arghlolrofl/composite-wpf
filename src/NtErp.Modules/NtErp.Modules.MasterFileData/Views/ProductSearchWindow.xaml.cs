@@ -2,7 +2,7 @@ using Autofac;
 using NtErp.ViewModel.MasterFileData;
 using System.Windows;
 
-namespace NtErp.Modules.Base.Views {
+namespace NtErp.Modules.MasterFileData.Views {
     public partial class ProductSearchWindow : Window {
         readonly ILifetimeScope _scope;
         readonly ProductSearchViewModel _viewModel;
