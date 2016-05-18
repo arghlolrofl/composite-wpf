@@ -2,9 +2,9 @@
 using NtErp.Modules.Finances.Views;
 using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Services.Constants;
 using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
-using NtErp.Shared.Services.Regions;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Commands;
 using Prism.Events;
@@ -12,179 +12,187 @@ using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
-    public class CashJournalViewModel : EntityViewModel, INavigationAware {
-        #region INavigationAware Members
+  public class CashJournalViewModel : EntityViewModel, INavigationAware {
+    #region INavigationAware Members
 
-        public void OnNavigatedTo(NavigationContext navigationContext) {
+    public void OnNavigatedTo(NavigationContext navigationContext) {
+      IsActive = true;
+    }
 
-        }
+    public bool IsNavigationTarget(NavigationContext navigationContext) {
+      return true;
+    }
 
-        public bool IsNavigationTarget(NavigationContext navigationContext) {
-            return true;
-        }
+    public void OnNavigatedFrom(NavigationContext navigationContext) {
+      IsActive = false;
+    }
 
-        public void OnNavigatedFrom(NavigationContext navigationContext) {
+    #endregion
 
-        }
+    #region Fields
 
-        #endregion
+    private CashJournalEntry _selectedEntry;
+    private ICashJournalRepository _cashJournalRepository;
+    private ICashJournalEntryRepository _cashJournalEntryRepository;
 
-        #region Fields
+    #endregion
 
-        private CashJournalEntry _selectedEntry;
-        private ICashJournalRepository _cashJournalRepository;
-        private ICashJournalEntryRepository _cashJournalEntryRepository;
+    #region Commands
 
-        #endregion
+    private ICommand _createEntryCommand;
+    private ICommand _editEntryCommand;
+    private ICommand _deleteEntryCommand;
 
-        #region Commands
+    public ICommand CreateEntryCommand {
+      get { return _createEntryCommand ?? (_createEntryCommand = new DelegateCommand(CreateEntryCommand_OnExecute)); }
+    }
 
-        private ICommand _createEntryCommand;
-        private ICommand _editEntryCommand;
-        private ICommand _deleteEntryCommand;
+    public ICommand EditEntryCommand {
+      get { return _editEntryCommand ?? (_editEntryCommand = new DelegateCommand(EditEntryCommand_OnExecute)); }
+    }
 
-        public ICommand CreateEntryCommand {
-            get { return _createEntryCommand ?? (_createEntryCommand = new DelegateCommand(CreateEntryCommand_OnExecute)); }
-        }
+    public ICommand DeleteEntryCommand {
+      get { return _deleteEntryCommand ?? (_deleteEntryCommand = new DelegateCommand(DeleteEntryCommand_OnExecute)); }
+    }
 
-        public ICommand EditEntryCommand {
-            get { return _editEntryCommand ?? (_editEntryCommand = new DelegateCommand(EditEntryCommand_OnExecute)); }
-        }
+    #endregion
 
-        public ICommand DeleteEntryCommand {
-            get { return _deleteEntryCommand ?? (_deleteEntryCommand = new DelegateCommand(DeleteEntryCommand_OnExecute)); }
-        }
+    #region Properties
 
-        #endregion
+    public CashJournalEntry SelectedEntry {
+      get { return _selectedEntry; }
+      set {
+        _selectedEntry = value;
+        RaisePropertyChanged();
+        RaisePropertyChanged(nameof(HasEntrySelected));
 
-        #region Properties
+        RefreshEnabledBindings();
+      }
+    }
 
-        public CashJournalEntry SelectedEntry {
-            get { return _selectedEntry; }
-            set {
-                _selectedEntry = value;
-                RaisePropertyChanged();
-                RaisePropertyChanged(nameof(HasEntrySelected));
+    public bool HasEntrySelected { get { return SelectedEntry != null; } }
 
-                RefreshEnabledBindings();
-            }
-        }
+    public bool CanRefreshEntry {
+      get {
+        return false;
+      }
+    }
 
-        public bool HasEntrySelected { get { return SelectedEntry != null; } }
+    public bool CanCreateEntry {
+      get {
+        return HasRootEntity && RootEntity.Exists && !RootEntity.HasChanges;
+      }
+    }
 
-        public bool CanRefreshEntry {
-            get {
-                return false;
-            }
-        }
+    public bool CanEditEntry {
+      get {
+        return HasRootEntity && SelectedEntry != null;
+      }
+    }
 
-        public bool CanCreateEntry {
-            get {
-                return HasRootEntity && RootEntity.Exists && !RootEntity.HasChanges;
-            }
-        }
+    public bool CanSaveEntry {
+      get {
+        return false;
+      }
+    }
 
-        public bool CanEditEntry {
-            get {
-                return HasRootEntity && SelectedEntry != null;
-            }
-        }
+    public bool CanDeleteEntry {
+      get {
+        return HasRootEntity && SelectedEntry != null;
+      }
+    }
 
-        public bool CanSaveEntry {
-            get {
-                return false;
-            }
-        }
+    private bool _isActive;
 
-        public bool CanDeleteEntry {
-            get {
-                return HasRootEntity && SelectedEntry != null;
-            }
-        }
-
-        #endregion
-
-        #region Initialization
-
-        public CashJournalViewModel(
-            ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager,
-            ICashJournalRepository cashJournalRepository,
-            ICashJournalEntryRepository cashJournalEntryRepository,
-            ITaxRateRepository taxRateRepository)
-            : base(scope, eventAggregator, regionManager) {
-            _cashJournalRepository = cashJournalRepository;
-            _cashJournalEntryRepository = cashJournalEntryRepository;
-        }
-
-        #endregion
+    public bool IsActive {
+      get { return _isActive; }
+      set { _isActive = value; RaisePropertyChanged(); }
+    }
 
 
-        protected override void OpenSearchCommand_OnExecute() {
-            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
-                            .Subscribe(JournalSearch_OnReply);
+    #endregion
 
-            var searchWindow = _scope.Resolve<CashJournalSearchWindow>();
-            searchWindow.ShowDialog();
-        }
+    #region Initialization
 
-        private void JournalSearch_OnReply(EntitySearchResultEvent response) {
-            _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
-                            .Unsubscribe(JournalSearch_OnReply);
+    public CashJournalViewModel(
+        ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager,
+        ICashJournalRepository cashJournalRepository,
+        ICashJournalEntryRepository cashJournalEntryRepository,
+        ITaxRateRepository taxRateRepository)
+        : base(scope, eventAggregator, regionManager) {
+      _cashJournalRepository = cashJournalRepository;
+      _cashJournalEntryRepository = cashJournalEntryRepository;
+    }
 
-            if (response.DialogResult.Equals(true))
-                RootEntity = _cashJournalRepository.Find(response.EntityId);
-        }
+    #endregion
 
-        protected override void RefreshCommand_OnExecute() {
-            _cashJournalRepository.Refresh(RootEntity);
-        }
 
-        protected override void CreateCommand_OnExecute() {
-            RootEntity = _cashJournalRepository.New();
-        }
+    protected override void OpenSearchCommand_OnExecute() {
+      _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                      .Subscribe(JournalSearch_OnReply);
 
-        protected override void SaveCommand_OnExecute() {
-            _cashJournalRepository.Save(RootEntity);
-        }
+      var searchWindow = _scope.Resolve<CashJournalSearchWindow>();
+      searchWindow.ShowDialog();
+    }
 
-        protected override void DeleteCommand_OnExecute() {
-            _cashJournalRepository.Delete(RootEntity);
-        }
+    private void JournalSearch_OnReply(EntitySearchResultEvent response) {
+      _eventAggregator.GetEvent<PubSubEvent<EntitySearchResultEvent>>()
+                      .Unsubscribe(JournalSearch_OnReply);
 
-        protected override void RefreshEnabledBindings() {
-            RaisePropertyChanged(nameof(HasRootEntity));
-            RaisePropertyChanged(nameof(CanCreateEntry));
-            RaisePropertyChanged(nameof(CanDeleteEntry));
-            RaisePropertyChanged(nameof(CanEditEntry));
-        }
+      if (response.DialogResult.Equals(true))
+        RootEntity = _cashJournalRepository.Find(response.EntityId);
+    }
 
-        private void CreateEntryCommand_OnExecute() {
-            var param = new NavigationParameters() {
+    protected override void RefreshCommand_OnExecute() {
+      _cashJournalRepository.Refresh(RootEntity);
+    }
+
+    protected override void CreateCommand_OnExecute() {
+      RootEntity = _cashJournalRepository.New();
+    }
+
+    protected override void SaveCommand_OnExecute() {
+      _cashJournalRepository.Save(RootEntity);
+    }
+
+    protected override void DeleteCommand_OnExecute() {
+      _cashJournalRepository.Delete(RootEntity);
+    }
+
+    protected override void RefreshEnabledBindings() {
+      RaisePropertyChanged(nameof(HasRootEntity));
+      RaisePropertyChanged(nameof(CanCreateEntry));
+      RaisePropertyChanged(nameof(CanDeleteEntry));
+      RaisePropertyChanged(nameof(CanEditEntry));
+    }
+
+    private void CreateEntryCommand_OnExecute() {
+      var param = new NavigationParameters() {
                 { ParameterNames.NextView, nameof(CashJournalView) },
                 { ParameterNames.ParentId, RootEntity.Id }
             };
 
-            //NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
-            Ribbon.GoToSubview(
-                typeof(CashJournalEntryView),
-                typeof(CashJournalEntryViewModel),
-                RegionNames.MainContent,
-                param
-            );
-        }
+      //NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
+      Ribbon.GoToSubview(
+          typeof(CashJournalEntryView),
+          typeof(CashJournalEntryViewModel),
+          ShellRegions.MainContent,
+          param
+      );
+    }
 
-        private void EditEntryCommand_OnExecute() {
-            var param = new NavigationParameters() {
+    private void EditEntryCommand_OnExecute() {
+      var param = new NavigationParameters() {
                 { ParameterNames.Id,        SelectedEntry.Id },
                 { ParameterNames.NextView,  nameof(CashJournalView) },
                 { ParameterNames.ParentId, RootEntity.Id }
             };
 
-            NavigateToView(nameof(CashJournalEntryView), RegionNames.MainContent, param);
-        }
-
-        private void DeleteEntryCommand_OnExecute() {
-            _cashJournalEntryRepository.Delete(SelectedEntry);
-        }
+      NavigateToView(nameof(CashJournalEntryView), ShellRegions.MainContent, param);
     }
+
+    private void DeleteEntryCommand_OnExecute() {
+      _cashJournalEntryRepository.Delete(SelectedEntry);
+    }
+  }
 }

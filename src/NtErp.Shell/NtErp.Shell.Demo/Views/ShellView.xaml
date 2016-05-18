@@ -5,7 +5,7 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:local="clr-namespace:NtErp.Shell.Demo.Views"        
             xmlns:prism="http://prismlibrary.com/"
-            xmlns:region="clr-namespace:NtErp.Shared.Services.Regions;assembly=NtErp.Shared.Services"
+            xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
             mc:Ignorable="d" Height="700" Width="950"
             VerticalAlignment="Stretch"
             HorizontalAlignment="Stretch">
@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Ribbon prism:RegionManager.RegionName="{x:Static region:RegionNames.RibbonBar}">
+        <Ribbon prism:RegionManager.RegionName="{x:Static const:ShellRegions.Ribbon}">
             
             <Ribbon.QuickAccessToolBar>
                 <RibbonQuickAccessToolBar Visibility="Collapsed" />
@@ -31,10 +31,10 @@
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
         </Ribbon>
-        <ContentControl prism:RegionManager.RegionName="{x:Static region:RegionNames.MainContent}"
+        <ContentControl prism:RegionManager.RegionName="{x:Static const:ShellRegions.MainContent}"
                         Margin="0,140,0,30" />
-        <StatusBar prism:RegionManager.RegionName="{x:Static region:RegionNames.StatusBar}"
+        <!--<StatusBar prism:RegionManager.RegionName="{x:Static region:ShellRegions.StatusBar}"
                    Height="30" VerticalAlignment="Bottom">
-        </StatusBar>
+        </StatusBar>-->
     </Grid>
 </RibbonWindow>

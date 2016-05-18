@@ -52,6 +52,9 @@
       <HintPath>..\..\..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Prism.RibbonRegionAdapter">
+      <HintPath>..\..\..\packages\Prism.RibbonRegionAdapter.0.20.0.1\lib\net45\Prism.RibbonRegionAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>

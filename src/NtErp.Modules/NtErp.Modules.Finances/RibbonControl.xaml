@@ -1,0 +1,30 @@
+﻿<UserControl x:Class="NtErp.Modules.Finances.RibbonControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.Finances"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
+             xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/NtErp.Shared.Resources;component/Resources/ImageDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>        
+    </UserControl.Resources>
+    <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
+        <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
+                   keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
+            <RibbonGroup Header="Navigation"
+                         keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonMainGroup}">
+                <RibbonButton LargeImageSource="{StaticResource ImageFinancesCashJournal}"                              
+                              Label="CashJournal"
+                              Command="{Binding Path=GoToCashJournalViewCommand}"/>
+            </RibbonGroup>
+        </RibbonTab>
+    </Ribbon>
+</UserControl>

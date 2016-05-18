@@ -44,6 +44,9 @@
       <HintPath>..\..\..\packages\Prism.Core.6.1.0\lib\net45\Prism.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Prism.RibbonRegionAdapter">
+      <HintPath>..\..\..\packages\Prism.RibbonRegionAdapter.0.20.0.1\lib\net45\Prism.RibbonRegionAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
       <Private>True</Private>
@@ -61,6 +64,9 @@
       <DependentUpon>FinancesModule.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RibbonControl.xaml.cs">
+      <DependentUpon>RibbonControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\CashJournalSearchViewModel.cs" />
     <Compile Include="ViewModels\CashJournalViewModel.cs" />
     <Compile Include="ViewModels\CashJournalEntryViewModel.cs" />
@@ -76,6 +82,9 @@
     </Compile>
     <Compile Include="Views\CashJournalSearchWindow.xaml.cs">
       <DependentUpon>CashJournalSearchWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\CashJournalViewRibbon.xaml.cs">
+      <DependentUpon>CashJournalViewRibbon.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -100,6 +109,10 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="RibbonControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Views\CashJournalView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -115,6 +128,10 @@
     <Page Include="Views\CashJournalSearchWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CashJournalViewRibbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
