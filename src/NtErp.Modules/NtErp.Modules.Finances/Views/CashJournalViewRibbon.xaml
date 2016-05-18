@@ -9,7 +9,7 @@
              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
              xmlns:conv="clr-namespace:NtErp.Shared.Services.Views;assembly=NtErp.Shared.Services"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="140" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:BooleanToVisibilityConverter x:Key="VisibilityConverter" />
@@ -22,7 +22,6 @@
         <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
                    keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
             <RibbonGroup Header="Cash Journal"
-                         keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonViewActionGroup}"
                          Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}">
                 <RibbonButton Label="Refresh"
                               Command="{Binding Path=RefreshCommand}"

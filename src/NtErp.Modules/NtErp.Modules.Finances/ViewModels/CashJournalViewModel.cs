@@ -102,14 +102,6 @@ namespace NtErp.Modules.Finances.ViewModels {
       }
     }
 
-    private bool _isActive;
-
-    public bool IsActive {
-      get { return _isActive; }
-      set { _isActive = value; RaisePropertyChanged(); }
-    }
-
-
     #endregion
 
     #region Initialization

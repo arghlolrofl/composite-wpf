@@ -17,8 +17,9 @@
         </ResourceDictionary>
     </Window.Resources>
     <Grid>
-        <Ribbon prism:RegionManager.RegionName="{x:Static const:ShellRegions.Ribbon}">
-            
+        <Ribbon prism:RegionManager.RegionName="{x:Static const:ShellRegions.Ribbon}"
+                x:Name="MainMenu" 
+                x:FieldModifier="protected internal">
             <Ribbon.QuickAccessToolBar>
                 <RibbonQuickAccessToolBar Visibility="Collapsed" />
             </Ribbon.QuickAccessToolBar>

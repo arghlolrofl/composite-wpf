@@ -16,6 +16,7 @@ namespace NtErp.Modules.Finances {
     protected override void RegisterViews() {
       _regionManager.RegisterViewWithRegion(ShellRegions.Ribbon, typeof(RibbonControl));
       _regionManager.RegisterViewWithRegion(ShellRegions.Ribbon, typeof(CashJournalViewRibbon));
+      _regionManager.RegisterViewWithRegion(ShellRegions.Ribbon, typeof(CashJournalEntryViewRibbon));
 
       _regionManager.RegisterViewWithRegion(ShellRegions.MainContent, typeof(CashJournalView));
       _regionManager.RegisterViewWithRegion(ShellRegions.MainContent, typeof(CashJournalEntryView));

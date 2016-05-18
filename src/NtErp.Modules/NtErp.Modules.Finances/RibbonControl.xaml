@@ -19,8 +19,7 @@
     <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
         <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
                    keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
-            <RibbonGroup Header="Navigation"
-                         keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonMainGroup}">
+            <RibbonGroup Header="Navigation">
                 <RibbonButton LargeImageSource="{StaticResource ImageFinancesCashJournal}"                              
                               Label="CashJournal"
                               Command="{Binding Path=GoToCashJournalViewCommand}"/>

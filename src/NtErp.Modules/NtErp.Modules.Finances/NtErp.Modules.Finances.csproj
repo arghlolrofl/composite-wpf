@@ -71,6 +71,9 @@
     <Compile Include="ViewModels\CashJournalViewModel.cs" />
     <Compile Include="ViewModels\CashJournalEntryViewModel.cs" />
     <Compile Include="RibbonViewModel.cs" />
+    <Compile Include="Views\CashJournalEntryViewRibbon.xaml.cs">
+      <DependentUpon>CashJournalEntryViewRibbon.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\CashJournalView.xaml.cs">
       <DependentUpon>CashJournalView.xaml</DependentUpon>
     </Compile>
@@ -112,6 +115,10 @@
     <Page Include="RibbonControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CashJournalEntryViewRibbon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CashJournalView.xaml">
       <SubType>Designer</SubType>

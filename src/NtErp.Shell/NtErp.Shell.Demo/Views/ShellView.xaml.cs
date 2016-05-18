@@ -2,16 +2,16 @@
 using System.Windows.Controls.Ribbon;
 
 namespace NtErp.Shell.Demo.Views {
-    /// <summary>
-    /// Interaction logic for ShellWindow.xaml
-    /// </summary>
-    public partial class ShellView : RibbonWindow {
-        private ShellViewModel _viewModel;
+  /// <summary>
+  /// Interaction logic for ShellWindow.xaml
+  /// </summary>
+  public partial class ShellView : RibbonWindow {
+    private ShellViewModel _viewModel;
 
-        public ShellView(ShellViewModel viewModel) {
-            InitializeComponent();
+    public ShellView(ShellViewModel viewModel) {
+      DataContext = _viewModel = viewModel;
 
-            _viewModel = viewModel;
-        }
+      InitializeComponent();
     }
+  }
 }

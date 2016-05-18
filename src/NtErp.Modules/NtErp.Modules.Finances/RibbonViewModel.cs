@@ -35,12 +35,6 @@ namespace NtErp.Modules.Finances {
 
     private void GoToCashJournalViewCommand_OnExecute() {
       NavigateToView(nameof(CashJournalView), ShellRegions.MainContent);
-      //NavigateToView(nameof(CashJournalViewRibbon), ShellRegions.Ribbon);
-
-      //ActiveViewModel = _scope.Resolve<CashJournalViewModel>();
-      //ActiveViewModel.Ribbon = this;
-
-      //IsRibbonGroupVisibleCashJournal = true;
     }
   }
 }

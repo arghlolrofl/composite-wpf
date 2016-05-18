@@ -12,6 +12,13 @@ namespace NtErp.Shared.Services.ViewModels {
     protected ILifetimeScope _scope;
     protected IEventAggregator _eventAggregator;
 
+    private bool _isActive;
+
+    public bool IsActive {
+      get { return _isActive; }
+      set { _isActive = value; RaisePropertyChanged(); }
+    }
+
 
     public CommonViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager) {
       _scope = scope;

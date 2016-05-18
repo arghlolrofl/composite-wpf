@@ -1,0 +1,51 @@
+﻿<UserControl x:Class="NtErp.Modules.Finances.Views.CashJournalEntryViewRibbon"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:NtErp.Modules.Finances.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
+             xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
+             xmlns:conv="clr-namespace:NtErp.Shared.Services.Views;assembly=NtErp.Shared.Services"
+             mc:Ignorable="d" 
+             d:DesignHeight="140" d:DesignWidth="600">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <conv:BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/NtErp.Shared.Resources;component/Resources/ImageDictionary.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
+        <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
+                   keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
+            <RibbonGroup Header="Entry"
+                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}">
+                <RibbonButton LargeImageSource="{StaticResource IconRefresh}"
+                      Label="Refresh"
+                      Command="{Binding Path=RefreshEntryCommand}"
+                      IsEnabled="{Binding Path=CanRefreshEntry}"
+                      Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                <RibbonButton LargeImageSource="{StaticResource IconCreateNew}" 
+                      Label="Create"
+                      Command="{Binding Path=CreateEntryCommand}"
+                      IsEnabled="{Binding Path=CanCreateEntry}" />
+                <RibbonButton LargeImageSource="{StaticResource IconEdit}" 
+                      Label="Edit"
+                      Command="{Binding Path=EditEntryCommand}"
+                      IsEnabled="{Binding Path=CanEditEntry}" />
+                <RibbonButton LargeImageSource="{StaticResource IconSave}"
+                      Label="Save"
+                      Command="{Binding Path=SaveEntryCommand}"
+                      IsEnabled="{Binding Path=CanSaveEntry}"
+                      Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                <RibbonButton LargeImageSource="{StaticResource IconDelete}" 
+                      Label="Delete"
+                      Command="{Binding Path=DeleteEntryCommand}"
+                      IsEnabled="{Binding Path=CanDeleteEntry}" />
+            </RibbonGroup>
+        </RibbonTab>
+    </Ribbon>
+</UserControl>

@@ -19,7 +19,6 @@ namespace NtErp.Shell.Demo.ViewModels {
 
 
     public ShellViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager) : base(scope, eventAggregator, regionManager) {
-      _regionManager.RegisterViewWithRegion(ShellRegions.Ribbon, typeof(ShellRibbonView));
       _regionManager.RegisterViewWithRegion(ShellRegions.MainContent, typeof(StartView));
     }
 

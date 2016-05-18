@@ -95,6 +95,8 @@ namespace NtErp.Modules.Finances.ViewModels {
       get { return HasRootEntity && SelectedPosition != null; }
     }
 
+    public CashJournalViewModel Parent { get; private set; }
+
     #endregion
 
     #region Commands
@@ -135,11 +137,13 @@ namespace NtErp.Modules.Finances.ViewModels {
         IEventAggregator eventAggregator,
         ICashJournalRepository cashJournalRepository,
         ICashJournalEntryRepository repository,
-        ITaxRateRepository taxRateRepository)
+        ITaxRateRepository taxRateRepository,
+        CashJournalViewModel parent)
         : base(scope, eventAggregator, regionManager) {
       _cashJournalRepository = cashJournalRepository;
       _cashJournalEntryRepository = repository;
       _taxRateRepository = taxRateRepository;
+      Parent = parent;
 
       RefreshAvailableTaxRates();
     }
