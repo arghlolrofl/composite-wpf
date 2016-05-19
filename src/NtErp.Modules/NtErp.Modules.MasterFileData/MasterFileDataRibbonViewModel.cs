@@ -8,7 +8,7 @@ using Prism.Regions;
 using System.Windows.Input;
 
 namespace NtErp.Modules.MasterFileData {
-  public class RibbonViewModel : NtErp.Shared.Services.ViewModels.RibbonViewModel {
+  public class MasterFileDataRibbonViewModel : NtErp.Shared.Services.ViewModels.RibbonViewModel {
     #region Commands
 
     private ICommand _GoToProductViewCommand;
@@ -49,7 +49,7 @@ namespace NtErp.Modules.MasterFileData {
 
     #endregion
 
-    public RibbonViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager)
+    public MasterFileDataRibbonViewModel(ILifetimeScope scope, IEventAggregator eventAggregator, IRegionManager regionManager)
         : base(scope, eventAggregator, regionManager) {
 
     }

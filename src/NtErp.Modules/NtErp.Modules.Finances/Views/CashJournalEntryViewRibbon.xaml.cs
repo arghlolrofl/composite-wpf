@@ -2,10 +2,10 @@
 using System.Windows.Controls;
 
 namespace NtErp.Modules.Finances.Views {
-  public partial class CashJournalEntryViewRibbon : UserControl {
-    public CashJournalEntryViewRibbon(CashJournalEntryViewModel viewModel) {
-      DataContext = viewModel;
-      InitializeComponent();
+    public partial class CashJournalEntryViewRibbon : UserControl {
+        public CashJournalEntryViewRibbon(CashJournalEntryViewModel viewModel) {
+            DataContext = viewModel;
+            InitializeComponent();
+        }
     }
-  }
 }

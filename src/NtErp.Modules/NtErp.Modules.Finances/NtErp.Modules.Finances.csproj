@@ -45,7 +45,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Prism.RibbonRegionAdapter">
-      <HintPath>..\..\..\packages\Prism.RibbonRegionAdapter.0.20.0.1\lib\net45\Prism.RibbonRegionAdapter.dll</HintPath>
+      <HintPath>..\..\..\packages\Prism.RibbonRegionAdapter.0.3.0\Prism.RibbonRegionAdapter.dll</HintPath>
     </Reference>
     <Reference Include="Prism.Wpf, Version=6.1.0.0, Culture=neutral, PublicKeyToken=91a96d2a154366d8, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Prism.Wpf.6.1.0\lib\net45\Prism.Wpf.dll</HintPath>
@@ -64,13 +64,13 @@
       <DependentUpon>FinancesModule.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RibbonControl.xaml.cs">
-      <DependentUpon>RibbonControl.xaml</DependentUpon>
+    <Compile Include="FinancesModuleRibbon.xaml.cs">
+      <DependentUpon>FinancesModuleRibbon.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\CashJournalSearchViewModel.cs" />
     <Compile Include="ViewModels\CashJournalViewModel.cs" />
     <Compile Include="ViewModels\CashJournalEntryViewModel.cs" />
-    <Compile Include="RibbonViewModel.cs" />
+    <Compile Include="FinancesModuleRibbonViewModel.cs" />
     <Compile Include="Views\CashJournalEntryViewRibbon.xaml.cs">
       <DependentUpon>CashJournalEntryViewRibbon.xaml</DependentUpon>
     </Compile>
@@ -79,9 +79,6 @@
     </Compile>
     <Compile Include="Views\CashJournalEntryView.xaml.cs">
       <DependentUpon>CashJournalEntryView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="RibbonView.xaml.cs">
-      <DependentUpon>RibbonView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CashJournalSearchWindow.xaml.cs">
       <DependentUpon>CashJournalSearchWindow.xaml</DependentUpon>
@@ -112,7 +109,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="RibbonControl.xaml">
+    <Page Include="FinancesModuleRibbon.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -125,10 +122,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CashJournalEntryView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="RibbonView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,7 +10,7 @@ namespace NtErp.Modules.Finances {
             builder.RegisterType<ViewModels.CashJournalViewModel>().SingleInstance();
             builder.RegisterType<Views.CashJournalView>();
 
-            builder.RegisterType<ViewModels.CashJournalEntryViewModel>();
+            builder.RegisterType<ViewModels.CashJournalEntryViewModel>().SingleInstance();
             builder.RegisterType<Views.CashJournalEntryView>();
         }
     }

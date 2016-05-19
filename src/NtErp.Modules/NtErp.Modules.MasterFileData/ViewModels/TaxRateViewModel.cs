@@ -8,7 +8,24 @@ using System;
 using System.Collections.ObjectModel;
 
 namespace NtErp.Modules.MasterFileData.ViewModels {
-    public class TaxRateViewModel : EntityViewModel {
+    public class TaxRateViewModel : EntityViewModel, INavigationAware {
+        #region INavigationAware Members
+
+        public void OnNavigatedTo(NavigationContext navigationContext) {
+            IsActive = true;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) {
+            IsActive = false;
+        }
+
+        #endregion
+
+
         private ITaxRateRepository _taxRateRepository;
         private ObservableCollection<TaxRate> _taxRates;
 

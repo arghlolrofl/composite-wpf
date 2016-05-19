@@ -20,6 +20,7 @@ build/
 
 # Enable "build/" folder in the NuGet Packages folder since NuGet packages use it for MSBuild targets
 !packages/*/build/
+!packages/Prism.RibbonRegionAdapter.0.3.0/
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

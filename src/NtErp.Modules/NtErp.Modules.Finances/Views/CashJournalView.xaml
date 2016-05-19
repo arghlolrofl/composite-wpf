@@ -104,8 +104,8 @@
 
         <StackPanel Orientation="Horizontal" Grid.Column="13" Grid.ColumnSpan="2" Grid.Row="2">
             <Label Content="CashBalance: " />
-            <Label Content="{Binding Path=CashBalance}"
-                   Foreground="{Binding Path=CashBalance, Converter={StaticResource colorConverter}}"/>
+            <Label Content="{Binding Path=Balance}"
+                   Foreground="{Binding Path=Balance, Converter={StaticResource colorConverter}}"/>
         </StackPanel>
     </Grid>
 </view:CommonView>

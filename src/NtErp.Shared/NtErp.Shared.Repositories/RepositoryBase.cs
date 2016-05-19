@@ -19,14 +19,25 @@ namespace NtErp.Shared.Repositories {
         public abstract TEntity Find(long id);
 
         public virtual void Save(EntityBase entity) {
-            if (entity.Exists)
-                _context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
-            else
-                _context.Entry(entity).State = System.Data.Entity.EntityState.Added;
+            try {
+                if (entity.Exists)
+                    _context.Entry(entity).State = System.Data.Entity.EntityState.Modified;
+                else
+                    _context.Entry(entity).State = System.Data.Entity.EntityState.Added;
 
-            _context.SaveChanges();
+                _context.SaveChanges();
 
-            entity.ResetChangedProperties();
+                entity.ResetChangedProperties();
+            } catch (DbEntityValidationException ex) {
+                Debug.WriteLine(ex.GetType().Name.ToUpper());
+                Debug.WriteLine(ex.Message);
+                foreach (DbEntityValidationResult result in ex.EntityValidationErrors) {
+                    Debug.WriteLine(" > Entity: " + result.Entry.GetType().Name);
+                    foreach (DbValidationError error in result.ValidationErrors)
+                        Debug.WriteLine("       > ERROR in Property " + error.PropertyName + ": " + error.ErrorMessage);
+
+                }
+            }
         }
 
         public virtual void Refresh(EntityBase entity) {

@@ -11,6 +11,22 @@ using System.Windows.Input;
 
 namespace NtErp.Modules.MasterFileData.ViewModels {
     public class ProductViewModel : EntityViewModel, INavigationAware {
+        #region INavigationAware Members
+
+        public void OnNavigatedTo(NavigationContext navigationContext) {
+            IsActive = true;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) {
+            IsActive = false;
+        }
+
+        #endregion
+
         #region Fields
 
         private readonly IProductRepository _productRepository;
@@ -151,21 +167,5 @@ namespace NtErp.Modules.MasterFileData.ViewModels {
             RaisePropertyChanged(nameof(CanAddComponents));
             RaisePropertyChanged(nameof(CanRemoveComponents));
         }
-
-        #region INavigationAware Members
-
-        public void OnNavigatedTo(NavigationContext navigationContext) {
-            IsRibbonGroupActive = true;
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext) {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext) {
-            IsRibbonGroupActive = false;
-        }
-
-        #endregion
     }
 }

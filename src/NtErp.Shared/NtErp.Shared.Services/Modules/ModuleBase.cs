@@ -21,15 +21,15 @@ namespace NtErp.Shared.Services.Modules {
 
 
         public virtual void Initialize() {
-            Log("Loading " + GetType().Name);
+            Log(" ==> Loading " + GetType().Name);
 
-            Log(" > Updating IoC container");
+            Log("   > Updating IoC container");
             RequestContainerUpdate();
 
-            Log(" > Registering views");
+            Log("   > Registering views");
             RegisterViews();
 
-            Log(" > " + GetType().Name + " loaded successfully");
+            Log("   > " + GetType().Name + " loaded successfully");
         }
 
         protected virtual void RequestContainerUpdate() {

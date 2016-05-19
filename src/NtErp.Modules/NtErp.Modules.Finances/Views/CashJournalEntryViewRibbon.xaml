@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:NtErp.Modules.Finances.Views"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              xmlns:prism="http://prismlibrary.com/"
              xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
@@ -22,29 +23,48 @@
         <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
                    keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
             <RibbonGroup Header="Entry"
-                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}">
+                         Visibility="{Binding Path=IsAnyActive, Converter={StaticResource VisibilityConverter}}">
                 <RibbonButton LargeImageSource="{StaticResource IconRefresh}"
                       Label="Refresh"
-                      Command="{Binding Path=RefreshEntryCommand}"
-                      IsEnabled="{Binding Path=CanRefreshEntry}"
-                      Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                      Command="{Binding Path=RefreshCommand}"
+                      IsEnabled="{Binding Path=CanRefresh}"
+                         Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconCreateNew}" 
                       Label="Create"
-                      Command="{Binding Path=CreateEntryCommand}"
-                      IsEnabled="{Binding Path=CanCreateEntry}" />
+                      Command="{Binding Path=Parent.CreateEntryCommand}"
+                      IsEnabled="{Binding Path=Parent.CanCreateEntry}" 
+                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}"/>
                 <RibbonButton LargeImageSource="{StaticResource IconEdit}" 
                       Label="Edit"
-                      Command="{Binding Path=EditEntryCommand}"
-                      IsEnabled="{Binding Path=CanEditEntry}" />
+                      Command="{Binding Path=Parent.EditEntryCommand}"
+                      IsEnabled="{Binding Path=Parent.CanEditEntry}"
+                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconSave}"
                       Label="Save"
-                      Command="{Binding Path=SaveEntryCommand}"
-                      IsEnabled="{Binding Path=CanSaveEntry}"
-                      Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                      Command="{Binding Path=SaveCommand}"
+                      IsEnabled="{Binding Path=CanSave}"
+                         Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconDelete}" 
                       Label="Delete"
-                      Command="{Binding Path=DeleteEntryCommand}"
-                      IsEnabled="{Binding Path=CanDeleteEntry}" />
+                      Command="{Binding Path=Parent.DeleteEntryCommand}"
+                      IsEnabled="{Binding Path=Parent.CanDeleteEntry}"
+                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+            </RibbonGroup>
+
+            <RibbonGroup Header="Position"
+                         Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}">
+                <RibbonButton Label="New" 
+                              LargeImageSource="{StaticResource IconCreateNew}"
+                              Command="{Binding Path=CreatePositionCommand}"
+                              IsEnabled="{Binding Path=CanCreatePosition}" />
+                <RibbonButton Label="Add/Save" 
+                              LargeImageSource="{StaticResource IconSave}"
+                              Command="{Binding Path=AddPositionCommand}"
+                              IsEnabled="{Binding Path=CanAddPosition}" />
+                <RibbonButton Label="Delete" 
+                              LargeImageSource="{StaticResource IconDelete}"
+                              Command="{Binding Path=DeletePositionCommand}"
+                              IsEnabled="{Binding Path=CanDeletePosition}" />
             </RibbonGroup>
         </RibbonTab>
     </Ribbon>
