@@ -25,6 +25,9 @@
     <ImageSource x:Key="IconSearch">
         icons/icon-search-1_256x256.png
     </ImageSource>
+    <ImageSource x:Key="IconShutdown">
+        icons/icon-shutdown-1_256x256.png
+    </ImageSource>
     
     <!-- Module Images -->
     <ImageSource x:Key="ImageFinancesCashJournal">
@@ -38,6 +41,9 @@
     </ImageSource>    
     <ImageSource x:Key="ImageTaxRates">
         images/img-taxrate-1_128x128.png
+    </ImageSource>    
+    <ImageSource x:Key="ImageHr">
+        images/img-hr-1_256x256.png
     </ImageSource>
 
 </ResourceDictionary>

@@ -8,7 +8,7 @@
              xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="140" d:DesignWidth="600">
     <UserControl.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,6 +26,9 @@
                 <RibbonButton LargeImageSource="{StaticResource ImageTaxRates}"
                               Label="Tax Rates"
                               Command="{Binding Path=GoToTaxRateViewCommand}"/>
+                <RibbonButton LargeImageSource="{StaticResource ImageHr}" 
+                              Label="Employees"
+                              Command="{Binding Path=GoToEmployeeViewCommand}"/>
             </RibbonGroup>
         </RibbonTab>
     </Ribbon>

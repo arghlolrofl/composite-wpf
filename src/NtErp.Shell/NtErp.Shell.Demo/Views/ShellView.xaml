@@ -1,14 +1,15 @@
 ﻿<RibbonWindow x:Class="NtErp.Shell.Demo.Views.ShellView"
-            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:local="clr-namespace:NtErp.Shell.Demo.Views"        
-            xmlns:prism="http://prismlibrary.com/"
-            xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
-            mc:Ignorable="d" Height="700" Width="950"
-            VerticalAlignment="Stretch"
-            HorizontalAlignment="Stretch">
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+              xmlns:local="clr-namespace:NtErp.Shell.Demo.Views"        
+              xmlns:prism="http://prismlibrary.com/"
+              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
+              mc:Ignorable="d" Height="700" Width="950"
+              VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              Title="NT ERP">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -27,8 +28,9 @@
                 <RibbonApplicationMenu>
                     <RibbonApplicationMenuItem Header="Options" 
                                                ImageSource="{StaticResource IconOptions}" />
-                    <!--<RibbonApplicationMenuItem Header="Exit" 
-                                               ImageSource="{StaticResource IconExit}" />-->
+                    <RibbonApplicationMenuItem Header="Exit" 
+                                               ImageSource="{StaticResource IconShutdown}"
+                                               Command="{Binding Path=ShutdownCommand}"/>
                 </RibbonApplicationMenu>
             </Ribbon.ApplicationMenu>
         </Ribbon>
