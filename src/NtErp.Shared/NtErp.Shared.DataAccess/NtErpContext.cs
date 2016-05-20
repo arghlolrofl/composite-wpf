@@ -1,17 +1,18 @@
 ﻿using NtErp.Data.Migrations;
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Configuration;
 using System.Data.Entity;
 using System.Diagnostics;
+using System.IO;
 
 namespace NtErp.Shared.DataAccess {
     public class NtErpContext : DbContext {
         const string NtErpConnectionStringName = "NtErpConnectionString";
         const string DataDirectoryKey = "DataDirectory";
 
-        static readonly string DatabasePath;
+        static string DatabasePath;
 
         #region Context Entities
 
@@ -40,6 +41,17 @@ namespace NtErp.Shared.DataAccess {
 
             string path = AppDomain.CurrentDomain.GetData(DataDirectoryKey) as String;
             if (String.IsNullOrEmpty(path)) {
+                if (DatabasePath.StartsWith("%")) {
+                    DatabasePath = Environment.ExpandEnvironmentVariables(DatabasePath);
+
+                    if (DatabasePath.StartsWith("%"))
+                        throw new ArgumentException("Invalid database path detected: " + DatabasePath);
+
+                    DirectoryInfo dir = new DirectoryInfo(DatabasePath);
+                    if (!dir.Exists)
+                        dir.Create();
+                }
+
                 // Set |DataDirectory| value
                 AppDomain.CurrentDomain.SetData(DataDirectoryKey, DatabasePath);
                 Debug.WriteLine("DataDirectory set to: " + DatabasePath);

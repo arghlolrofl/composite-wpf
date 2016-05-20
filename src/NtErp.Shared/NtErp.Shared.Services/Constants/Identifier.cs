@@ -12,6 +12,7 @@
     public static class MasterFileDataModuleMergeKeys {
         public const string RibbonTab = "MasterFileDataModuleRibbonTab";
         public const string RibbonMainGroup = "MasterFileDataModuleRibbonMainGroup";
+        public const string RibbonTaxRateGroup = "MasterFileDataModuleRibbonTaxRateGroup";
     }
 
     public static class FinancesModuleMergeKeys {

@@ -24,6 +24,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -71,6 +73,7 @@
     <Compile Include="ViewModels\CashJournalViewModel.cs" />
     <Compile Include="ViewModels\CashJournalEntryViewModel.cs" />
     <Compile Include="FinancesModuleRibbonViewModel.cs" />
+    <Compile Include="ViewModels\TaxRateViewModel.cs" />
     <Compile Include="Views\CashJournalEntryViewRibbon.xaml.cs">
       <DependentUpon>CashJournalEntryViewRibbon.xaml</DependentUpon>
     </Compile>
@@ -85,6 +88,12 @@
     </Compile>
     <Compile Include="Views\CashJournalViewRibbon.xaml.cs">
       <DependentUpon>CashJournalViewRibbon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxRateView.xaml.cs">
+      <DependentUpon>TaxRateView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TaxRateViewRibbon.xaml.cs">
+      <DependentUpon>TaxRateViewRibbon.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -132,6 +141,14 @@
     <Page Include="Views\CashJournalViewRibbon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TaxRateView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\TaxRateViewRibbon.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

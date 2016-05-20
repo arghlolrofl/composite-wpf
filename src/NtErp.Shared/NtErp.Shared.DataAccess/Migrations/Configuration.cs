@@ -1,4 +1,4 @@
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.Collections.Generic;

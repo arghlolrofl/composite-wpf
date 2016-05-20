@@ -1,9 +1,9 @@
-﻿using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Base;
+﻿using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Entities.MasterFileData;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace NtErp.Shared.Entities.CashJournal {
+namespace NtErp.Shared.Entities.Finances {
     public class CashJournalEntryPosition : EntityBase {
         private decimal _delta;
         private string _description;

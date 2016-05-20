@@ -47,9 +47,9 @@
   <ItemGroup>
     <Compile Include="Base\EntityBase.cs" />
     <Compile Include="Base\TrackedScalarProperty.cs" />
-    <Compile Include="CashJournal\CashJournal.cs" />
-    <Compile Include="CashJournal\CashJournalEntry.cs" />
-    <Compile Include="CashJournal\CashJournalEntryPosition.cs" />
+    <Compile Include="Finances\CashJournal.cs" />
+    <Compile Include="Finances\CashJournalEntry.cs" />
+    <Compile Include="Finances\CashJournalEntryPosition.cs" />
     <Compile Include="MasterFileData\Product.cs" />
     <Compile Include="MasterFileData\ProductComponent.cs" />
     <Compile Include="MasterFileData\TaxRate.cs" />

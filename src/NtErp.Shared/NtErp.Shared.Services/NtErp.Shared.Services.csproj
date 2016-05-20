@@ -87,6 +87,7 @@
     <Compile Include="Views\BooleanToVisibilityConverter.cs" />
     <Compile Include="Views\CommonView.cs" />
     <Compile Include="Views\MonetaryValueToForegroundColorConverter.cs" />
+    <Compile Include="Views\StringToCurrencyConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,8 +1,8 @@
 ﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Base;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -66,6 +66,12 @@ namespace NtErp.Shared.Repositories {
             } else
                 _context.Entry(position).State = System.Data.Entity.EntityState.Added;
 
+            _context.SaveChanges();
+        }
+
+        public void UpdatePosition(CashJournalEntryPosition position) {
+            _context.CashJournalEntryPositions.Attach(position);
+            _context.Entry(position).State = EntityState.Modified;
             _context.SaveChanges();
         }
 

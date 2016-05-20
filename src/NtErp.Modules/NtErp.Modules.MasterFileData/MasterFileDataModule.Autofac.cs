@@ -9,9 +9,6 @@ namespace NtErp.Modules.MasterFileData {
 
             builder.RegisterType<ViewModels.ProductViewModel>().SingleInstance();
             builder.RegisterType<Views.ProductView>();
-
-            builder.RegisterType<ViewModels.TaxRateViewModel>().SingleInstance();
-            builder.RegisterType<Views.TaxRateView>();
         }
     }
 }

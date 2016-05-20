@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Services.Base;
+﻿using NtErp.Shared.Entities.Base;
 using System.Collections.Generic;
 
 namespace NtErp.Shared.Contracts.Repository {

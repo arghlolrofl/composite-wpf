@@ -1,7 +1,7 @@
 ﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
+using NtErp.Shared.Entities.Base;
 using NtErp.Shared.Entities.MasterFileData;
-using NtErp.Shared.Services.Base;
 using System.Collections.Generic;
 using System.Linq;
 

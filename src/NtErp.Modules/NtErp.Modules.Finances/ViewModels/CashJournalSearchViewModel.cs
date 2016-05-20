@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using NtErp.Shared.Contracts.Repository;
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Services.Events;
 using NtErp.Shared.Services.ViewModels;
 using Prism.Events;

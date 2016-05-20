@@ -19,16 +19,17 @@
     <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
         <RibbonTab Header="{x:Static const:ModuleNames.MasterFileData}"
                    keys:UIElementExtension.MergeKey="{x:Static const:MasterFileDataModuleMergeKeys.RibbonTab}">
-            <RibbonGroup Header="Navigation">
-                <RibbonButton LargeImageSource="{StaticResource ImageProducts}"
+            <RibbonGroup Header="Navigation"
+                         keys:UIElementExtension.MergeKey="{x:Static const:MasterFileDataModuleMergeKeys.RibbonMainGroup}">
+                <!--<RibbonButton LargeImageSource="{StaticResource ImageProducts}"
                               Label="Products"
-                              Command="{Binding Path=GoToProductViewCommand}"/>
-                <RibbonButton LargeImageSource="{StaticResource ImageTaxRates}"
+                              Command="{Binding Path=GoToProductViewCommand}"/>-->
+                <!--<RibbonButton LargeImageSource="{StaticResource ImageTaxRates}"
                               Label="Tax Rates"
-                              Command="{Binding Path=GoToTaxRateViewCommand}"/>
-                <RibbonButton LargeImageSource="{StaticResource ImageHr}" 
+                              Command="{Binding Path=GoToTaxRateViewCommand}"/>-->
+                <!--<RibbonButton LargeImageSource="{StaticResource ImageHr}" 
                               Label="Employees"
-                              Command="{Binding Path=GoToEmployeeViewCommand}"/>
+                              Command="{Binding Path=GoToEmployeeViewCommand}"/>-->
             </RibbonGroup>
         </RibbonTab>
     </Ribbon>

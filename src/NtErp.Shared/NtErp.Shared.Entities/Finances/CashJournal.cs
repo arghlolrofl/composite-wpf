@@ -1,9 +1,9 @@
-﻿using NtErp.Shared.Services.Base;
+﻿using NtErp.Shared.Entities.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace NtErp.Shared.Entities.CashJournal {
+namespace NtErp.Shared.Entities.Finances {
     public class CashJournal : EntityBase {
         private string _number;
         private DateTime _startDate;

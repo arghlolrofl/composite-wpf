@@ -1,6 +1,6 @@
 ﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
-using NtErp.Shared.Services.Base;
+using NtErp.Shared.Entities.Base;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.Validation;

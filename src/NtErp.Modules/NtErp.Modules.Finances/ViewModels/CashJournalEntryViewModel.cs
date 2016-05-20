@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using Microsoft.Win32;
 using NtErp.Shared.Contracts.Repository;
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Entities.MasterFileData;
 using NtErp.Shared.Services.Constants;
 using NtErp.Shared.Services.Contracts;
@@ -12,6 +12,7 @@ using Prism.Regions;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using System.Windows.Input;
 
 namespace NtErp.Modules.Finances.ViewModels {
@@ -43,7 +44,10 @@ namespace NtErp.Modules.Finances.ViewModels {
 
             // Set a SelectedPosition for direct editing
             var entry = RootEntity as CashJournalEntry;
-            SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
+            if (!entry.Positions.Any())
+                SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
+            else
+                SelectedPosition = entry.Positions.Last();
 
             // Store the name of the next view for later use
             string nextView = (string)navigationContext.Parameters[ParameterNames.NextView];
@@ -113,12 +117,12 @@ namespace NtErp.Modules.Finances.ViewModels {
         }
 
         public bool CanAddPosition {
-            get { return IsActive && (RootEntity.Exists && !RootEntity.HasChanges) && HasRootEntity && SelectedPosition != null; }
+            get { return IsActive && (RootEntity.Exists && !RootEntity.HasChanges) && HasRootEntity && (SelectedPosition != null && !SelectedPosition.Exists); }
         }
 
         public bool CanDeletePosition {
             get {
-                return IsActive && (RootEntity.Exists && !RootEntity.HasChanges) && SelectedPosition.Exists;
+                return IsActive && (RootEntity.Exists && !RootEntity.HasChanges) && (SelectedPosition != null && SelectedPosition.Exists);
             }
         }
 
@@ -131,8 +135,9 @@ namespace NtErp.Modules.Finances.ViewModels {
         private ICommand _attachDocumentCommand;
         private ICommand _createPositionCommand;
         private ICommand _addPositionCommand;
-        private ICommand _applyCommand;
-        private ICommand _cancelCommand;
+        private ICommand _goBackCommand;
+        private ICommand _deletePositionCommand;
+
 
         public ICommand AttachDocumentCommand {
             get { return _attachDocumentCommand ?? (_attachDocumentCommand = new DelegateCommand(AttachDocumentCommand_OnExecute)); }
@@ -146,12 +151,12 @@ namespace NtErp.Modules.Finances.ViewModels {
             get { return _addPositionCommand ?? (_addPositionCommand = new DelegateCommand(AddPositionCommand_OnExecute)); }
         }
 
-        public ICommand ApplyCommand {
-            get { return _applyCommand ?? (_applyCommand = new DelegateCommand(ApplyCommand_OnExecute)); }
+        public ICommand DeletePositionCommand {
+            get { return _deletePositionCommand ?? (_deletePositionCommand = new DelegateCommand(DeletePositionCommand_OnExecute)); }
         }
 
-        public ICommand CancelCommand {
-            get { return _cancelCommand ?? (_cancelCommand = new DelegateCommand(CancelCommand_OnExecute)); }
+        public ICommand GoBackCommand {
+            get { return _goBackCommand ?? (_goBackCommand = new DelegateCommand(GoBackCommand_OnExecute)); }
         }
 
         #endregion
@@ -188,38 +193,54 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         #endregion
 
-
+        /// <summary>
+        /// Refreshes the list of available <see cref="TaxRate"/>s.
+        /// </summary>
         private void RefreshAvailableTaxRates() {
             AvailableTaxRates = new ObservableCollection<TaxRate>(_taxRateRepository.Fetch());
         }
 
+        /// <inheritdoc />
         protected override void RefreshCommand_OnExecute() {
             _cashJournalEntryRepository.Refresh(RootEntity);
+            RefreshEnabledBindings();
         }
 
+        /// <inheritdoc />
         protected override void SaveCommand_OnExecute() {
             _cashJournalEntryRepository.Save(RootEntity);
+            RefreshEnabledBindings();
         }
 
+        /// <inheritdoc />
         protected override void RefreshEnabledBindings() {
             RaisePropertyChanged(nameof(CanAttachDocument));
             RaisePropertyChanged(nameof(CanCreatePosition));
             RaisePropertyChanged(nameof(CanAddPosition));
+            RaisePropertyChanged(nameof(CanDeletePosition));
             RaisePropertyChanged(nameof(IsActive));
+            RaisePropertyChanged(nameof(IsAnyActive));
+            RaisePropertyChanged(nameof(SelectedPosition));
         }
 
+        /// <inheritdoc />
         protected override void CreateCommand_OnExecute() {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         protected override void DeleteCommand_OnExecute() {
             throw new NotImplementedException();
         }
 
+        /// <inheritdoc />
         protected override void OpenSearchCommand_OnExecute() {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Attaches document information to an entry.
+        /// </summary>
         private void AttachDocumentCommand_OnExecute() {
             OpenFileDialog ofd = new OpenFileDialog() {
                 CheckFileExists = true,
@@ -244,15 +265,20 @@ namespace NtErp.Modules.Finances.ViewModels {
             entry.DocumentFolderPath = file.DirectoryName;
         }
 
+        /// <summary>
+        /// Creates a new position for the current entry that can be edited and added later.
+        /// </summary>
         private void CreatePositionCommand_OnExecute() {
             var entry = RootEntity as CashJournalEntry;
 
             SelectedPosition = _cashJournalEntryRepository.NewPosition(entry);
 
-            RaisePropertyChanged(nameof(CanAddPosition));
-            RaisePropertyChanged(nameof(CanCreatePosition));
+            RefreshEnabledBindings();
         }
 
+        /// <summary>
+        /// Adds a position to the current entry or updates an existing position.
+        /// </summary>
         private void AddPositionCommand_OnExecute() {
             if (!RootEntity.Exists || (RootEntity.Exists && RootEntity.HasChanges))
                 _cashJournalEntryRepository.Save(RootEntity);
@@ -261,21 +287,29 @@ namespace NtErp.Modules.Finances.ViewModels {
             if (entry == null)
                 throw new ArgumentNullException("ERROR: Selected Entity is 'null' => JournalEntryViewModel.AddPositionCommand_OnExecute()");
 
-            _cashJournalEntryRepository.AddPosition(entry, SelectedPosition);
+            if (!SelectedPosition.Exists)
+                _cashJournalEntryRepository.AddPosition(entry, SelectedPosition);
+            else
+                _cashJournalEntryRepository.UpdatePosition(SelectedPosition);
 
             entry.RefreshCashBalance();
-
-            RaisePropertyChanged(nameof(CanAddPosition));
-            RaisePropertyChanged(nameof(CanCreatePosition));
+            RefreshEnabledBindings();
+            //RaisePropertyChanged(String.Empty);
         }
 
-        private void ApplyCommand_OnExecute() {
+        /// <summary>
+        /// Deletes the selected position from the entry.
+        /// </summary>
+        private void DeletePositionCommand_OnExecute() {
+            _cashJournalEntryRepository.RemovePosition(SelectedPosition);
+        }
+
+        /// <summary>
+        /// Navigates back to the last view.
+        /// </summary>
+        private void GoBackCommand_OnExecute() {
             //@TODO: Check for changes
 
-            NavigateToView(_nextView, ShellRegions.MainContent);
-        }
-
-        private void CancelCommand_OnExecute() {
             NavigateToView(_nextView, ShellRegions.MainContent);
         }
     }

@@ -1,7 +1,7 @@
 ﻿using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
-using NtErp.Shared.Entities.CashJournal;
-using NtErp.Shared.Services.Base;
+using NtErp.Shared.Entities.Base;
+using NtErp.Shared.Entities.Finances;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Services.Base;
+﻿using NtErp.Shared.Entities.Base;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
@@ -6,13 +6,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
 using System.Linq;
 
-namespace NtErp.Shared.Entities.CashJournal {
+namespace NtErp.Shared.Entities.Finances {
     public class CashJournalEntry : EntityBase {
         private DateTime _date;
         private string _documentFolderPath;
         private string _documentName;
         private string _processDescription;
-        //private decimal _cashBalance;
         private CashJournal _journal;
         private ObservableCollection<CashJournalEntryPosition> _positions = new ObservableCollection<CashJournalEntryPosition>();
 

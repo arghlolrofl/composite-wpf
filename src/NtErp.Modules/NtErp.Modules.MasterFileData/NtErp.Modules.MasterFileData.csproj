@@ -84,14 +84,8 @@
     <Compile Include="Views\ProductView.xaml.cs">
       <DependentUpon>ProductView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\TaxRateViewRibbon.xaml.cs">
-      <DependentUpon>TaxRateViewRibbon.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ProductViewRibbon.xaml.cs">
       <DependentUpon>ProductViewRibbon.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Views\TaxRateView.xaml.cs">
-      <DependentUpon>TaxRateView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -128,17 +122,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\TaxRateViewRibbon.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Views\ProductViewRibbon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\TaxRateView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup />

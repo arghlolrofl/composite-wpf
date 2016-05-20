@@ -1,6 +1,6 @@
 ﻿using Autofac;
 using Microsoft.Practices.Prism.Commands;
-using NtErp.Shared.Services.Base;
+using NtErp.Shared.Entities.Base;
 using Prism.Events;
 using Prism.Regions;
 using System;

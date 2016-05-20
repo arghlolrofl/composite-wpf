@@ -19,7 +19,9 @@ namespace NtErp.Shared.Services.Modules {
             _logger = logger;
         }
 
-
+        /// <summary>
+        /// Initializes and loads a Prism module.
+        /// </summary>
         public virtual void Initialize() {
             Log(" ==> Loading " + GetType().Name);
 
@@ -32,6 +34,10 @@ namespace NtErp.Shared.Services.Modules {
             Log("   > " + GetType().Name + " loaded successfully");
         }
 
+        /// <summary>
+        /// Updates the IoC-Container at runtime, when a module is being loaded,
+        /// with the module registrations.
+        /// </summary>
         protected virtual void RequestContainerUpdate() {
             Type[] assemblyTypes = GetType().Assembly.GetTypes();
             Type type = assemblyTypes.Single(t => t.IsSubclassOf(typeof(Autofac.Module)));
@@ -42,8 +48,16 @@ namespace NtErp.Shared.Services.Modules {
                             .Publish(new ModuleLoadEvent(module));
         }
 
+        /// <summary>
+        /// Override in inherited classes to register all views of the module with
+        /// Prism's RegionManager.
+        /// </summary>
         protected abstract void RegisterViews();
 
+        /// <summary>
+        /// Prints module messages to debug output.
+        /// </summary>
+        /// <param name="message"></param>
         protected void Log(string message) {
             _logger.Log("MODULE: " + message, Category.Debug, Priority.Low);
         }

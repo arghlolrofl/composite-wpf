@@ -1,4 +1,4 @@
-﻿using NtErp.Shared.Services.Base;
+﻿using NtErp.Shared.Entities.Base;
 
 namespace NtErp.Shared.Entities.MasterFileData {
     public class TaxRate : EntityBase {

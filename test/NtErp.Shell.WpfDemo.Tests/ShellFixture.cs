@@ -1,9 +1,7 @@
-﻿using NUnit.Framework;
-
-namespace NtErp.Shell.WpfDemo.Tests {
-    [TestFixture]
+﻿namespace NtErp.Shell.WpfDemo.Tests {
+    //[TestFixture]
     public class ShellFixture {
-        [Test]
+        //[Test]
         public void SomeUsefulTest() {
             //TODO: write a useful test
         }

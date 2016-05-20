@@ -8,6 +8,7 @@
                  d:DesignHeight="645" d:DesignWidth="950">
     <Grid>
         <Grid.Resources>
+            <view:StringToCurrencyConverter x:Key="stringDecimalConverter" />
             <view:MonetaryValueToForegroundColorConverter x:Key="colorConverter" />
         </Grid.Resources>
         <Grid.ColumnDefinitions>
@@ -82,13 +83,13 @@
         <Label Content="Process:"
                Grid.Row="6" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=RootEntity.ProcessDescription}"
+        <TextBox Text="{Binding Path=RootEntity.ProcessDescription, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="6" Grid.Column="3" Grid.ColumnSpan="5" />
 
         <Label Content="Delta:"
                Grid.Row="8" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=SelectedPosition.Delta}"
+        <TextBox Text="{Binding Path=SelectedPosition.Delta, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource stringDecimalConverter}}"
                  Name="DeltaTextBox"
                  Grid.Row="8" Grid.Column="3" />
 
@@ -98,22 +99,12 @@
         <ComboBox ItemsSource="{Binding Path=AvailableTaxRates}" 
                   SelectedItem="{Binding Path=SelectedPosition.TaxRate}"
                   Grid.Row="8" Grid.Column="7" />
-        <Button Content="New" 
-                Command="{Binding Path=CreatePositionCommand}"
-                IsEnabled="{Binding Path=CanCreatePosition}"
-                ToolTip="Creates a new position for this entry."
-                Grid.Row="8" Grid.Column="9" />
 
         <Label Content="Description:"
                Grid.Row="10" Grid.Column="1"
                HorizontalAlignment="Right" />
-        <TextBox Text="{Binding Path=SelectedPosition.Description}"
+        <TextBox Text="{Binding Path=SelectedPosition.Description, UpdateSourceTrigger=PropertyChanged}"
                  Grid.Row="10" Grid.Column="3" Grid.ColumnSpan="5" />
-        <Button Content="Add" 
-                Command="{Binding Path=AddPositionCommand}"
-                IsEnabled="{Binding Path=CanAddPosition}"
-                ToolTip="Adds a new position to this entry."
-                Grid.Row="10" Grid.Column="9" />
 
         <DataGrid ItemsSource="{Binding Path=RootEntity.Positions}" 
                   SelectedItem="{Binding Path=SelectedPosition}"
@@ -139,14 +130,11 @@
             </DataGrid.Columns>
         </DataGrid>
 
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right"
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left"
                     Grid.Row="14" Grid.Column="1" Grid.ColumnSpan="11"
                     Margin="0,5,0,5">
-            <Button Content="OK" 
-                    Command="{Binding Path=ApplyCommand}"
-                    Width="100" Margin="0,0,10,0" />
-            <Button Content="Cancel" 
-                    Command="{Binding Path=CancelCommand}"
+            <Button Content="Back" 
+                    Command="{Binding Path=GoBackCommand}"
                     Width="100" />
         </StackPanel>
 

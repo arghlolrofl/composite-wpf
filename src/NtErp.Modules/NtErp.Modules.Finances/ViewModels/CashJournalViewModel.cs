@@ -1,7 +1,7 @@
 ﻿using Autofac;
 using NtErp.Modules.Finances.Views;
 using NtErp.Shared.Contracts.Repository;
-using NtErp.Shared.Entities.CashJournal;
+using NtErp.Shared.Entities.Finances;
 using NtErp.Shared.Services.Constants;
 using NtErp.Shared.Services.Contracts;
 using NtErp.Shared.Services.Events;
@@ -18,6 +18,7 @@ namespace NtErp.Modules.Finances.ViewModels {
 
         public void OnNavigatedTo(NavigationContext navigationContext) {
             IsActive = true;
+            RaisePropertyChanged(nameof(Balance));
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) {
