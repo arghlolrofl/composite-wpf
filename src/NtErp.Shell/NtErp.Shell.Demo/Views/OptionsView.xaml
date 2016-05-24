@@ -1,0 +1,45 @@
+﻿<Window x:Class="NtErp.Shell.Demo.Views.OptionsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NtErp.Shell.Demo.Views"
+        xmlns:lex="http://wpflocalizeextension.codeplex.com"
+        lex:LocalizeDictionary.DesignCulture="en"
+        lex:LocalizeDictionary.OutputMissingKeys="True"
+        lex:ResxLocalizationProvider.DefaultAssembly="NtErp.Shared.Resources"
+        lex:ResxLocalizationProvider.DefaultDictionary="Strings"
+        mc:Ignorable="d"
+        Title="{lex:Loc Key=String_Settings}" Height="115" Width="300">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <Label Content="{lex:Loc Key=Label_Language}" 
+               HorizontalAlignment="Right"
+               Grid.Row="0" Grid.Column="0" />
+        <ComboBox ItemsSource="{Binding Path=AvailableCultures}"
+                  SelectedItem="{Binding Path=SelectedCulture}"
+                  Grid.Row="0" Grid.Column="2"
+                  Margin="0,3" />
+
+        <StackPanel Orientation="Horizontal" 
+                    HorizontalAlignment="Right" Grid.Row="2" Grid.ColumnSpan="3">
+            <Button Content="{lex:Loc Key=String_Apply}" 
+                    Command="{Binding Path=ApplyCommand}"
+                    Width="75" 
+                    Margin="0,0,10,0" />
+            <Button Content="{lex:Loc Key=String_Cancel}" 
+                    Command="{Binding Path=CancelCommand}"
+                    Width="75" />
+        </StackPanel>
+    </Grid>
+</Window>

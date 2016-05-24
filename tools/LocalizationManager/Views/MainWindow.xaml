@@ -1,0 +1,58 @@
+﻿<Window x:Class="LocalizationManager.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LocalizationManager.Views"
+        mc:Ignorable="d"
+        Title="Localizations" Height="600" Width="800"
+        Closing="Window_Closing">
+    <Window.Resources>
+        <local:DataGridConverter x:Key="dataGridConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="125" />
+            <ColumnDefinition Width="10" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="26" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="26" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+        
+        <Label Content="Localization Project:"
+               Grid.Row="0" Grid.Column="0"
+               HorizontalAlignment="Right"/>
+        <TextBox Text="{Binding Path=ProjectDirectory.FullName, Mode=OneWay}"
+                 IsReadOnly="True"
+                 Grid.Row="0" Grid.Column="2"
+                 MouseDoubleClick="TextBox_MouseDoubleClick"
+                 VerticalContentAlignment="Center" />
+        <Label Content="Dictionary:"
+               Grid.Row="2" Grid.Column="0"
+               HorizontalAlignment="Right"/>
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2" Grid.Column="2">
+        <ComboBox ItemsSource="{Binding Path=Dictionaries}"
+                  SelectedItem="{Binding Path=SelectedDictionary}"
+                  Width="200" HorizontalAlignment="Left" />
+        <Button Content="Save Changes"
+                IsEnabled="{Binding Path=HasChanges}"
+                Click="SaveButton_OnClick"
+                Width="100"
+                Margin="10,0,0,0"/>
+        </StackPanel>
+
+        <DataGrid ItemsSource="{Binding Path=LocTable, Converter={StaticResource dataGridConverter}, Mode=TwoWay}" 
+                  x:Name="dataGrid1"
+                  Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3"
+                  AutoGenerateColumns="True" RowEditEnding="DataGrid_RowEditEnding"
+                  FontFamily="Courier New"                  
+                  FontSize="14" />
+    </Grid>
+</Window>

@@ -4,6 +4,7 @@ using NtErp.Shared.Contracts.Repository;
 using NtErp.Shared.DataAccess;
 using NtErp.Shared.Repositories;
 using NtErp.Shared.Services.Events;
+using NtErp.Shell.Demo.ViewModels;
 using NtErp.Shell.Demo.Views;
 using Prism.Autofac;
 using Prism.Events;
@@ -49,6 +50,7 @@ namespace NtErp.Shell.Demo {
 
             builder.RegisterType<RibbonRegionAdapter>();
             builder.RegisterType<ShellView>();
+            builder.RegisterType<ShellViewModel>().SingleInstance();
             builder.RegisterType<NtErpContext>().SingleInstance();
             builder.RegisterType<ProductRepository>().As<IProductRepository>();
             builder.RegisterType<CashJournalRepository>().As<ICashJournalRepository>();

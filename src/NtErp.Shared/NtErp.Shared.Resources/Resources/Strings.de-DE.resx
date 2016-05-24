@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Application_Title" xml:space="preserve">
+    <value>NT ERP</value>
+  </data>
+  <data name="String_Exit" xml:space="preserve">
+    <value>Beenden</value>
+  </data>
+  <data name="String_Settings" xml:space="preserve">
+    <value>Einstellungen</value>
+  </data>
+  <data name="String_Cancel" xml:space="preserve">
+    <value>Abbrechen</value>
+  </data>
+  <data name="String_Apply" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Label_Language" xml:space="preserve">
+    <value>Sprache:</value>
+  </data>
+  <data name="Text_RestartAfterSettingsChanged" xml:space="preserve">
+    <value>Bitte starten Sie die Anwendung neu, damit die Änderungen wirksam werden!</value>
+  </data>
 </root>

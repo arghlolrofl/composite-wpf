@@ -40,6 +40,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Modules.HumanResource
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NtErp.Shared.Services.Tests", "test\Shared\NtErp.Shared.Services.Tests\NtErp.Shared.Services.Tests.csproj", "{067456C0-086C-46A8-B37F-1405717B7BFC}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{299551BD-85C8-44F7-9A58-24EE9360F0A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LocalizationManager", "tools\LocalizationManager\LocalizationManager.csproj", "{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -94,6 +98,10 @@ Global
 		{067456C0-086C-46A8-B37F-1405717B7BFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{067456C0-086C-46A8-B37F-1405717B7BFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{067456C0-086C-46A8-B37F-1405717B7BFC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -110,9 +118,10 @@ Global
 		{E15CBD93-7B49-42A5-A3AC-54F43DD46B1E} = {CD4BADEA-4AE5-4B3E-B96F-81BCFC1C8496}
 		{11C8E61A-C011-41B2-87F9-A66D3078BF2A} = {FF28EA42-AFAE-439F-AA39-B1521E070525}
 		{067456C0-086C-46A8-B37F-1405717B7BFC} = {97DD816C-E132-4F19-839C-35D5C9DC7528}
+		{56AC2B57-C4FE-4CFF-A25E-4BFE7F39282C} = {299551BD-85C8-44F7-9A58-24EE9360F0A1}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 13
+		SccNumberOfProjects = 14
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = http://tfs2013-01:8080/tfs/ntinnovationcompanygmbh
 		SccLocalPath0 = .
@@ -163,5 +172,9 @@ Global
 		SccProjectTopLevelParentUniqueName12 = NtErp.sln
 		SccProjectName12 = test/Shared/NtErp.Shared.Services.Tests
 		SccLocalPath12 = test\\Shared\\NtErp.Shared.Services.Tests
+		SccProjectUniqueName13 = tools\\LocalizationManager\\LocalizationManager.csproj
+		SccProjectTopLevelParentUniqueName13 = NtErp.sln
+		SccProjectName13 = tools/LocalizationManager
+		SccLocalPath13 = tools\\LocalizationManager
 	EndGlobalSection
 EndGlobal

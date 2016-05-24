@@ -6,10 +6,15 @@
               xmlns:local="clr-namespace:NtErp.Shell.Demo.Views"        
               xmlns:prism="http://prismlibrary.com/"
               xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
+              xmlns:lex="http://wpflocalizeextension.codeplex.com"
+              lex:LocalizeDictionary.DesignCulture="en"
+              lex:LocalizeDictionary.OutputMissingKeys="True"
+              lex:ResxLocalizationProvider.DefaultAssembly="NtErp.Shared.Resources"
+              lex:ResxLocalizationProvider.DefaultDictionary="Strings"
               mc:Ignorable="d" Height="700" Width="950"
               VerticalAlignment="Stretch"
               HorizontalAlignment="Stretch"
-              Title="NT ERP">
+              Title="{lex:Loc Key=Application_Title}">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,9 +31,10 @@
             </Ribbon.QuickAccessToolBar>
             <Ribbon.ApplicationMenu>
                 <RibbonApplicationMenu>
-                    <RibbonApplicationMenuItem Header="Options" 
-                                               ImageSource="{StaticResource IconOptions}" />
-                    <RibbonApplicationMenuItem Header="Exit" 
+                    <RibbonApplicationMenuItem Header="{lex:Loc Key=String_Settings}" 
+                                               ImageSource="{StaticResource IconOptions}"
+                                               Command="{Binding Path=ShowOptionsViewCommand}"/>
+                    <RibbonApplicationMenuItem Header="{lex:Loc Key=String_Exit}" 
                                                ImageSource="{StaticResource IconShutdown}"
                                                Command="{Binding Path=ShutdownCommand}"/>
                 </RibbonApplicationMenu>
