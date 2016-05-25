@@ -4,11 +4,6 @@
         public const string Ribbon = "Ribbon";
     }
 
-    public static class ModuleNames {
-        public const string MasterFileData = "MasterFileData";
-        public const string Finances = "Finances";
-    }
-
     public static class MasterFileDataModuleMergeKeys {
         public const string RibbonTab = "MasterFileDataModuleRibbonTab";
         public const string RibbonMainGroup = "MasterFileDataModuleRibbonMainGroup";

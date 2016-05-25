@@ -9,10 +9,15 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using System.Windows.Controls;
+using System.Windows.Forms;
 using System.Xml.Linq;
 
 namespace LocalizationManager.ViewModels {
     public class MainViewModel : INotifyPropertyChanged {
+        public event EventHandler DataTableUpdated;
+        private void RaiseDataTableUpdated() => DataTableUpdated?.Invoke(this, EventArgs.Empty);
+
+
         #region INotifyPropertyChanged Members
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -21,23 +26,35 @@ namespace LocalizationManager.ViewModels {
 
         #endregion
 
-        const string settingsFileName = ".settings";
-        const string resxKeyValuePattern = @"<data name=""(?<key>.+?)"" xml:space=""preserve"">\r\n.+?<value>(?<value>.+?)</value>";
+        private int _selectedColumnIndex;
+        private int _selectedRowIndex;
+        #region Fields
 
+        const string resxKeyValuePattern = @"<data name=""(?<key>.+?)"" xml:space=""preserve"">\r\n.+?<value>(?<value>.+?)</value>";
+        const string xamlKeyPattern = @"=""\{lex:Loc (?:Key=)?(?<key>.+?)\}";
+
+        private readonly Regex xamlRegex = new Regex(xamlKeyPattern, RegexOptions.Compiled);
         private readonly Regex resxRegex = new Regex(resxKeyValuePattern, RegexOptions.Compiled);
 
-        private string _selectedDictionary;
-        private DirectoryInfo _projectDirectory;
-        private DirectoryInfo _resourceDirectory;
-        private Dictionary<string, string> _settingsCache = new Dictionary<string, string>();
-        private ObservableCollection<string> _dictionaries = new ObservableCollection<string>();
 
-        private DataTable _locTable;
         private bool _hasChanges;
+        private bool _isScanInactive;
+        private DataTable _locTable;
+        private string _solutionPath;
+        private DirectoryInfo _solutionDirectory;
+        private ObservableCollection<DirectoryInfo> _projectDirectories = new ObservableCollection<DirectoryInfo>();
+        private string _selectedDictionary;
+        private ObservableCollection<string> _dictionaries = new ObservableCollection<string>();
+        private DirectoryInfo _selectedProjectDirectory;
+        private DirectoryInfo _resourceDirectory;
 
-        public DataTable LocTable {
-            get { return _locTable; }
-            set { _locTable = value; RaisePropertyChanged(); }
+        #endregion
+
+        #region Properties
+
+        public bool IsScanInactive {
+            get { return _isScanInactive; }
+            set { _isScanInactive = value; RaisePropertyChanged(); }
         }
 
         public bool HasChanges {
@@ -45,19 +62,16 @@ namespace LocalizationManager.ViewModels {
             set { _hasChanges = value; RaisePropertyChanged(); }
         }
 
-        public ObservableCollection<string> Dictionaries {
-            get { return _dictionaries; }
-            set { _dictionaries = value; RaisePropertyChanged(); }
-        }
-
-        public DirectoryInfo ProjectDirectory {
-            get { return _projectDirectory; }
+        public string SolutionPath {
+            get { return SolutionDirectory?.FullName; }
             set {
-                _projectDirectory = value;
+                _solutionPath = value;
                 RaisePropertyChanged();
 
-                CacheDirectory();
-                ScanForDefaultDictionaries();
+                if (String.IsNullOrEmpty(_solutionPath) || !Directory.Exists(_solutionPath))
+                    return;
+
+                SolutionDirectory = new DirectoryInfo(_solutionPath);
             }
         }
 
@@ -67,57 +81,124 @@ namespace LocalizationManager.ViewModels {
                 _selectedDictionary = value;
                 RaisePropertyChanged();
 
-                CacheDictionary();
-                ScanForLocalizations();
+                SelectedDictionaryChangedCallback();
             }
         }
+
+        public int SelectedRowIndex {
+            get { return _selectedRowIndex; }
+            set {
+                _selectedRowIndex = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(SelectedKey));
+                RaisePropertyChanged(nameof(SelectedValue));
+            }
+        }
+
+        public int SelectedColumnIndex {
+            get { return _selectedColumnIndex; }
+            set {
+                _selectedColumnIndex = value;
+                RaisePropertyChanged();
+                RaisePropertyChanged(nameof(SelectedValue));
+            }
+        }
+
+        public string SelectedKey {
+            get {
+                if (SelectedRowIndex >= LocTable.Rows.Count || SelectedRowIndex < 0)
+                    return String.Empty;
+
+                return LocTable.Rows[SelectedRowIndex]["Key"].ToString();
+            }
+        }
+
+        public string SelectedValue {
+            get {
+                if (SelectedRowIndex >= LocTable.Rows.Count || SelectedRowIndex < 0)
+                    return String.Empty;
+
+                if (SelectedColumnIndex > 0)
+                    return LocTable.Rows[SelectedRowIndex][SelectedColumnIndex].ToString();
+
+                return LocTable.Rows[SelectedRowIndex]["Default"].ToString();
+            }
+        }
+
+
+        public DataTable LocTable {
+            get { return _locTable; }
+            set { _locTable = value; RaisePropertyChanged(); }
+        }
+
+        public DirectoryInfo SolutionDirectory {
+            get { return _solutionDirectory; }
+            set {
+                _solutionDirectory = value;
+                RaisePropertyChanged();
+
+                SolutionDirectoryChangedCallback();
+            }
+        }
+
+        public DirectoryInfo ResourceDirectory {
+            get { return _resourceDirectory; }
+            set { _resourceDirectory = value; RaisePropertyChanged(); }
+        }
+
+        public DirectoryInfo SelectedProjectDirectory {
+            get { return _selectedProjectDirectory; }
+            set {
+                _selectedProjectDirectory = value;
+                RaisePropertyChanged();
+
+                SelectedProjectDirectoryChangedCallback();
+            }
+        }
+
+        public ObservableCollection<string> Dictionaries {
+            get { return _dictionaries; }
+            set { _dictionaries = value; RaisePropertyChanged(); }
+        }
+
+        public ObservableCollection<DirectoryInfo> ProjectDirectories {
+            get { return _projectDirectories; }
+            set { _projectDirectories = value; RaisePropertyChanged(); }
+        }
+
+        #endregion
+
 
         public MainViewModel() {
-            FileInfo settingsFile = new FileInfo(settingsFileName);
-            if (!settingsFile.Exists)
+            IsScanInactive = true;
+            SolutionPath = AppRegistry.GetValue(RegistryKeys.SolutionPath);
+        }
+
+        /// <summary>
+        /// Called, when the solution directory changes
+        /// </summary>
+        private void SolutionDirectoryChangedCallback() {
+            AppRegistry.SetValue(RegistryKeys.SolutionPath, SolutionPath);
+
+            ProjectDirectories = new ObservableCollection<DirectoryInfo>(
+                SolutionDirectory.GetFiles("*.csproj", SearchOption.AllDirectories)
+                                 .Select(f => f.Directory)
+                                 .ToList()
+            );
+
+            string lastProjectUsed = AppRegistry.GetValue(RegistryKeys.SelectedProject);
+            if (String.IsNullOrEmpty(lastProjectUsed))
                 return;
 
-            using (StreamReader sr = settingsFile.OpenText()) {
-                string[] kv = sr.ReadLine().Split('=');
-
-                string key = kv[0].Trim();
-                string value = kv[1].Trim();
-
-                switch (key) {
-                    case "project":
-                        ProjectDirectory = new DirectoryInfo(value);
-                        break;
-                    default:
-                        break;
-                }
-            }
+            SelectedProjectDirectory = ProjectDirectories.FirstOrDefault(dir => dir.FullName == lastProjectUsed);
         }
 
-
-        private void CacheDirectory() {
-            if (_settingsCache.Keys.Contains("project")) {
-                _settingsCache.Remove("project");
-            }
-
-            _settingsCache.Add("project", ProjectDirectory.FullName);
-        }
-
-        private void CacheDictionary() {
-            if (_settingsCache.Keys.Contains("dictionary")) {
-                _settingsCache.Remove("dictionary");
-            }
-
-            _settingsCache.Add("dictionary", SelectedDictionary);
-        }
-
-        internal void PersistCache() {
-            FileInfo settingsFile = new FileInfo(settingsFileName);
-
-            using (StreamWriter sw = settingsFile.CreateText()) {
-                foreach (var setting in _settingsCache) {
-                    sw.WriteLine(String.Format("{0} = {1}", setting.Key, setting.Value));
-                }
-            }
+        /// <summary>
+        /// Called, when the selected localization project changes
+        /// </summary>
+        private void SelectedProjectDirectoryChangedCallback() {
+            AppRegistry.SetValue(RegistryKeys.SelectedProject, SelectedProjectDirectory.FullName);
+            ScanForDefaultDictionaries();
         }
 
         /// <summary>
@@ -127,7 +208,7 @@ namespace LocalizationManager.ViewModels {
             Dictionaries.Clear();
 
             var culturInfoList = CultureInfo.GetCultures(CultureTypes.AllCultures).Where(c => c.Name.Length > 0);
-            _resourceDirectory = ProjectDirectory.GetDirectories("Resources").Single();
+            _resourceDirectory = SelectedProjectDirectory.GetDirectories("Resources").Single();
             var resxFiles = _resourceDirectory.GetFiles("*.resx");
 
             foreach (FileInfo resxFile in resxFiles) {
@@ -138,13 +219,26 @@ namespace LocalizationManager.ViewModels {
             }
 
             if (Dictionaries.Any()) {
-                if (!_settingsCache.Keys.Contains("dictionary"))
+                string lastUsedDictionary = AppRegistry.GetValue(RegistryKeys.SelectedDictionary);
+                if (String.IsNullOrEmpty(lastUsedDictionary))
                     SelectedDictionary = Dictionaries.First();
                 else
-                    SelectedDictionary = Dictionaries.First(d => d == _settingsCache["dictionary"]);
+                    SelectedDictionary = Dictionaries.First(dict => dict == lastUsedDictionary);
             }
         }
 
+        /// <summary>
+        /// Called, when the selected dictionary changes
+        /// </summary>
+        private void SelectedDictionaryChangedCallback() {
+            AppRegistry.SetValue(RegistryKeys.SelectedDictionary, SelectedDictionary);
+
+            ScanForLocalizations();
+        }
+
+        /// <summary>
+        /// Scans for exisiting localizations in the resource directory
+        /// </summary>
         private void ScanForLocalizations() {
             LocTable = new DataTable();
 
@@ -169,46 +263,15 @@ namespace LocalizationManager.ViewModels {
                 // ... and pass it to the parser
                 ParseLocalizedValues(localizedResourceFile, new CultureInfo(cultureString));
             }
-        }
 
-        private void ParseLocalizedValues(FileInfo resxFile, CultureInfo ci = null) {
-            // Prepare LocTable
-            if (ci == null) {
-                LocTable.PrimaryKey = new DataColumn[] { LocTable.Columns.Add("Key") };
-                LocTable.Columns.Add("Default");
-            } else
-                LocTable.Columns.Add(ci.Name);
-
-
-            MatchCollection matches = null;
-            using (StreamReader sr = resxFile.OpenText())
-                matches = resxRegex.Matches(sr.ReadToEnd());
-
-
-            foreach (Match match in matches) {
-                if (!match.Success)
-                    continue;
-
-                string key = match.Groups["key"].Value;
-                string value = match.Groups["value"].Value;
-
-                if (ci == null) {
-                    DataRow row = LocTable.NewRow();
-                    row[0] = key;
-                    row[1] = value;
-                    LocTable.Rows.Add(row);
-                } else {
-                    DataRow row = LocTable.Rows.Find(key);
-                    row[ci.Name] = value;
-                }
-            }
+            RaiseDataTableUpdated();
         }
 
         public void Callback_OnRowEditEnding(object sender, DataGridRowEditEndingEventArgs e) {
             HasChanges = true;
         }
 
-        public void SaveChanges(DataTable dataTable) {
+        public void SaveChangesToResxFiles(DataTable dataTable) {
             string targetFileName = SelectedDictionary + ".resx";
 
             FileInfo targetFile = _resourceDirectory.GetFiles(targetFileName).First();
@@ -220,6 +283,45 @@ namespace LocalizationManager.ViewModels {
                                                             .Replace(SelectedDictionary + ".", String.Empty);
 
                 WriteColumnToResx(localizedTargetFile, columnName);
+            }
+        }
+
+        #region Helpers
+
+        private void ParseLocalizedValues(FileInfo resxFile, CultureInfo ci = null) {
+            // Prepare LocTable
+            if (ci == null) {
+                LocTable.Columns.Add("ID");
+                LocTable.Columns[0].ReadOnly = true;
+                LocTable.PrimaryKey = new DataColumn[] { LocTable.Columns.Add("Key") };
+                LocTable.Columns.Add("Default");
+            } else
+                LocTable.Columns.Add(ci.Name);
+
+
+            MatchCollection matches = null;
+            using (StreamReader sr = resxFile.OpenText())
+                matches = resxRegex.Matches(sr.ReadToEnd());
+
+
+            int rowIndex = 0;
+            foreach (Match match in matches) {
+                if (!match.Success)
+                    continue;
+
+                string key = match.Groups["key"].Value;
+                string value = match.Groups["value"].Value;
+
+                if (ci == null) {
+                    DataRow row = LocTable.NewRow();
+                    row[0] = rowIndex++;
+                    row[1] = key;
+                    row[2] = value;
+                    LocTable.Rows.Add(row);
+                } else {
+                    DataRow row = LocTable.Rows.Find(key);
+                    row[ci.Name] = value;
+                }
             }
         }
 
@@ -271,5 +373,72 @@ namespace LocalizationManager.ViewModels {
         private static FileAttributes RemoveAttribute(FileAttributes attributes, FileAttributes attributesToRemove) {
             return attributes & ~attributesToRemove;
         }
+
+
+
+        #endregion
+
+        #region Missing key scan
+
+        public void FindMissingLocalizations() {
+            IsScanInactive = false;
+
+            try {
+                IList<string> keys = ParseLocalizationKeys();
+
+                for (int i = 0; i < keys.Count; i++) {
+                    string key = keys[i];
+
+                    DataRow row = LocTable.Rows.Find(key);
+                    if (row != null)
+                        keys.RemoveAt(i--);
+                }
+
+                string nl = Environment.NewLine;
+                DialogResult result = MessageBox.Show(
+                    "Following keys are not yet localized:" +
+                    nl + nl +
+                    String.Join(nl, keys) +
+                    nl + nl +
+                    "Do you want to add them?",
+                    "Missing localization keys",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Warning
+                );
+
+                if (result == DialogResult.Yes) {
+                    foreach (string missingKey in keys) {
+                        DataRow row = LocTable.NewRow();
+                        row[0] = missingKey;
+
+                        LocTable.Rows.Add(row);
+                    }
+                }
+            } finally {
+                IsScanInactive = true;
+            }
+        }
+
+        private IList<string> ParseLocalizationKeys() {
+            List<string> keys = new List<string>();
+
+            FileInfo[] xamlFiles = SolutionDirectory.GetFiles("*.xaml", SearchOption.AllDirectories);
+
+            foreach (FileInfo xamlFile in xamlFiles) {
+                MatchCollection matches = null;
+                using (StreamReader sr = xamlFile.OpenText())
+                    matches = xamlRegex.Matches(sr.ReadToEnd());
+
+                foreach (Match match in matches) {
+                    if (!match.Success)
+                        continue;
+
+                    keys.Add(match.Groups["key"].Value);
+                }
+            }
+
+            return keys;
+        }
+
+        #endregion
     }
 }

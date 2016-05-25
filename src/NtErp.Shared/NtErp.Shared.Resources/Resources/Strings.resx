@@ -138,4 +138,40 @@
   <data name="Text_RestartAfterSettingsChanged" xml:space="preserve">
     <value>Please restart the application for changes to take effect!</value>
   </data>
+  <data name="Module_Finances" xml:space="preserve">
+    <value>Finances</value>
+  </data>
+  <data name="String_CashJournal" xml:space="preserve">
+    <value>Cash Journal</value>
+  </data>
+  <data name="String_Navigation" xml:space="preserve">
+    <value>Navigation</value>
+  </data>
+  <data name="String_Entry" xml:space="preserve">
+    <value>Entry</value>
+  </data>
+  <data name="String_Position" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="String_Refresh" xml:space="preserve">
+    <value>Refresh</value>
+  </data>
+  <data name="String_Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="String_New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="String_Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="String_Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="String_Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="String_AddSave" xml:space="preserve">
+    <value>Add/Save</value>
+  </data>
 </root>

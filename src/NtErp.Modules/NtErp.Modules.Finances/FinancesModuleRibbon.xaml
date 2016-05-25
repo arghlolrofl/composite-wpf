@@ -7,6 +7,11 @@
              xmlns:prism="http://prismlibrary.com/"
              xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:LocalizeDictionary.OutputMissingKeys="True"
+             lex:ResxLocalizationProvider.DefaultAssembly="NtErp.Shared.Resources"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <UserControl.Resources>
@@ -17,11 +22,11 @@
         </ResourceDictionary>        
     </UserControl.Resources>
     <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
-        <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
+        <RibbonTab Header="{lex:Loc Key=Module_Finances}"
                    keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
-            <RibbonGroup Header="Navigation">
+            <RibbonGroup Header="{lex:Loc Key=String_Navigation}">
                 <RibbonButton LargeImageSource="{StaticResource ImageFinancesCashJournal}"                              
-                              Label="CashJournal"
+                              Label="{lex:Loc Key=String_CashJournal}"
                               Command="{Binding Path=GoToCashJournalViewCommand}"/>
             </RibbonGroup>
         </RibbonTab>

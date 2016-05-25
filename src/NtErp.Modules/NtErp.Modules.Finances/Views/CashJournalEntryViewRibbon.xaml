@@ -9,8 +9,13 @@
              xmlns:keys="clr-namespace:Prism.RibbonRegionAdapter;assembly=Prism.RibbonRegionAdapter"
              xmlns:const="clr-namespace:NtErp.Shared.Services.Constants;assembly=NtErp.Shared.Services"
              xmlns:conv="clr-namespace:NtErp.Shared.Services.Views;assembly=NtErp.Shared.Services"
+             xmlns:lex="http://wpflocalizeextension.codeplex.com"
+             lex:LocalizeDictionary.DesignCulture="en"
+             lex:LocalizeDictionary.OutputMissingKeys="True"
+             lex:ResxLocalizationProvider.DefaultAssembly="NtErp.Shared.Resources"
+             lex:ResxLocalizationProvider.DefaultDictionary="Strings"
              mc:Ignorable="d" 
-             d:DesignHeight="140" d:DesignWidth="600">
+             d:DesignHeight="140" d:DesignWidth="800">
     <UserControl.Resources>
         <ResourceDictionary>
             <conv:BooleanToVisibilityConverter x:Key="VisibilityConverter" />
@@ -20,48 +25,48 @@
         </ResourceDictionary>
     </UserControl.Resources>
     <Ribbon x:Name="MainMenu" x:FieldModifier="protected internal">
-        <RibbonTab Header="{x:Static const:ModuleNames.Finances}"
+        <RibbonTab Header="{lex:Loc Key=Module_Finances}"
                    keys:UIElementExtension.MergeKey="{x:Static const:FinancesModuleMergeKeys.RibbonTab}">
-            <RibbonGroup Header="Entry"
+            <RibbonGroup Header="{lex:Loc Key=String_Entry}"
                          Visibility="{Binding Path=IsAnyActive, Converter={StaticResource VisibilityConverter}}">
                 <RibbonButton LargeImageSource="{StaticResource IconRefresh}"
-                      Label="Refresh"
-                      Command="{Binding Path=RefreshCommand}"
-                      IsEnabled="{Binding Path=CanRefresh}"
-                         Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
+                              Label="{lex:Loc Key=String_Refresh}"
+                              Command="{Binding Path=RefreshCommand}"
+                              IsEnabled="{Binding Path=CanRefresh}"
+                              Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconCreateNew}" 
-                      Label="Create"
-                      Command="{Binding Path=Parent.CreateEntryCommand}"
-                      IsEnabled="{Binding Path=Parent.CanCreateEntry}" 
-                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}"/>
+                              Label="{lex:Loc Key=String_Create}"
+                              Command="{Binding Path=Parent.CreateEntryCommand}"
+                              IsEnabled="{Binding Path=Parent.CanCreateEntry}" 
+                              Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}"/>
                 <RibbonButton LargeImageSource="{StaticResource IconEdit}" 
-                      Label="Edit"
-                      Command="{Binding Path=Parent.EditEntryCommand}"
-                      IsEnabled="{Binding Path=Parent.CanEditEntry}"
-                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                              Label="{lex:Loc Key=String_Edit}"
+                              Command="{Binding Path=Parent.EditEntryCommand}"
+                              IsEnabled="{Binding Path=Parent.CanEditEntry}"
+                              Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconSave}"
-                      Label="Save"
-                      Command="{Binding Path=SaveCommand}"
-                      IsEnabled="{Binding Path=CanSave}"
-                         Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
+                              Label="{lex:Loc Key=String_Save}"
+                              Command="{Binding Path=SaveCommand}"
+                              IsEnabled="{Binding Path=CanSave}"
+                              Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}" />
                 <RibbonButton LargeImageSource="{StaticResource IconDelete}" 
-                      Label="Delete"
-                      Command="{Binding Path=Parent.DeleteEntryCommand}"
-                      IsEnabled="{Binding Path=Parent.CanDeleteEntry}"
-                         Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
+                              Label="{lex:Loc Key=String_Delete}"
+                              Command="{Binding Path=Parent.DeleteEntryCommand}"
+                              IsEnabled="{Binding Path=Parent.CanDeleteEntry}"
+                              Visibility="{Binding Path=Parent.IsActive, Converter={StaticResource VisibilityConverter}}" />
             </RibbonGroup>
 
-            <RibbonGroup Header="Position"
+            <RibbonGroup Header="{lex:Loc Key=String_Position}"
                          Visibility="{Binding Path=IsActive, Converter={StaticResource VisibilityConverter}}">
-                <RibbonButton Label="New" 
+                <RibbonButton Label="{lex:Loc Key=String_New}" 
                               LargeImageSource="{StaticResource IconCreateNew}"
                               Command="{Binding Path=CreatePositionCommand}"
                               IsEnabled="{Binding Path=CanCreatePosition}" />
-                <RibbonButton Label="Add/Save" 
+                <RibbonButton Label="{lex:Loc Key=String_AddSave}" 
                               LargeImageSource="{StaticResource IconSave}"
                               Command="{Binding Path=AddPositionCommand}"
                               IsEnabled="{Binding Path=CanAddPosition}" />
-                <RibbonButton Label="Delete" 
+                <RibbonButton Label="{lex:Loc Key=String_Delete}" 
                               LargeImageSource="{StaticResource IconDelete}"
                               Command="{Binding Path=DeletePositionCommand}"
                               IsEnabled="{Binding Path=CanDeletePosition}" />
